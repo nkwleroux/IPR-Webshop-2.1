@@ -5,8 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ServerApplication"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="400" Width="350">
     <Grid>
-
+        <Label Margin="0,10,252,338" >Status: </Label>
+        <Button Click="OnStart_Click" Margin="138,10,137,338">Start server</Button>
+        <Button Click="OnStop_Click" Margin="261,10,10,338">Stop server</Button>
     </Grid>
 </Window>

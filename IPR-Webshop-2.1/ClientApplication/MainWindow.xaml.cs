@@ -23,6 +23,7 @@ namespace ClientApplication
         public MainWindow()
         {
             InitializeComponent();
+
         }
     }
 }

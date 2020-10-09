@@ -20,9 +20,20 @@ namespace ServerApplication
     /// </summary>
     public partial class MainWindow : Window
     {
+        private Server server;
         public MainWindow()
         {
+            this.server = new Server();
             InitializeComponent();
+        }
+
+        private void OnStart_Click(object sender, RoutedEventArgs e)
+        {
+            server.StartServer();
+        }
+        private void OnStop_Click(object sender, RoutedEventArgs e)
+        {
+            server.StopServer();
         }
     }
 }
