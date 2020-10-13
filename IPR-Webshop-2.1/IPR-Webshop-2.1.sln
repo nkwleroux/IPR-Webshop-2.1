@@ -13,6 +13,7 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Util", "Util\Util.shproj", 
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		Util\Util.projitems*{eb34837d-663d-4891-ae4c-b95882d6d6b3}*SharedItemsImports = 5
 		Util\Util.projitems*{f8515f61-de4c-4fcd-9f5a-6b035196f928}*SharedItemsImports = 13
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

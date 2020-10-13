@@ -61,7 +61,7 @@ namespace ServerApplication
                 case "":
                     break;
                 default:
-                    // TODO: when message is not undestood.
+                    // TODO: when message is not understood.
                     Debug.WriteLine($"Messagetype not recognised: {type}");
                     break;
             }
