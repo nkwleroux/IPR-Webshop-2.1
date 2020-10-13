@@ -23,8 +23,10 @@ namespace ServerApplication
         private Server server;
         public MainWindow()
         {
-            this.server = new Server();
             InitializeComponent();
+            LogField log = new LogField(this.Log);
+            ServerStatusLabel statusLabel = new ServerStatusLabel(this.Label_Status, this.Indicator);
+            this.server = new Server(log, statusLabel);
         }
 
         private void OnStart_Click(object sender, RoutedEventArgs e)
