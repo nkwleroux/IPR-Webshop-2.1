@@ -26,7 +26,8 @@ namespace ServerApplication
             InitializeComponent();
             LogField log = new LogField(this.Log);
             ServerStatusLabel statusLabel = new ServerStatusLabel(this.Label_Status, this.Indicator);
-            this.server = new Server(log, statusLabel);
+            ServerButtons serverButtons = new ServerButtons(this.Button_Start, this.Button_Stop);
+            this.server = new Server(log, statusLabel, serverButtons);
         }
 
         private void OnStart_Click(object sender, RoutedEventArgs e)

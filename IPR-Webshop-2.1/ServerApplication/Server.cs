@@ -18,16 +18,21 @@ namespace ServerApplication
         private LogField log;
         // label for indicating the serverstate
         private ServerStatusLabel ServerStatusLabel;
+        // Object to controll the buttons in the server;
+        private ServerButtons serverButtons;
         // Status
         public bool Running;
-        public Server(LogField log, ServerStatusLabel serverStatusLabel)
+        public Server(LogField log, ServerStatusLabel serverStatusLabel, ServerButtons serverButtons)
         {
             this.log = log;
+            this.serverButtons = serverButtons;
             this.ServerStatusLabel = serverStatusLabel;
 
+            // Set the stop button diabled
+            this.serverButtons.Button_Stop.IsEnabled = false;
             // Sets the label to init
             this.ServerStatusLabel.SetStatus(ServerStates.Init);
-
+            // List of clients
             this.clients = new List<ServerClient>();
             this.tcpListener = new TcpListener(IPAddress.Any, PORT_DEFAULT);
             // Indicate user of serverstate
@@ -50,6 +55,8 @@ namespace ServerApplication
             log.PrintLine(SOURCE_LABEL, "starting server!");
 
             this.Running = true;
+            this.serverButtons.Button_Start.IsEnabled = false;
+            this.serverButtons.Button_Stop.IsEnabled = true;
             // Start to listen for connections
             this.tcpListener.Start();
             // Async way of accepting new tcp connections
@@ -63,8 +70,10 @@ namespace ServerApplication
             log.PrintLine(SOURCE_LABEL, "stopping server!");
 
             this.Running = false;
+            this.serverButtons.Button_Start.IsEnabled = true;
+            this.serverButtons.Button_Stop.IsEnabled = false;
             // foreach client connected to the server
-            foreach(ServerClient client in clients)
+            foreach (ServerClient client in clients)
             {
                 // Disposes the TcpClient and NetworkStream
                 client.Disconect();
