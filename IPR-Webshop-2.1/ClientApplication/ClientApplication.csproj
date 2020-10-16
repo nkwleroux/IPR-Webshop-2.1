@@ -7,7 +7,94 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="NewFolder\**" />
+    <EmbeddedResource Remove="NewFolder\**" />
+    <None Remove="NewFolder\**" />
+    <Page Remove="NewFolder\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Assets\images\aardappelen_groente_fruit.png" />
+    <None Remove="Assets\images\baby-drogisterij.png" />
+    <None Remove="Assets\images\bewuste-voeding.png" />
+    <None Remove="Assets\images\bier-sterke-drank.png" />
+    <None Remove="Assets\images\boter-eieren-zuivel.png" />
+    <None Remove="Assets\images\brood-gebak.png" />
+    <None Remove="Assets\images\chips-koek-snoep-chocolade.png" />
+    <None Remove="Assets\images\diepvries.png" />
+    <None Remove="Assets\images\frisdrank-koffie-thee-sappen.png" />
+    <None Remove="Assets\images\huishouden-huisdier.png" />
+    <None Remove="Assets\images\kaas-vleeswaren-tapas.png" />
+    <None Remove="Assets\images\koken-tafelen-nonfood.png" />
+    <None Remove="Assets\images\ontbijtgranen-beleg-tussendoor.png" />
+    <None Remove="Assets\images\pasta-rijst-wereldkeuken.png" />
+    <None Remove="Assets\images\salades-pizza-maaltijden.png" />
+    <None Remove="Assets\images\soepen-sauzen-kruiden-olie.png" />
+    <None Remove="Assets\images\vlees-kip-vis-vega.png" />
+    <None Remove="Assets\images\wijn.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MaterialDesignColors" Version="1.2.7" />
+    <PackageReference Include="MaterialDesignThemes" Version="3.2.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\images\aardappelen_groente_fruit.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\images\baby-drogisterij.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\images\bewuste-voeding.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\images\bier-sterke-drank.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\images\boter-eieren-zuivel.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\images\brood-gebak.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\images\chips-koek-snoep-chocolade.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\images\diepvries.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\images\frisdrank-koffie-thee-sappen.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\images\huishouden-huisdier.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\images\kaas-vleeswaren-tapas.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\images\koken-tafelen-nonfood.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\images\ontbijtgranen-beleg-tussendoor.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\images\pasta-rijst-wereldkeuken.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\images\salades-pizza-maaltijden.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\images\soepen-sauzen-kruiden-olie.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\images\vlees-kip-vis-vega.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\images\wijn.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
   <Import Project="..\Util\Util.projitems" Label="Shared" />
