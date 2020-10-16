@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ServerApplication"
         mc:Ignorable="d"
-        Title="MainWindow" Height="400" Width="450" MinHeight="300" MinWidth="400" WindowStartupLocation="CenterScreen"
+        Title="Server" Height="400" Width="450" MinHeight="300" MinWidth="400" WindowStartupLocation="CenterScreen"
         Background="#002626"
-        WindowStyle="SingleBorderWindow">
+        WindowStyle="ToolWindow">
 
     <Window.Resources>
         <Style x:Key="FocusVisual">
@@ -148,7 +148,7 @@
             <RowDefinition Height="20" />
         </Grid.RowDefinitions>
 
-        <Ellipse Name="Indicator" Fill="Yellow" Grid.Column="1" Grid.Row="1" Width="10" Height="10"></Ellipse> 
+        <Ellipse Name="Indicator" Fill="Orange" Grid.Column="1" Grid.Row="1" Width="10" Height="10"></Ellipse> 
         
         <Label Name ="Label_Status" Grid.Column="2" Grid.Row="1" Content="Status: "
                Foreground="White" FontWeight="Bold"></Label>
@@ -156,6 +156,8 @@
                 Foreground="White" FontWeight="Bold"></Button>
         <Button Style="{DynamicResource RoundedBorder}" Name="Button_Stop" Click="OnStop_Click" Grid.Column="4" Grid.Row="1" Content="Stop server" Margin="5,0,0,0"
                 Foreground="White" FontWeight="Bold" ></Button>
-        <RichTextBox Style="{DynamicResource RoundedRichTextBody}" Name="Log" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="4" Margin="0,20,0,0" Background="#0E4749"></RichTextBox>
+        <RichTextBox Style="{DynamicResource RoundedRichTextBody}" Name="Log" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="4" Margin="0,20,0,0" 
+                Background="#0E4749"></RichTextBox>
+        <Label Name="Label_Info" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="4" Content="Serverinfo" FontSize="8" Foreground="White" Margin="-5,0,0,0"></Label>
     </Grid>
 </Window>

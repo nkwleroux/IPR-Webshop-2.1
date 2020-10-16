@@ -21,7 +21,7 @@ namespace ServerApplication
                     indicator.Fill = new SolidColorBrush(Colors.Blue);
                     break;
                 case ServerStates.Idle:
-                    indicator.Fill = new SolidColorBrush(Colors.Yellow);
+                    indicator.Fill = new SolidColorBrush(Colors.Orange);
                     break;
                 case ServerStates.Running:
                     indicator.Fill = new SolidColorBrush(Colors.Green);

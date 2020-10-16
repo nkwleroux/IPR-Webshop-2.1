@@ -8,7 +8,7 @@ namespace ServerApplication
 {
     public class Server
     {
-        public static readonly string SOURCE_LABEL = "Server";
+        private static readonly string SOURCE_LABEL = "Server";
         public static readonly int PORT_DEFAULT = 2000;
         // Object to listen for new tcp connections.
         private TcpListener tcpListener;

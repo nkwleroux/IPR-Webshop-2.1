@@ -10,6 +10,7 @@ namespace ServerApplication
 {
     public class ServerClient
     {
+        private static readonly string SOURCE_LABEL = "ServerClient";
         // The accepted client from out tcp listener
         private TcpClient client;
         // The stream to send and receive tcp data
