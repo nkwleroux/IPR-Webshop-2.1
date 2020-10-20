@@ -1,9 +1,6 @@
-﻿using ServerEditor.Interface_pages;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -14,17 +11,18 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ServerEditor
+namespace ServerEditor.Interface_pages
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for MainInterface.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainInterface : Page
     {
-        public MainWindow()
+        public MainInterface()
         {
             InitializeComponent();
-            this.ViewPort_MainWindow.Navigate(new LoginInterface());
+            this.ViewPort_ProductEditor.Navigate(new Page_ProductEditor());
+            this.ViewPort_UserEditor.Navigate(new Page_UserEditor());
         }
     }
 }

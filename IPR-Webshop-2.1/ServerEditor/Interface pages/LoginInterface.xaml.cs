@@ -1,9 +1,6 @@
-﻿using ServerEditor.Interface_pages;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -14,17 +11,20 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ServerEditor
+namespace ServerEditor.Interface_pages
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for LoginInterface.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class LoginInterface : Page
     {
-        public MainWindow()
+        public LoginInterface()
         {
             InitializeComponent();
-            this.ViewPort_MainWindow.Navigate(new LoginInterface());
+        }
+        private void Button_LoginButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.NavigationService.Navigate(new MainInterface());
         }
     }
 }
