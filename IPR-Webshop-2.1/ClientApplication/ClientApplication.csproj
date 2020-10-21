@@ -7,13 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="NewFolder\**" />
-    <EmbeddedResource Remove="NewFolder\**" />
-    <None Remove="NewFolder\**" />
-    <Page Remove="NewFolder\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Remove="Assets\images\aardappelen_groente_fruit.png" />
     <None Remove="Assets\images\baby-drogisterij.png" />
     <None Remove="Assets\images\bewuste-voeding.png" />

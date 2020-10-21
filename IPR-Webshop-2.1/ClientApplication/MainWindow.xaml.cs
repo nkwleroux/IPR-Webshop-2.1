@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ClientApplication.AccountScreen;
+using ClientApplication.FAQScreen;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -22,39 +24,109 @@ namespace ClientApplication
     /// </summary>
     public partial class MainWindow : Window
     {
+        private MainProductScreenUC mainProductScreenUC;
+        private FAQScreenUC fAQUC;
+        private LoginScreenUC loginScreenUC;
+        private RegisterScreenUC registerScreenUC;
+        private AccountOverviewUC accountOverviewUC;
+
+        private bool HasAccount { get; set; }
+
         public MainWindow()
         {
             InitializeComponent();
-            var categories = GetCategories();
-            if (categories.Count > 0)
-                ListViewCategories.ItemsSource = categories;
+
+            init();
         }
 
-        private List<Category> GetCategories()
+        private void init()
         {
+            // Initialise the different pages.
 
-            return new List<Category>()
-            {
-                new Category("Aardappel, groente, fruit","/Assets/images/aardappelen_groente_fruit.png"),
-                new Category("Salades, pizza, maaltijden","/Assets/images/salades-pizza-maaltijden.png"),
-                new Category("Vlees, kip, vis, vega","/Assets/images/vlees-kip-vis-vega.png"),
-                new Category("Kaas, vleeswaren, tapas","/Assets/images/kaas-vleeswaren-tapas.png"),
-                new Category("Zuivel, plantaardig en eiren","/Assets/images/boter-eieren-zuivel.png"),
-                new Category("Bakkerij en banket","/Assets/images/brood-gebak.png"),
-                new Category("Ontbijtgranen, broodbeleg, tussendoor","/Assets/images/ontbijtgranen-beleg-tussendoor.png"),
-                new Category("Frisdrank, sappen, koffie, thee","/Assets/images/frisdrank-koffie-thee-sappen.png"),
-                new Category("Wijn en bubbels","/Assets/images/wijn.png"),
-                new Category("Bier, sterke drank, aperitieven","/Assets/images/bier-sterke-drank.png"),
-                new Category("Pasta, rijst en wereldkeuken","/Assets/images/pasta-rijst-wereldkeuken.png"),
-                new Category("Soepen, sauzen, kruiden, olie","/Assets/images/soepen-sauzen-kruiden-olie.png"),
-                new Category("Snoep, koek, chips en chocolade","/Assets/images/chips-koek-snoep-chocolade.png"),
-                new Category("Diepvries","/Assets/images/diepvries.png"),
-                new Category("Baby, verzorging en hygiene","/Assets/images/baby-drogisterij.png"),
-                new Category("Bewuste voeding","/Assets/images/bewuste-voeding.png"),
-                new Category("Huishouden, huisdier","/Assets/images/huishouden-huisdier.png"),
-                new Category("Koken, tafelen, vrije tijd","/Assets/images/koken-tafelen-nonfood.png"),
-                };
+            mainProductScreenUC = new MainProductScreenUC(this);
+            LayoutControl.Children.Add(mainProductScreenUC);
+            fAQUC = new FAQScreenUC(this);
+            LayoutControl.Children.Add(fAQUC);
+            loginScreenUC = new LoginScreenUC(this);
+            LayoutControl.Children.Add(loginScreenUC);
+            registerScreenUC = new RegisterScreenUC(this);
+            LayoutControl.Children.Add(registerScreenUC);
+            accountOverviewUC = new AccountOverviewUC(this);
+            LayoutControl.Children.Add(accountOverviewUC);
+
+            ChangeView("MainProduct");
         }
+
+        public void ChangeView(String viewName)
+        {
+            mainProductScreenUC.Visibility = Visibility.Hidden;
+            fAQUC.Visibility = Visibility.Hidden;
+            loginScreenUC.Visibility = Visibility.Hidden;
+            registerScreenUC.Visibility = Visibility.Hidden;
+            accountOverviewUC.Visibility = Visibility.Hidden;
+            mainscreen.MinHeight = 480;
+            mainscreen.MinWidth = 600;
+
+            switch (viewName)
+            {
+                case "MainProduct":
+                    mainProductScreenUC.Visibility = Visibility.Visible;
+                    break;
+                case "FAQ":
+                    fAQUC.Visibility = Visibility.Visible;
+                    break;
+                case "Login":
+                    if (HasAccount)
+                    {
+                        ChangeView("AccountOverview");
+                    }
+                    else
+                    {
+                        loginScreenUC.Visibility = Visibility.Visible;
+                    }
+                    break;
+                case "Register":
+                    if (HasAccount)
+                    {
+                        ChangeView("AccountOverview");
+                    }
+                    else
+                    {
+                        registerScreenUC.Visibility = Visibility.Visible;
+                    }
+                    break;
+                case "AccountOverview":
+                    accountOverviewUC.Visibility = Visibility.Visible;
+                    mainscreen.MinHeight = 660;
+                    mainscreen.MinWidth = 960;
+                    if (!HasAccount)
+                    {
+                        HasAccount = true;
+                    }
+
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        #region //Button onClicks
+
+        private void Button_FAQ(object sender, RoutedEventArgs e)
+        {
+            ChangeView("FAQ");
+        }
+
+        private void Button_AppName(object sender, RoutedEventArgs e)
+        {
+            ChangeView("MainProduct");
+        }
+
+        private void Button_MyAccount(object sender, RoutedEventArgs e)
+        {
+            ChangeView("Login");
+        }
+        #endregion
     }
 }
 

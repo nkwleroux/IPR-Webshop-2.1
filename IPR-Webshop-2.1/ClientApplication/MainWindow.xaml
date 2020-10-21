@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:ClientApplication"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" x:Class="ClientApplication.MainWindow"
         mc:Ignorable="d"
-        Title="MainWindow" Height="660" Width="960" Name="StartScreen">
+        Title="MainWindow" Height="660" Width="960" Name="mainscreen" MinHeight="480" MinWidth="600">
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
@@ -16,50 +17,26 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <StackPanel Grid.Row="0" HorizontalAlignment ="Right" Orientation="Horizontal" Height="40" >
-            <Button Content="FAQ" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FFA2A2A2" FontSize="15" FontWeight="Bold" VerticalAlignment="Center"/>
+        <Button Grid.Column="0" Click="Button_AppName" Grid.Row="0" Height="40" Width="150" Margin="10,0,0,0" HorizontalAlignment="Left" Background="{x:Null}"  BorderBrush="{x:Null}">
+            <StackPanel Orientation="Horizontal">
+                <materialDesign:PackIcon Kind="Food" Height="40" Width="30" Foreground="#FFA2A2A2" />
+                <Label Content="App name" FontSize="24" Height="40" Width="120"  HorizontalAlignment="Center"/>
+            </StackPanel>
+        </Button>
+
+        <StackPanel Grid.Column="0" Grid.Row="0" HorizontalAlignment ="Right" Orientation="Horizontal" Height="40" Margin="00,00,10,00">
+
+            <Button Content="FAQ" Click="Button_FAQ" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FFA2A2A2" FontSize="15" FontWeight="Bold" VerticalAlignment="Center"/>
             <Button Content="CART" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FFA2A2A2" FontSize="15" FontWeight="Bold" VerticalAlignment="Center"/>
-            <Button Content="MY ACCOUNT" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FFA2A2A2" FontSize="15" FontWeight="Bold" VerticalAlignment="Center"/>
+            <Button Content="MY ACCOUNT" Click="Button_MyAccount" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FFA2A2A2" FontSize="15" FontWeight="Bold" VerticalAlignment="Center"/>
             <Button Background="{x:Null}" BorderBrush="{x:Null}" VerticalAlignment="Center">
                 <materialDesign:PackIcon Kind="Power" Foreground="#FFA2A2A2" Width="25" Height="25" />
             </Button>
+
         </StackPanel>
 
-        <ScrollViewer Grid.Row="1" Margin="20" VerticalScrollBarVisibility="Hidden" >
-            <StackPanel>
-                <StackPanel>
-                    <ItemsControl x:Name="ListViewCategories" ItemsSource="{Binding Category}">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <Border Margin="10" Width="160" Height="160" Background="Beige">
-                                    <StackPanel Orientation="Vertical">
-                                      
-                                        <materialDesign:Card Uid="{Binding Name}" >
-                                            <StackPanel>
-                                                <Border Width="100" Height="100" CornerRadius="5" Margin="5">
-                                                    <Border.Effect>
-                                                        <DropShadowEffect ShadowDepth="1"/>
-                                                    </Border.Effect>
-                                                    <Border.Background>
-                                                        <ImageBrush ImageSource="{Binding CategoryImage}"/>
-                                                    </Border.Background>
-                                                </Border>
-                                                <TextBlock Margin="5" TextWrapping="Wrap" FontSize="15" TextAlignment="Center" VerticalAlignment="Center" Text="{Binding Name}"/>
-                                            </StackPanel>
-                                        </materialDesign:Card>
-                                    </StackPanel>
-                                </Border>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <WrapPanel/>
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-                    </ItemsControl>
-                </StackPanel>
-            </StackPanel>
-        </ScrollViewer>
-        
+
+        <Grid Name="LayoutControl" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2"></Grid>
+
     </Grid>
 </Window>
