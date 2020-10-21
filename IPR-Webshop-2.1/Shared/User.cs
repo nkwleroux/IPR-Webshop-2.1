@@ -1,8 +1,9 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ServerEditor
+namespace Shared
 {
     public class User
     {
@@ -14,5 +15,6 @@ namespace ServerEditor
         public double Credits { get; set; }
         public string ShippingDetails { get; set; }
         public string BillingDetails { get; set; }
+        public bool IsEditor { get; set; }
     }
 }

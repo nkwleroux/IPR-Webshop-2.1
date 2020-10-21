@@ -24,7 +24,7 @@ namespace ServerApplication
         public MainWindow()
         {
             InitializeComponent();
-            LogField log = new LogField(this.Log);
+            LogField log = new LogField(this.Log, this.Dispatcher);
             ServerStatusLabel statusLabel = new ServerStatusLabel(this.Label_Status, this.Indicator);
             ServerButtons serverButtons = new ServerButtons(this.Button_Start, this.Button_Stop);
             this.server = new Server(log, statusLabel, serverButtons);
@@ -37,6 +37,7 @@ namespace ServerApplication
         private void OnStop_Click(object sender, RoutedEventArgs e)
         {
             server.StopServer();
+            
         }
     }
 }

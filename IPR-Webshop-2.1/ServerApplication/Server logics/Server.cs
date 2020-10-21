@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ServerApplication.Server_logics;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net;
@@ -14,8 +15,10 @@ namespace ServerApplication
         private TcpListener tcpListener;
         // List with all the accepted clients.
         private List<ServerClient> clients;
+        // Database with all the products and users;
+        public Database Database;
         // logging object
-        private LogField log;
+        public LogField Log;
         // label for indicating the serverstate
         private ServerStatusLabel ServerStatusLabel;
         // Object to controll the buttons in the server;
@@ -24,9 +27,11 @@ namespace ServerApplication
         public bool Running;
         public Server(LogField log, ServerStatusLabel serverStatusLabel, ServerButtons serverButtons)
         {
-            this.log = log;
+            this.Log = log;
             this.serverButtons = serverButtons;
             this.ServerStatusLabel = serverStatusLabel;
+
+            this.Database = new Database();
 
             // Set the stop button diabled
             this.serverButtons.Button_Stop.IsEnabled = false;
@@ -45,14 +50,14 @@ namespace ServerApplication
 
             TcpClient tcpClient = tcpListener.EndAcceptTcpClient(ar);
             // Adds the new accepted tcpClient to the list
-            clients.Add(new ServerClient(tcpClient));
+            clients.Add(new ServerClient(tcpClient, this));
             // Start async for accepting clients
             tcpListener.BeginAcceptTcpClient(new AsyncCallback(AcceptClient), null);   
         }
         // Starts the server
         public void StartServer()
         {
-            log.PrintLine(SOURCE_LABEL, "starting server!");
+            Log.PrintLine(SOURCE_LABEL, "starting server!");
 
             this.Running = true;
             this.serverButtons.Button_Start.IsEnabled = false;
@@ -67,7 +72,7 @@ namespace ServerApplication
         // Stops the server and all the connected client streams.
         public void StopServer()
         {
-            log.PrintLine(SOURCE_LABEL, "stopping server!");
+            Log.PrintLine(SOURCE_LABEL, "stopping server!");
 
             this.Running = false;
             this.serverButtons.Button_Start.IsEnabled = true;
@@ -78,11 +83,22 @@ namespace ServerApplication
                 // Disposes the TcpClient and NetworkStream
                 client.Disconect();
             }
-            clients.Clear();
             // Stop listening to new tcp connections
             this.tcpListener.Stop();
             // Indicate user of serverstate
             this.ServerStatusLabel.SetStatus(ServerStates.Stopped);
+        }
+        public void OnDisposeServerClient(ServerClient serverClient)
+        {
+            this.clients.Remove(serverClient);
+        }
+        public void sendUpdateProductList()
+        {
+            foreach(ServerClient serverClient in clients)
+            {
+                serverClient.SendProductList(null);
+                Log.PrintLine(SOURCE_LABEL, $"sending update..");
+            }
         }
     }
 }

@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>efa32a8a-0dad-4785-b658-4e384ba2b849</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>Shared</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)BitmapConvertor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Crypto.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DataProtocol.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ProductSerializable.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Product.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)User.cs" />
+  </ItemGroup>
+</Project>

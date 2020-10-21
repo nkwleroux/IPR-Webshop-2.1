@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Net.Sockets;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -18,11 +20,25 @@ namespace ServerEditor.Interface_pages
     /// </summary>
     public partial class MainInterface : Page
     {
-        public MainInterface()
+        private Page_ProductEditor productEditor;
+        private Page_UserEditor userEditor;
+        public MainInterface(Window window)
         {
+            TcpClient tcpClient = new TcpClient();
+            tcpClient.Connect("localhost", 2000);
             InitializeComponent();
-            this.ViewPort_ProductEditor.Navigate(new Page_ProductEditor());
-            this.ViewPort_UserEditor.Navigate(new Page_UserEditor());
+
+            this.productEditor = new Page_ProductEditor(tcpClient.GetStream());
+            this.userEditor = new Page_UserEditor();
+
+            this.ViewPort_ProductEditor.Navigate(this.productEditor);
+            this.ViewPort_UserEditor.Navigate(this.userEditor);
+            window.Closed += Window_Closed;
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            this.productEditor.disconnectMessage();
         }
     }
 }

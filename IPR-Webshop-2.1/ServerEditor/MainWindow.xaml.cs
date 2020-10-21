@@ -24,7 +24,7 @@ namespace ServerEditor
         public MainWindow()
         {
             InitializeComponent();
-            this.ViewPort_MainWindow.Navigate(new LoginInterface());
+            this.ViewPort_MainWindow.Navigate(new LoginInterface(this));
         }
     }
 }

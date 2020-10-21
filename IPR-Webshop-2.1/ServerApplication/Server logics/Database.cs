@@ -1,0 +1,141 @@
+﻿using Newtonsoft.Json;
+using Shared;
+using System;
+using System.Collections.Generic;
+using System.IO.Packaging;
+using System.Security.Policy;
+using System.Text;
+
+namespace ServerApplication.Server_logics
+{
+    public class Database
+    {
+        private int IdCount;
+        public List<ProductSerializable> Products;
+        public List<User> Users;
+        public Database()
+        {
+            this.Products = new List<ProductSerializable>();
+            this.Users = new List<User>();
+        }
+
+        #region Json constructors
+        public string[] GetAllProductsJson()
+        {
+            string[] jsons = new string[this.Products.Count];
+
+            for(int i = 0; i < this.Products.Count; i++)
+            {
+                jsons[i] = JsonConvert.SerializeObject(Products[i]);
+            }
+
+            return jsons;
+        }
+        public string[] GetAllUsersJson()
+        {
+            string[] jsons = new string[this.Products.Count];
+
+            for (int i = 0; i < this.Users.Count; i++)
+            {
+                jsons[i] = JsonConvert.SerializeObject(Users[i]);
+            }
+
+            return jsons;
+        }
+        #endregion
+
+        #region List editors
+        public void RemoveUser(User user)
+        {
+            User selected = null;
+            foreach(User userI in Users)
+            {
+                if(userI.Username == user.Username)
+                {
+                    selected = userI;
+                }
+            }
+
+            if(selected != null)
+            {
+                this.Users.Remove(selected);
+            }
+        }
+        public void AddUser(User user)
+        {
+            foreach (User userI in Users)
+            {
+                if (userI.Username == user.Username)
+                {
+                    return;
+                }
+            }
+
+            this.Users.Add(user);
+        }
+        public void EditUser(User user)
+        {
+            int selected = -1;
+            for (int i = 0; i < this.Users.Count; i++)
+            {
+                if (Users[i].Username == user.Username)
+                {
+                    selected = i;
+                }
+            }
+
+            if (selected >= 0)
+            {
+                this.Users.RemoveAt(selected);
+                this.Users.Insert(selected, user);
+            }
+        }
+        public void RemoveProduct(ProductSerializable product)
+        {
+            ProductSerializable selected = null;
+            foreach (ProductSerializable productI in Products)
+            {
+                if (productI.Id == product.Id)
+                {
+                    selected = productI;
+                }
+            }
+
+            if (selected != null)
+            {
+                this.Products.Remove(selected);
+            }
+        }
+        public void AddProduct(ProductSerializable product)
+        {
+            foreach (ProductSerializable productI in Products)
+            {
+                if (productI.Name == product.Name)
+                {
+                    return;
+                }
+            }
+            product.Id = IdCount;
+            IdCount++;
+            this.Products.Add(product);
+        }
+        public void EditProduct(ProductSerializable product)
+        {
+            int selected = -1;
+            for (int i = 0; i < this.Products.Count; i++)
+            {
+                if (Products[i].Id == product.Id)
+                {
+                    selected = i;
+                }
+            }
+
+            if (selected >= 0)
+            {
+                this.Products.RemoveAt(selected);
+                this.Products.Insert(selected, product);
+            }
+        }
+        #endregion
+    }
+}

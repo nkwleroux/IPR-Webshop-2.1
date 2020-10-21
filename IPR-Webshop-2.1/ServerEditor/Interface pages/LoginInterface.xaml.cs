@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net.Sockets;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -18,13 +19,16 @@ namespace ServerEditor.Interface_pages
     /// </summary>
     public partial class LoginInterface : Page
     {
-        public LoginInterface()
+        Window window;
+        public LoginInterface(Window window)
         {
+            this.window = window;
             InitializeComponent();
         }
         private void Button_LoginButton_Click(object sender, RoutedEventArgs e)
         {
-            this.NavigationService.Navigate(new MainInterface());
+            
+            this.NavigationService.Navigate(new MainInterface(window));
         }
     }
 }

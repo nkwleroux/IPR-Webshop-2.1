@@ -3,13 +3,20 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientApplication", "ClientApplication\ClientApplication.csproj", "{EB34837D-663D-4891-AE4C-B95882D6D6B3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClientApplication", "ClientApplication\ClientApplication.csproj", "{EB34837D-663D-4891-AE4C-B95882D6D6B3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerEditor", "ServerEditor\ServerEditor.csproj", "{0020B253-9847-4BC0-8A21-4F0D662F73ED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServerEditor", "ServerEditor\ServerEditor.csproj", "{0020B253-9847-4BC0-8A21-4F0D662F73ED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerApplication", "ServerApplication\ServerApplication.csproj", "{1675B1DF-3874-45D7-A673-6F53797C626E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServerApplication", "ServerApplication\ServerApplication.csproj", "{1675B1DF-3874-45D7-A673-6F53797C626E}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Shared", "Shared\Shared.shproj", "{EFA32A8A-0DAD-4785-B658-4E384BA2B849}"
 EndProject
 Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		Shared\Shared.projitems*{0020b253-9847-4bc0-8a21-4f0d662f73ed}*SharedItemsImports = 5
+		Shared\Shared.projitems*{1675b1df-3874-45d7-a673-6f53797c626e}*SharedItemsImports = 5
+		Shared\Shared.projitems*{efa32a8a-0dad-4785-b658-4e384ba2b849}*SharedItemsImports = 13
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
