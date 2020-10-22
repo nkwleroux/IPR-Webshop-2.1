@@ -6,7 +6,9 @@
         xmlns:local="clr-namespace:ClientApplication"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" x:Class="ClientApplication.MainWindow"
         mc:Ignorable="d"
-        Title="MainWindow" Height="660" Width="960" Name="mainscreen" MinHeight="480" MinWidth="600">
+        WindowStyle="None"
+        WindowStartupLocation="CenterScreen"
+        Title="MainWindow" Height="640" Width="960" Name="mainscreen" MinHeight="480" MinWidth="600">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -27,9 +29,9 @@
         <StackPanel Grid.Column="0" Grid.Row="0" HorizontalAlignment ="Right" Orientation="Horizontal" Height="40" Margin="00,00,10,00">
 
             <Button Content="FAQ" Click="Button_FAQ" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FFA2A2A2" FontSize="15" FontWeight="Bold" VerticalAlignment="Center"/>
-            <Button Content="CART" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FFA2A2A2" FontSize="15" FontWeight="Bold" VerticalAlignment="Center"/>
+            <Button Content="CART" Click="Button_Cart" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FFA2A2A2" FontSize="15" FontWeight="Bold" VerticalAlignment="Center"/>
             <Button Content="MY ACCOUNT" Click="Button_MyAccount" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FFA2A2A2" FontSize="15" FontWeight="Bold" VerticalAlignment="Center"/>
-            <Button Background="{x:Null}" BorderBrush="{x:Null}" VerticalAlignment="Center">
+            <Button Click="Button_Shutdown" Background="{x:Null}" BorderBrush="{x:Null}" VerticalAlignment="Center">
                 <materialDesign:PackIcon Kind="Power" Foreground="#FFA2A2A2" Width="25" Height="25" />
             </Button>
 

@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ClientApplication.AccountScreen"
              mc:Ignorable="d" 
-             d:DesignHeight="660" d:DesignWidth="960" Background="white">
+             d:DesignHeight="640" d:DesignWidth="960" Background="white">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"></RowDefinition>
@@ -50,12 +50,12 @@
 
             <!--Shipping address-->
             <Border Grid.Column="0" Grid.Row="2" BorderThickness="2" BorderBrush="Black" Margin="10" >
-                <TextBlock Text="Shipping address" TextWrapping="Wrap" />
+                <TextBox Text="Shipping address" TextWrapping="Wrap" />
             </Border>
 
             <!--Billing address-->
             <Border Grid.Column="0" Grid.Row="3" BorderThickness="2" BorderBrush="Black" Margin="10" >
-                <TextBlock Text="Billing address" TextWrapping="Wrap"/>
+                <TextBox Text="Billing address" TextWrapping="Wrap"/>
             </Border>
 
             <!--Password reset-->
@@ -68,13 +68,20 @@
                     <Label Content="Password  :" Width="120" HorizontalContentAlignment="Right"></Label>
                     <PasswordBox Width="300" VerticalAlignment="Center"/>
                 </StackPanel>
-                <StackPanel Grid.Column="0" Grid.Row="2" Orientation="Horizontal" VerticalAlignment="Center" >
+                <StackPanel Grid.Column="0" Grid.Row="2"  Orientation="Horizontal" VerticalAlignment="Center" >
                     <Label Content="Confirm password  :" Width="120" HorizontalContentAlignment="Right"></Label>
                     <PasswordBox Width="300" VerticalAlignment="Center" />
                 </StackPanel>
                 <Button Content="Change password" Height="30" Width="110" Margin="0,0,60,0" HorizontalAlignment="Right"/>
             </StackPanel>
 
+            <Border Grid.Column="0" Grid.Row="5" Height="35" Width="160" Margin="10,20,0,0" BorderThickness="2" BorderBrush="Black" HorizontalAlignment="Left" VerticalAlignment="Top">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Current credits : " TextWrapping="Wrap" VerticalAlignment="Center"/>
+                    <TextBlock Text="Amount " TextWrapping="Wrap" VerticalAlignment="Center"/>
+                </StackPanel>
+
+            </Border>
             <!--Save changes-->
             <Button Grid.Column="0" Grid.Row="5" Content="Save changes" Height="35" Width="90"  Margin="0,20,40,0" HorizontalAlignment="Right" VerticalAlignment="Top"/>
 
@@ -89,11 +96,22 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            
-            <Label Grid.Column="0" Grid.Row="0" Content="Previous orders" FontSize="30" FontWeight="Bold" Height="60" VerticalContentAlignment="Center"></Label>
-            <ListView Grid.Column="0" Grid.Row="1" BorderThickness="2" Margin="0,0,40,40">
 
+            <Label Grid.Column="0" Grid.Row="0" Content="Previous orders" FontSize="30" FontWeight="Bold" Height="60" VerticalContentAlignment="Center"></Label>
+
+            <ListView Name="PreviousOrdersListView" Grid.Column="0" Grid.Row="1" BorderThickness="2" Margin="0,0,40,40" Foreground="Black">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding SelectId}" FontSize="16" FontWeight="Bold" MinWidth="200"/>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <EventSetter Event="PreviewMouseLeftButtonDown" Handler="ListViewItem_PreviewMouseLeftButtonDown" />
+                    </Style>
+                </ListView.ItemContainerStyle>
             </ListView>
+
         </Grid>
 
     </Grid>

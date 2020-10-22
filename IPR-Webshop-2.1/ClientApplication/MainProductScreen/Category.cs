@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ClientApplication
 {
-    class Category
+    public class Category
     {
         public string Name { get; set; }
 

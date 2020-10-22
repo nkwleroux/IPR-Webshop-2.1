@@ -48,7 +48,7 @@
 
             <Button Grid.Column="0" Grid.Row="0" Click="Button_Login" Margin="10" Height="50" VerticalAlignment="Top">
                 <TextBox Text="Already have an account? 
-                         Click here to login" TextWrapping="Wrap" Background="Transparent" IsReadOnly="True" IsHitTestVisible="False"></TextBox>
+                         Click here to login" TextWrapping="Wrap" Background="Transparent" IsReadOnly="True" IsHitTestVisible="False"  BorderThickness="0"></TextBox>
             </Button>
 
             <Button Content="Register" Grid.Column="1" Grid.Row="0" Click="Button_Register" Margin="10" Height="50" VerticalAlignment="Top">

@@ -47,13 +47,7 @@ namespace ClientApplication.FAQScreen
             var item = sender as ListViewItem;
             if (item != null && item.IsSelected)
             {
-                //var data = GetFAQData();
-                //data.Add(new FAQData("ASDDAS", "ASDASD"));
-                //QuestionsListBox.ItemsSource = data;
-
                 AnswerBox.Text = ((FAQData)item.DataContext).Answer;
-                    //data.FindIndex(QuestionsListBox.SelectedIndex);
-                //Do your stuff
             }
 
         }

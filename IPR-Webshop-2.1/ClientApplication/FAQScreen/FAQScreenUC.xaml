@@ -12,26 +12,32 @@
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
+            <RowDefinition Height="40"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
-
-        <ListView Name="QuestionsListBox" Grid.Column="0" Grid.Row="0" Margin="20,20,10,20" Foreground="Black">
+        
+        <!--Title-->
+        <Label Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Content="FAQ" FontSize="25" FontWeight="Bold" VerticalContentAlignment="Center" HorizontalContentAlignment="Center">
+            
+        </Label>
+        
+        <!--Questions-->
+        <ListView Name="QuestionsListBox" Grid.Column="0" Grid.Row="1" Margin="20,20,10,20" Foreground="Black">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding Question}" FontSize="12" FontWeight="Bold" Width="215"/>
                 </DataTemplate>
             </ListBox.ItemTemplate>
-
-
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <EventSetter Event="PreviewMouseLeftButtonDown" Handler="ListViewItem_PreviewMouseLeftButtonDown" />
                 </Style>
             </ListView.ItemContainerStyle>
-
         </ListView>
+        
 
-        <TextBlock Name="AnswerBox" Text="{Binding Answer}" Grid.Column="1" Grid.Row="0" FontSize="12" FontWeight="Bold" Padding="10,20,20,20" HorizontalAlignment="Center" Width="670"/>
+        <!--Answers-->
+        <TextBlock Name="AnswerBox" Text="{Binding Answer}" Grid.Column="1" Grid.Row="1" FontSize="12" FontWeight="Bold" Padding="10,20,20,20" HorizontalAlignment="Center" Width="670"/>
 
 
     </Grid>

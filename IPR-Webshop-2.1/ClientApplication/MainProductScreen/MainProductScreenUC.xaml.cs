@@ -57,11 +57,19 @@ namespace ClientApplication
         }
 
         //todo
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Button_Category(object sender, RoutedEventArgs e)
         {
-            var cat = GetCategories();
-            cat.Add(new Category("Koken, tafelen, vrije tijd", "/Assets/images/koken-tafelen-nonfood.png"));
-            ListViewCategories.ItemsSource = cat;
+            string cat = ((Button)sender).Tag.ToString();
+            foreach (Category item in GetCategories())
+            {
+                if (cat.Equals(item.Name))
+                {
+                    mainWindow.SelectedCategory = item.Name;
+                    mainWindow.ChangeView("CategoryProduct");
+                    return;
+                }
+            }
+            
         }
     }
 }
