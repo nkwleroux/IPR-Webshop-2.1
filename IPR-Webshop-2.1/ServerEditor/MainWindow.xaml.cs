@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ServerEditor.Interface_pages;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,7 @@ namespace ServerEditor
         public MainWindow()
         {
             InitializeComponent();
+            this.ViewPort_MainWindow.Navigate(new LoginInterface(this));
         }
     }
 }

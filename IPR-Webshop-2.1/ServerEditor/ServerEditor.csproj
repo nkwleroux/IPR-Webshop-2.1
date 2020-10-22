@@ -6,8 +6,9 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <Import Project="..\Shared\Shared.projitems" Label="Shared" />
+
   <ItemGroup>
-    <PackageReference Include="MaterialDesignColors" Version="1.2.7" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
   </ItemGroup>
 
