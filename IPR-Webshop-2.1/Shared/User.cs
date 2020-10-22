@@ -15,6 +15,7 @@ namespace Shared
         public double Credits { get; set; }
         public string ShippingDetails { get; set; }
         public string BillingDetails { get; set; }
+        public int Id { get; set; }
         public bool IsEditor { get; set; }
     }
 }

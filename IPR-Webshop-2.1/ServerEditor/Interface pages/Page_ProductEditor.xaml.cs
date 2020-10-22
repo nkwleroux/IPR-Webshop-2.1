@@ -27,38 +27,17 @@ namespace ServerEditor.Interface_pages
     {
         private TextBox[] textBoxes;
         private Crypto crypto;
-        public Page_ProductEditor(NetworkStream stream)
+        public Page_ProductEditor(Crypto crypto)
         {
             InitializeComponent();
+            this.crypto = crypto;
+            this.crypto.WriteTextMessage(DataProtocol.getJsonMessage("client/productListRequest",
+                DataProtocol.getProductListRequest("TODO")));
+
             this.cachedImage = null;
             this.textBoxes = new TextBox[] { this.TextBox_ProductName, this.TextBox_ProductPrice, this.TextBox_ProductAmount };
-            this.crypto = new Crypto(stream, HandleData);
-            this.crypto.WriteTextMessage(DataProtocol.getJsonMessage("client/productListRequest", getProductListRequest()));
         }
-        private dynamic getProductListRequest()
-        {
-            return new
-            {
-                // TODO category
-            };
-        }
-        private dynamic getProductChangeDynamic(string typeOfChange, Product p)
-        {
-            ProductSerializable product = DataProtocol.MakeSerializableProduct(p);
-            return new
-            {
-                typeOfChange,
-                product
-            };
-        }
-        private dynamic getUserChangeDynamic(string typeOfChange, User user)
-        {
-            return new
-            {
-                typeOfChange,
-                user
-            };
-        }
+
         #region Callbacks
         private void Button_AddProduct_Click(object sender, RoutedEventArgs e)
         {
@@ -70,7 +49,7 @@ namespace ServerEditor.Interface_pages
 
             double price;
             int amount;
-            if (!double.TryParse(this.TextBox_ProductPrice.Text, out price) || 
+            if (!double.TryParse(this.TextBox_ProductPrice.Text, out price) ||
                 !int.TryParse(this.TextBox_ProductAmount.Text, out amount))
                 return;
 
@@ -81,14 +60,14 @@ namespace ServerEditor.Interface_pages
                 Amount = amount,
             };
 
-            if(cachedImage != null && changed)
+            if (cachedImage != null)
             {
                 product.Image = cachedImage;
             }
-            changed = false;
+
             this.crypto.WriteTextMessage(DataProtocol.getJsonMessage(
-                                            "client/productListChangeRequest", 
-                                            getProductChangeDynamic("add", product)));
+                                            "client/productListChangeRequest",
+                                            DataProtocol.getProductChangeDynamic("add", product)));
         }
         private void Button_EditProduct_Click(object sender, RoutedEventArgs e)
         {
@@ -111,29 +90,30 @@ namespace ServerEditor.Interface_pages
                 selectedProduct.Price = price;
                 selectedProduct.Amount = amount;
 
-                if(cachedImage != null && changed)
+                if (cachedImage != null)
                 {
-                    selectedProduct.Image = this.cachedImage;
+                    selectedProduct.Image = cachedImage;
                 }
-                changed = false;
                 this.crypto.WriteTextMessage(DataProtocol.getJsonMessage(
                                             "client/productListChangeRequest",
-                                            getProductChangeDynamic("edit", selectedProduct)));
+                                            DataProtocol.getProductChangeDynamic("edit", selectedProduct)));
             }
         }
         private void Button_Clear_Click(object sender, RoutedEventArgs e)
         {
-            foreach(TextBox box in this.textBoxes)
+            foreach (TextBox box in this.textBoxes)
             {
                 box.Clear();
             }
+            this.cachedImage = new byte[0];
+            this.Dispatcher.Invoke(() => this.Image_ProductImage.Source = new BitmapImage());
         }
         private void Button_RemoveProduct_Click(object sender, RoutedEventArgs e)
         {
             Product product = (Product)this.ListView_ProductList.SelectedItem;
             this.crypto.WriteTextMessage(DataProtocol.getJsonMessage(
                                             "client/productListChangeRequest",
-                                            getProductChangeDynamic("remove", product)));
+                                            DataProtocol.getProductChangeDynamic("remove", product)));
         }
         private void Button_ChangeImage_Click(object sender, RoutedEventArgs e)
         {
@@ -145,14 +125,13 @@ namespace ServerEditor.Interface_pages
             dialog.FileOk += Dialog_FileOk;
             dialog.ShowDialog();
         }
-        private BitmapImage cachedImage;
-        private bool changed;
+        private byte[] cachedImage;
         private void Dialog_FileOk(object sender, System.ComponentModel.CancelEventArgs e)
         {
             OpenFileDialog dialog = (OpenFileDialog)sender;
-            cachedImage = new BitmapImage(new Uri(dialog.FileName));
-            this.Image_ProductImage.Source = cachedImage;
-            changed = true;
+            BitmapImage bitmapImage = new BitmapImage(new Uri(dialog.FileName));
+            this.Dispatcher.Invoke(() => this.Image_ProductImage.Source = bitmapImage);
+            this.cachedImage = BitmapConverter.ConvertImageToByteArray(bitmapImage);
         }
         private void MyListView_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
@@ -165,45 +144,39 @@ namespace ServerEditor.Interface_pages
                     this.TextBox_ProductName.Text = selectedObject.Name;
                     this.TextBox_ProductPrice.Text = selectedObject.Price.ToString();
                     this.TextBox_ProductAmount.Text = selectedObject.Amount.ToString();
-                    this.Image_ProductImage.Source = selectedObject.Image;
-                    this.cachedImage = selectedObject.Image;
+
+                    BitmapImage image = BitmapConverter.LoadImage(selectedObject.Image);
+                    this.Dispatcher.Invoke(() => this.Image_ProductImage.Source = image);
                 }
             }
         }
         #endregion
 
-        private void HandleData(string receivedText)
-        {
-            JObject receivedMessage = (JObject)JsonConvert.DeserializeObject(receivedText);
-            // Type of message received.
-            string type = (string)receivedMessage["type"];
-            JObject receivedData = (JObject)receivedMessage["data"];
-
-            switch (type)
-            {
-                case "server/productListResponse":
-                    this.handleProductList(receivedData);
-                    break;
-                default:
-                    // TODO: when message is not undestood.
-                    Debug.WriteLine($"received type: {type}");
-                    return;
-            }
-        }
-        private void handleProductList(JObject data)
+        public void handleProductList(JObject receivedData)
         {
             this.Dispatcher.Invoke(() => this.ListView_ProductList.Items.Clear());
-            JArray productList = (JArray)data["productList"];
-            foreach(JToken product in productList)
+            JArray productList = (JArray)receivedData["productList"];
+            foreach (JToken Jproduct in productList)
             {
-                ProductSerializable serializable = JsonConvert.DeserializeObject<ProductSerializable>(product.ToString());
-                Product productFromList = new Product(serializable);
-                this.Dispatcher.Invoke(() => this.ListView_ProductList.Items.Add(productFromList));
+                Product product = JsonConvert.DeserializeObject<Product>(Jproduct.ToString());
+                this.Dispatcher.Invoke(() => this.ListView_ProductList.Items.Add(product));
             }
         }
-        public void disconnectMessage()
+        private void ListViewItem_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            this.crypto.WriteTextMessage(DataProtocol.getJsonMessage("client/disconnect", new { }));
+            ListViewItem item = (ListViewItem)sender;
+            Product selectedObject = (Product)item.DataContext;
+
+            if (selectedObject != null)
+            {
+                this.TextBox_ProductName.Text = selectedObject.Name;
+                this.TextBox_ProductPrice.Text = selectedObject.Price.ToString();
+                this.TextBox_ProductAmount.Text = selectedObject.Amount.ToString();
+
+                BitmapImage image = BitmapConverter.LoadImage(selectedObject.Image);
+                this.Dispatcher.Invoke(() => this.Image_ProductImage.Source = image);
+            }
+
         }
     }
 }

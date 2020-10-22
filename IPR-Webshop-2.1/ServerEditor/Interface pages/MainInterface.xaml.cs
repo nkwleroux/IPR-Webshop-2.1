@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using Shared;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net.Sockets;
@@ -22,23 +25,50 @@ namespace ServerEditor.Interface_pages
     {
         private Page_ProductEditor productEditor;
         private Page_UserEditor userEditor;
-        public MainInterface(Window window)
-        {
-            TcpClient tcpClient = new TcpClient();
-            tcpClient.Connect("localhost", 2000);
-            InitializeComponent();
+        private Crypto crypto;
 
-            this.productEditor = new Page_ProductEditor(tcpClient.GetStream());
-            this.userEditor = new Page_UserEditor();
+        public MainInterface(Window window, Crypto crypto)
+        {
+            InitializeComponent();
+            this.crypto = crypto;
+            this.crypto.handleMethod = this.HandleData;
+
+            this.productEditor = new Page_ProductEditor(this.crypto);
+            this.userEditor = new Page_UserEditor(this.crypto);
 
             this.ViewPort_ProductEditor.Navigate(this.productEditor);
             this.ViewPort_UserEditor.Navigate(this.userEditor);
             window.Closed += Window_Closed;
         }
 
+        private void HandleData(string receivedText)
+        {
+            JObject receivedMessage = (JObject)JsonConvert.DeserializeObject(receivedText);
+            // Type of message received.
+            string type = (string)receivedMessage["type"];
+            JObject receivedData = (JObject)receivedMessage["data"];
+
+            switch (type)
+            {
+                case "server/productListResponse":
+                    productEditor.handleProductList(receivedData);
+                    break;
+                case "server/userListResponse":
+                    userEditor.handleUserList(receivedData);
+                    break;
+                default:
+                    // TODO: when message is not undestood.
+                    Debug.WriteLine($"received type: {type}");
+                    return;
+            }
+        }
         private void Window_Closed(object sender, EventArgs e)
         {
-            this.productEditor.disconnectMessage();
+            this.disconnectMessage();
+        }
+        public void disconnectMessage()
+        {
+            this.crypto.WriteTextMessage(DataProtocol.getJsonMessage("client/disconnect", new { }));
         }
     }
 }

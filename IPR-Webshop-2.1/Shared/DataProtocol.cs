@@ -16,10 +16,44 @@ namespace Shared
             };
             return JsonConvert.SerializeObject(message);
         }
-        
-        public static ProductSerializable MakeSerializableProduct(Product product)
+        public static dynamic getLoginDynamic(string username, string password, bool isEditor)
         {
-            return new ProductSerializable(product);
+            return new
+            {
+                username,
+                password,
+                isEditor
+            };
+        }
+        public static dynamic getProductListRequest(string category)
+        {
+            return new
+            {
+                category
+            };
+        }
+        public static dynamic getUserListRequest()
+        {
+            return new
+            {
+                //todo criteria maybe
+            };
+        }
+        public static dynamic getProductChangeDynamic(string typeOfChange, Product product)
+        {
+            return new
+            {
+                typeOfChange,
+                product
+            };
+        }
+        public static dynamic getUserChangeDynamic(string typeOfChange, User user)
+        {
+            return new
+            {
+                typeOfChange,
+                user
+            };
         }
     }
 }

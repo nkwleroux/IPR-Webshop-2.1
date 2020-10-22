@@ -11,12 +11,18 @@ namespace ServerApplication.Server_logics
     public class Database
     {
         private int IdCount;
-        public List<ProductSerializable> Products;
+        public List<Product> Products;
         public List<User> Users;
         public Database()
         {
-            this.Products = new List<ProductSerializable>();
+            this.Products = new List<Product>();
             this.Users = new List<User>();
+            this.Users.Add(new User
+            {
+                Username = "admin",
+                Password = "admin",
+                IsEditor = true
+            });
         }
 
         #region Json constructors
@@ -70,7 +76,8 @@ namespace ServerApplication.Server_logics
                     return;
                 }
             }
-
+            user.Id = IdCount;
+            IdCount++;
             this.Users.Add(user);
         }
         public void EditUser(User user)
@@ -90,10 +97,10 @@ namespace ServerApplication.Server_logics
                 this.Users.Insert(selected, user);
             }
         }
-        public void RemoveProduct(ProductSerializable product)
+        public void RemoveProduct(Product product)
         {
-            ProductSerializable selected = null;
-            foreach (ProductSerializable productI in Products)
+            Product selected = null;
+            foreach (Product productI in Products)
             {
                 if (productI.Id == product.Id)
                 {
@@ -106,9 +113,9 @@ namespace ServerApplication.Server_logics
                 this.Products.Remove(selected);
             }
         }
-        public void AddProduct(ProductSerializable product)
+        public void AddProduct(Product product)
         {
-            foreach (ProductSerializable productI in Products)
+            foreach (Product productI in Products)
             {
                 if (productI.Name == product.Name)
                 {
@@ -119,7 +126,7 @@ namespace ServerApplication.Server_logics
             IdCount++;
             this.Products.Add(product);
         }
-        public void EditProduct(ProductSerializable product)
+        public void EditProduct(Product product)
         {
             int selected = -1;
             for (int i = 0; i < this.Products.Count; i++)
@@ -137,5 +144,16 @@ namespace ServerApplication.Server_logics
             }
         }
         #endregion
+        public bool CheckUserLogin(string username, string password, bool isEditor)
+        {
+            foreach(User user in this.Users)
+            {
+                if(user.Username == username && user.Password == password)
+                {
+                    return (isEditor == user.IsEditor);
+                }
+            }
+            return false;
+        }
     }
 }

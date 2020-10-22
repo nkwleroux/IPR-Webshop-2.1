@@ -9,10 +9,9 @@
     <Import_RootNamespace>Shared</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="$(MSBuildThisFileDirectory)BitmapConvertor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)BitmapConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Crypto.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DataProtocol.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ProductSerializable.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Product.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)User.cs" />
   </ItemGroup>

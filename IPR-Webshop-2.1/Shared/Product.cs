@@ -11,20 +11,12 @@ namespace Shared
     {
         public Product()
         {
-
-        }
-        public Product(ProductSerializable product)
-        {
-            this.Name = product.Name;
-            this.Price = product.Price;
-            this.Amount = product.Amount;
-            this.Id = product.Id;
-            this.Image = BitmapConvertor.LoadImage(product.Image);
+            this.Image = new byte[0];
         }
         public string Name { get; set; }
         public double Price { get; set; }
         public int Amount { get; set; }
         public int Id { get; set; }
-        public BitmapImage Image { get; set; }
+        public byte[] Image { get; set; }
     }
 }

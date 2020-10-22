@@ -12,10 +12,10 @@ namespace Shared
     public class Crypto
     {
         private byte[] buffer;
+        private TcpClient client;
         private NetworkStream networkStream;
         private List<byte> totalBuffer;
-
-        private Action<string> handleMethod;
+        public Action<string> handleMethod { get; set; }
         private byte[] key;
         private byte[] iV;
 
@@ -25,11 +25,11 @@ namespace Shared
         /// </summary>
         /// <param name="networkStream">the stream from a TcpClient</param>
         /// <param name="handleMethod">method where the data is being handled</param>
-        public Crypto(NetworkStream networkStream, Action<string> handleMethod)
+        public Crypto(TcpClient client, Action<string> handleMethod)
         {
             this.buffer = new byte[1024];
-
-            this.networkStream = networkStream;
+            this.client = client;
+            this.networkStream = client.GetStream();
             this.handleMethod = handleMethod;
             this.totalBuffer = new List<byte>();
 
@@ -228,7 +228,7 @@ namespace Shared
             try
             {
                 networkStream.BeginRead(buffer, 0, buffer.Length, new AsyncCallback(OnRead), null);
-            }catch(Exception e)
+            }catch(Exception)
             {
                 Console.WriteLine("A client disconnected");
             }

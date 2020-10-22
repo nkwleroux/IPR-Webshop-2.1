@@ -57,7 +57,7 @@
             <RowDefinition Height="20" />
         </Grid.RowDefinitions>
 
-        <ListView Name="ListView_ProductList" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="6" MouseLeftButtonUp="MyListView_MouseLeftButtonUp">
+        <ListView Name="ListView_UserList" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="6">
             <ListView.View >
                 <GridView >
                     <GridViewColumn Header="Username" DisplayMemberBinding="{Binding Username}" />
@@ -66,8 +66,12 @@
                     <GridViewColumn Header="Shipping details" DisplayMemberBinding="{Binding ShippingDetails}" />
                     <GridViewColumn Header="Billing Details" DisplayMemberBinding="{Binding BillingDetails}" />
                 </GridView>
-            </ListView.View> 
-            
+            </ListView.View>
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <EventSetter Event="PreviewMouseLeftButtonDown" Handler="ListViewItem_PreviewMouseLeftButtonDown" />
+                </Style>
+            </ListView.ItemContainerStyle>
         </ListView>
         <TextBox Style="{StaticResource MyWaterMarkStyle}" Name="TextBox_FirstName" Tag="Firstname" Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="2" VerticalContentAlignment="Center" Height="30" Margin="0,0,50,0" />
         <TextBox Style="{StaticResource MyWaterMarkStyle}" Name="TextBox_LastName" Tag="Lastname" Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="2" VerticalContentAlignment="Center" Height="30" Margin="0,0,50,0" />

@@ -30,13 +30,14 @@ namespace ServerApplication
         private Server server;
         public ServerClient(TcpClient client, Server server)
         {
+            this.loginStatus = false;
             this.server = server;
             this.log = server.Log;
             this.log.PrintLine(SOURCE_LABEL, $"client connected: {client.Client.RemoteEndPoint}");
             this.client = client;
             this.database = server.Database;
             this.stream = client.GetStream();
-            this.crypto = new Crypto(this.stream, HandleData);
+            this.crypto = new Crypto(client, HandleData);
         }
         /*
          * When the received message is wrapped by a JObject, the message ends in the 
@@ -49,26 +50,51 @@ namespace ServerApplication
             // Type of message received.
             string type = (string)receivedMessage["type"];
             JObject receivedData = (JObject)receivedMessage["data"];
-
-            switch (type)
+            if (loginStatus)
             {
-                case "client/productListRequest":
-                    SendProductList(receivedData);
-                    break;
-                case "client/productListChangeRequest":
-                    handleProductListChangeRequest(receivedData);
-                    break;
-                case "client/userListChangeRequest":
-                    handleUserListChangeRequest(receivedData);
-                    break;
-                case "client/disconnect":
-                    Disconect();
-                    break;
-                default:
-                    // TODO: when message is not undestood.
-                    log.PrintLine(SOURCE_LABEL, $"Unsupported message type: {type}");
-                    return;
+                switch (type)
+                {
+                    case "client/productListRequest":
+                        SendProductList(receivedData);
+                        break;
+                    case "client/userListRequest":
+                        SendUserList();
+                        break;
+                    case "client/productListChangeRequest":
+                        handleProductListChangeRequest(receivedData);
+                        break;
+                    case "client/userListChangeRequest":
+                        handleUserListChangeRequest(receivedData);
+                        break;
+                    case "client/disconnect":
+                        Disconect();
+                        break;
+                    default:
+                        // TODO: when message is not undestood.
+                        log.PrintLine(SOURCE_LABEL, $"Unsupported message type: {type}");
+                        return;
+                }
+            } else if(type == "client/login")
+            {
+                handleClientLogin(receivedData);
             }
+            
+        }
+        private bool loginStatus;
+        private void handleClientLogin(JObject receivedData)
+        {
+            string username = receivedData["username"].ToString();
+            string password = receivedData["password"].ToString();
+            bool isEditor = (bool)receivedData["isEditor"];
+
+            this.loginStatus = this.database.CheckUserLogin(username, password, isEditor);
+
+            dynamic data = new
+            {
+                status = loginStatus
+            };
+
+            this.crypto.WriteTextMessage(DataProtocol.getJsonMessage("server/loginResponse", data));
         }
 
         private void handleUserListChangeRequest(JObject receivedData)
@@ -90,13 +116,14 @@ namespace ServerApplication
                     log.PrintLine(SOURCE_LABEL, $"Added user: {user.FullName}");
                     break;
             }
+            this.server.SendUpdateUserList();
         }
 
         private void handleProductListChangeRequest(JObject receivedData)
         {
             string typeOfChange = (string)receivedData["typeOfChange"];
-            ProductSerializable product = JsonConvert.DeserializeObject<ProductSerializable>(receivedData["product"].ToString());
-            
+            Product product = JsonConvert.DeserializeObject<Product>(receivedData["product"].ToString());
+
             switch (typeOfChange)
             {
                 case "edit":
@@ -118,14 +145,22 @@ namespace ServerApplication
         public void SendProductList(JObject json)
         {
             //TODO categories
-            List<ProductSerializable> productList = database.Products;
+            List<Product> productList = database.Products;
             dynamic data = new
             {
                 productList
             };
             this.crypto.WriteTextMessage(DataProtocol.getJsonMessage("server/productListResponse", data));
         }
-        
+        public void SendUserList()
+        {
+            List<User> userList = database.Users;
+            dynamic data = new
+            {
+                userList
+            };
+            this.crypto.WriteTextMessage(DataProtocol.getJsonMessage("server/userListResponse", data));
+        }
         public void Disconect()
         {
             this.stream.Dispose();

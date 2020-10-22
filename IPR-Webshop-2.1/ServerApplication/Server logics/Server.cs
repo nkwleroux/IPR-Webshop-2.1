@@ -92,12 +92,20 @@ namespace ServerApplication
         {
             this.clients.Remove(serverClient);
         }
+
+        internal void SendUpdateUserList()
+        {
+            foreach (ServerClient serverClient in clients)
+            {
+                serverClient.SendUserList();
+            }
+        }
+
         public void sendUpdateProductList()
         {
             foreach(ServerClient serverClient in clients)
             {
                 serverClient.SendProductList(null);
-                Log.PrintLine(SOURCE_LABEL, $"sending update..");
             }
         }
     }

@@ -9,7 +9,7 @@ using System.Windows.Media;
 
 namespace Shared
 {
-    public class BitmapConvertor
+    public class BitmapConverter
     {
         public static byte[] ConvertImageToByteArray(BitmapImage image)
         {
