@@ -242,7 +242,7 @@ namespace ServerApplication.Server_logics
                         string userJson = streamReader.ReadToEnd();
                         List<User> loaded = JsonConvert.DeserializeObject<List<User>>(userJson);
                         if (loaded != null)
-                            this.Products = loaded;
+                            this.Users = loaded;
                         streamReader.Close();
                     }
                 }
