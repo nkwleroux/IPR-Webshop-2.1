@@ -32,7 +32,7 @@ namespace ServerApplication
             this.ServerStatusLabel = serverStatusLabel;
 
             this.Database = new Database();
-
+            this.load();
             // Set the stop button diabled
             this.serverButtons.Button_Stop.IsEnabled = false;
             // Sets the label to init
@@ -43,6 +43,7 @@ namespace ServerApplication
             // Indicate user of serverstate
             this.ServerStatusLabel.SetStatus(ServerStates.Idle);
         }
+
         private void AcceptClient(IAsyncResult ar)
         {
             if (!Running)
@@ -89,6 +90,14 @@ namespace ServerApplication
             this.tcpListener.Stop();
             // Indicate user of serverstate
             this.ServerStatusLabel.SetStatus(ServerStates.Stopped);
+        }
+        public void save()
+        {
+            this.Database.Save("saved_data");
+        }
+        public void load()
+        {
+            this.Database.Load("saved_data");
         }
         public void OnDisposeServerClient(ServerClient serverClient)
         {

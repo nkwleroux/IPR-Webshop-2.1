@@ -2,6 +2,7 @@
 using Shared;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.IO.Packaging;
 using System.Security.Policy;
 using System.Text;
@@ -30,7 +31,7 @@ namespace ServerApplication.Server_logics
         {
             string[] jsons = new string[this.Products.Count];
 
-            for(int i = 0; i < this.Products.Count; i++)
+            for (int i = 0; i < this.Products.Count; i++)
             {
                 jsons[i] = JsonConvert.SerializeObject(Products[i]);
             }
@@ -54,15 +55,15 @@ namespace ServerApplication.Server_logics
         public void RemoveUser(User user)
         {
             User selected = null;
-            foreach(User userI in Users)
+            foreach (User userI in Users)
             {
-                if(userI.Username == user.Username)
+                if (userI.Username == user.Username)
                 {
                     selected = userI;
                 }
             }
 
-            if(selected != null)
+            if (selected != null)
             {
                 this.Users.Remove(selected);
             }
@@ -143,13 +144,14 @@ namespace ServerApplication.Server_logics
                 this.Products.Insert(selected, product);
             }
         }
+
         #endregion
         public List<Product> getCategoryList(string category)
         {
             List<Product> returningList = new List<Product>();
-            foreach(Product product in this.Products)
+            foreach (Product product in this.Products)
             {
-                if(product.Category == category)
+                if (product.Category == category)
                 {
                     returningList.Add(product);
                 }
@@ -158,9 +160,9 @@ namespace ServerApplication.Server_logics
         }
         public User CheckUserLogin(string username, string password, bool isEditor)
         {
-            foreach(User user in this.Users)
+            foreach (User user in this.Users)
             {
-                if(user.Username == username && user.Password == password)
+                if (user.Username == username && user.Password == password)
                 {
                     return user;
                 }
@@ -169,9 +171,9 @@ namespace ServerApplication.Server_logics
         }
         internal User RegisterUser(string username, string password)
         {
-            foreach(User user in this.Users)
+            foreach (User u in this.Users)
             {
-                if(user.Username == username)
+                if (u.Username == username)
                 {
                     return null;
                 }
@@ -183,6 +185,94 @@ namespace ServerApplication.Server_logics
             };
             this.Users.Add(user);
             return user;
+        }
+        public void Save(string dirName)
+        {
+            string location = Environment.CurrentDirectory + @"\" + dirName;
+            string productsFile = location + @"\products.txt";
+            string usersFile = location + @"\users.txt";
+            if (!Directory.Exists(location))
+            {
+                Directory.CreateDirectory(location);
+            }
+            if (!File.Exists(productsFile))
+            {
+                File.Create(productsFile);
+            }
+            if (!File.Exists(usersFile))
+            {
+                File.Create(usersFile);
+            }
+
+            using (StreamWriter streamWriter = new StreamWriter(productsFile, false))
+            {
+                string products = JsonConvert.SerializeObject(this.Products);
+                streamWriter.Write(products);
+                streamWriter.Flush();
+            }
+            using (StreamWriter streamWriter = new StreamWriter(usersFile, false))
+            {
+                string users = JsonConvert.SerializeObject(this.Users);
+                streamWriter.Write(users);
+                streamWriter.Flush();
+            }
+        }
+        public void Load(string dirName)
+        {
+            string location = Environment.CurrentDirectory + @"\" + dirName;
+            string productsFile = location + @"\products.txt";
+            string usersFile = location + @"\users.txt";
+            if (Directory.Exists(location))
+            {
+                if (File.Exists(productsFile))
+                {
+                    using(StreamReader streamReader = new StreamReader(productsFile))
+                    {
+                        string productsJson = streamReader.ReadToEnd();
+                        this.Products = JsonConvert.DeserializeObject<List<Product>>(productsJson);
+                        streamReader.Close();
+                    }
+                }
+                if (File.Exists(usersFile))
+                {
+                    using (StreamReader streamReader = new StreamReader(usersFile))
+                    {
+                        string userJson = streamReader.ReadToEnd();
+                        this.Users = JsonConvert.DeserializeObject<List<User>>(userJson);
+                        streamReader.Close();
+                    }
+                }
+            }
+        }
+        public bool checkStockAndUpdate(Product product, bool add)
+        {
+            int amount = product.Amount;
+            if (add)
+            {
+                foreach (Product p in this.Products)
+                {
+                    if (p.Id == product.Id)
+                    {
+                        if (p.Amount >= product.Amount)
+                        {
+                            p.Amount -= product.Amount;
+                            return true;
+                        }
+                    }
+                }
+                return false;
+            }
+            else
+            {
+                foreach (Product p in this.Products)
+                {
+                    if (p.Id == product.Id)
+                    {
+                        p.Amount += product.Amount;
+                    }
+                }
+                return false;
+            }
         }
     }
 }

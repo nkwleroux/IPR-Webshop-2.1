@@ -65,6 +65,9 @@ namespace ServerApplication
                 case "client/cartUpdateRequest":
                     SendCurrentCart();
                     break;
+                case "client/cartChangeProduct":
+                    changeProductInCart(receivedData);
+                    break;
                 case "client/disconnect":
                     Disconect();
                     break;
@@ -98,6 +101,7 @@ namespace ServerApplication
                 }
             }
         }
+
         private void handleClientRegister(JObject receivedData)
         {
             string username = receivedData["username"].ToString();
@@ -195,6 +199,31 @@ namespace ServerApplication
                 this.currentUser.cart
             };
             this.crypto.WriteTextMessage(DataProtocol.getJsonMessage("server/cartUpdateResponse", data));
+        }
+        private void changeProductInCart(JObject receivedData)
+        {
+            string typeOfChange = receivedData["typeOfChange"].ToString();
+            Product product = JsonConvert.DeserializeObject<Product>(receivedData["product"].ToString());
+            if(typeOfChange == "add")
+            {
+                bool status = this.database.checkStockAndUpdate(product, true);
+                if (status)
+                {
+                    this.currentUser.cart.Add(product);
+                }
+            } else if(typeOfChange == "remove")
+            {
+                this.database.checkStockAndUpdate(product, false);
+                foreach(Product p in this.currentUser.cart)
+                {
+                    if(p.Id == product.Id)
+                    {
+                        this.currentUser.cart.Remove(p);
+                    }
+                }
+            }
+            
+            this.SendCurrentCart();
         }
         private void SendCurrentUser()
         {

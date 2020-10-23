@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ServerApplication"
         mc:Ignorable="d"
-        Title="Server" Height="400" Width="450" MinHeight="300" MinWidth="400" WindowStartupLocation="CenterScreen"
+        Title="Server" Height="400" Width="450" MinHeight="300" MinWidth="450" WindowStartupLocation="CenterScreen"
         Background="#002626"
         WindowStyle="ToolWindow">
 
@@ -139,6 +139,7 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
             <ColumnDefinition Width="20" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
@@ -152,11 +153,13 @@
         
         <Label Name ="Label_Status" Grid.Column="2" Grid.Row="1" Content="Status: "
                Foreground="White" FontWeight="Bold"></Label>
-        <Button Style="{DynamicResource RoundedBorder}" Name="Button_Start" Click="OnStart_Click" Grid.Column="3" Grid.Row="1" Content="Start server" Margin="0,0,5,0"
+        <Button Style="{DynamicResource RoundedBorder}" Name="Button_Start" Click="OnStart_Click" Grid.Column="3" Grid.Row="1" Content="Start server" Margin="5,0,0,0"
+                Foreground="White" FontWeight="Bold"></Button>
+        <Button Style="{DynamicResource RoundedBorder}" Name="Button_Save" Click="Button_Save_Click" Grid.Column="5" Grid.Row="1" Content="Save" Margin="5,0,5,0"
                 Foreground="White" FontWeight="Bold"></Button>
         <Button Style="{DynamicResource RoundedBorder}" Name="Button_Stop" Click="OnStop_Click" Grid.Column="4" Grid.Row="1" Content="Stop server" Margin="5,0,0,0"
                 Foreground="White" FontWeight="Bold" ></Button>
-        <RichTextBox Style="{DynamicResource RoundedRichTextBody}" Name="Log" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="4" Margin="0,20,0,0" 
+        <RichTextBox Style="{DynamicResource RoundedRichTextBody}" Name="Log" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="5" Margin="0,20,0,0" 
                 Background="#0E4749"></RichTextBox>
         <Label Name="Label_Info" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="4" Content="Serverinfo" FontSize="8" Foreground="White" Margin="-5,0,0,0"></Label>
     </Grid>

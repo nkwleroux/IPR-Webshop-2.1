@@ -39,5 +39,10 @@ namespace ServerApplication
             server.StopServer();
             
         }
+
+        private void Button_Save_Click(object sender, RoutedEventArgs e)
+        {
+            server.save();
+        }
     }
 }
