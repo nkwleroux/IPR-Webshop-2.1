@@ -28,6 +28,8 @@ namespace ServerApplication
         private LogField log;
         // server
         private Server server;
+        // the logged in user
+        private User currentUser;
         public ServerClient(TcpClient client, Server server)
         {
             this.loginStatus = false;
@@ -38,6 +40,7 @@ namespace ServerApplication
             this.database = server.Database;
             this.stream = client.GetStream();
             this.crypto = new Crypto(client, HandleData);
+            this.currentUser = new User();
         }
         /*
          * When the received message is wrapped by a JObject, the message ends in the 
@@ -50,35 +53,42 @@ namespace ServerApplication
             // Type of message received.
             string type = (string)receivedMessage["type"];
             JObject receivedData = (JObject)receivedMessage["data"];
-            if (loginStatus)
+
+            switch (type)
+            {
+                case "client/productListRequest":
+                    SendProductList(receivedData);
+                    break;
+                case "client/userListRequest":
+                    SendUserList();
+                    break;
+                case "client/disconnect":
+                    Disconect();
+                    break;
+                case "client/login":
+                    handleClientLogin(receivedData);
+                    break;
+                default:
+                    if (!currentUser.IsEditor)
+                    {
+                        log.PrintLine(SOURCE_LABEL, $"Unsupported message type: {type}");
+                        return;
+                    }
+                    break;
+            };
+
+            if (currentUser.IsEditor)
             {
                 switch (type)
                 {
-                    case "client/productListRequest":
-                        SendProductList(receivedData);
-                        break;
-                    case "client/userListRequest":
-                        SendUserList();
-                        break;
                     case "client/productListChangeRequest":
                         handleProductListChangeRequest(receivedData);
                         break;
                     case "client/userListChangeRequest":
                         handleUserListChangeRequest(receivedData);
                         break;
-                    case "client/disconnect":
-                        Disconect();
-                        break;
-                    default:
-                        // TODO: when message is not undestood.
-                        log.PrintLine(SOURCE_LABEL, $"Unsupported message type: {type}");
-                        return;
                 }
-            } else if(type == "client/login")
-            {
-                handleClientLogin(receivedData);
             }
-            
         }
         private bool loginStatus;
         private void handleClientLogin(JObject receivedData)
@@ -87,7 +97,15 @@ namespace ServerApplication
             string password = receivedData["password"].ToString();
             bool isEditor = (bool)receivedData["isEditor"];
 
-            this.loginStatus = this.database.CheckUserLogin(username, password, isEditor);
+            User user = this.database.CheckUserLogin(username, password, isEditor);
+
+            if (user != null)
+            {
+                this.loginStatus = true;
+                this.currentUser = user;
+                if (this.currentUser.IsEditor)
+                    log.PrintLine(SOURCE_LABEL, $"editor logged on: {this.currentUser.Username}");
+            }
 
             dynamic data = new
             {
