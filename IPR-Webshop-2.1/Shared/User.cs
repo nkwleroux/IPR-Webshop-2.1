@@ -22,5 +22,10 @@ namespace Shared
         public List<Product> cart { get; set; }
         public int Id { get; set; }
         public bool IsEditor { get; set; }
+
+        public static explicit operator User(JToken v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -68,6 +68,9 @@ namespace ServerApplication
                 case "client/disconnect":
                     Disconect();
                     break;
+                case "client/userEditRequest":
+                    EditUser(receivedData);
+                    break;
                 case "client/login":
                     handleClientLogin(receivedData);
                     break;
@@ -95,7 +98,6 @@ namespace ServerApplication
                 }
             }
         }
-
         private void handleClientRegister(JObject receivedData)
         {
             string username = receivedData["username"].ToString();
@@ -104,7 +106,8 @@ namespace ServerApplication
 
             dynamic data = new
             {
-                status = registerSucceeded
+                status = registerSucceeded,
+                user = this.currentUser
             };
             
             this.crypto.WriteTextMessage(DataProtocol.getJsonMessage("server/registerResponse", data));
@@ -129,7 +132,8 @@ namespace ServerApplication
 
             dynamic data = new
             {
-                status = loginStatus
+                status = loginStatus,
+                user = this.currentUser
             };
 
             this.crypto.WriteTextMessage(DataProtocol.getJsonMessage("server/loginResponse", data));
@@ -187,6 +191,19 @@ namespace ServerApplication
                 this.currentUser.cart
             };
             this.crypto.WriteTextMessage(DataProtocol.getJsonMessage("server/cartUpdateResponse", data));
+        }
+        private void SendCurrentUser()
+        {
+            dynamic data = new
+            {
+                user = this.currentUser
+            };
+            this.crypto.WriteTextMessage(DataProtocol.getJsonMessage("server/userResponse", data));
+        }
+        private void EditUser(JObject receivedData)
+        {
+            User user = JsonConvert.DeserializeObject<User>((string)receivedData["user"]);
+
         }
         public void SendProductList(JObject json)
         {
