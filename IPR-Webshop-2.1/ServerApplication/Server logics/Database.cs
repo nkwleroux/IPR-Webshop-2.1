@@ -229,7 +229,9 @@ namespace ServerApplication.Server_logics
                     using(StreamReader streamReader = new StreamReader(productsFile))
                     {
                         string productsJson = streamReader.ReadToEnd();
-                        this.Products = JsonConvert.DeserializeObject<List<Product>>(productsJson);
+                        List<Product> loaded = JsonConvert.DeserializeObject<List<Product>>(productsJson);
+                        if (loaded != null)
+                            this.Products = loaded;
                         streamReader.Close();
                     }
                 }
@@ -238,7 +240,9 @@ namespace ServerApplication.Server_logics
                     using (StreamReader streamReader = new StreamReader(usersFile))
                     {
                         string userJson = streamReader.ReadToEnd();
-                        this.Users = JsonConvert.DeserializeObject<List<User>>(userJson);
+                        List<User> loaded = JsonConvert.DeserializeObject<List<User>>(userJson);
+                        if (loaded != null)
+                            this.Products = loaded;
                         streamReader.Close();
                     }
                 }
