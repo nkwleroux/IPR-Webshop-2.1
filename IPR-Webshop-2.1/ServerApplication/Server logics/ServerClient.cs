@@ -203,6 +203,9 @@ namespace ServerApplication
         private void EditUser(JObject receivedData)
         {
             User user = JsonConvert.DeserializeObject<User>((string)receivedData["user"]);
+            database.EditUser(user);
+            this.currentUser = user;
+
 
         }
         public void SendProductList(JObject json)
