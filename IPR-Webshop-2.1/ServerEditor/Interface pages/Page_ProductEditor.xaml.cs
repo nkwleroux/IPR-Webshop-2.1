@@ -30,12 +30,38 @@ namespace ServerEditor.Interface_pages
         public Page_ProductEditor(Crypto crypto)
         {
             InitializeComponent();
+            List<string> categories = new List<string>();
+            categories.AddRange(new string[] { "Aardappel, groente, fruit",
+                "Salades, pizza, maaltijden",
+                "Vlees, kip, vis, vega",
+                "Kaas, vleeswaren, tapas",
+                "Zuivel, plantaardig en eiren",
+                "Bakkerij en banket",
+                "Ontbijtgranen, beleg, tussendoor",
+                "Frisdrank, sappen, koffie, thee",
+                "Wijn en bubbels",
+                "Bier, sterke drank, aperitieven",
+                "Pasta, rijst en wereldkeuken",
+                "Soepen, sauzen, kruiden, olie",
+                "Snoep, koek, chips en chocolade",
+                "Diepvries",
+                "Baby, verzorging en hygiene",
+                "Bewuste voeding",
+                "Huishouden, huisdier",
+                "Koken, tafelen, vrije tijd"});
+
+            this.ComboBox_category.ItemsSource = categories;
+            this.ComboBox_category.SelectedIndex = 0;
+
             this.crypto = crypto;
             this.crypto.WriteTextMessage(DataProtocol.getJsonMessage("client/productListRequest",
                 DataProtocol.getProductListRequest("TODO")));
 
             this.cachedImage = null;
-            this.textBoxes = new TextBox[] { this.TextBox_ProductName, this.TextBox_ProductPrice, this.TextBox_ProductAmount };
+            this.textBoxes = new TextBox[] { 
+                this.TextBox_ProductName, 
+                this.TextBox_ProductPrice, 
+                this.TextBox_ProductAmount };
         }
 
         #region Callbacks
@@ -56,6 +82,7 @@ namespace ServerEditor.Interface_pages
             Product product = new Product()
             {
                 Name = this.TextBox_ProductName.Text,
+                Category = this.ComboBox_category.Text,
                 Price = price,
                 Amount = amount,
             };
@@ -87,6 +114,7 @@ namespace ServerEditor.Interface_pages
                     return;
 
                 selectedProduct.Name = this.TextBox_ProductName.Text;
+                selectedProduct.Category = this.ComboBox_category.Text;
                 selectedProduct.Price = price;
                 selectedProduct.Amount = amount;
 
@@ -133,35 +161,6 @@ namespace ServerEditor.Interface_pages
             this.Dispatcher.Invoke(() => this.Image_ProductImage.Source = bitmapImage);
             this.cachedImage = BitmapConverter.ConvertImageToByteArray(bitmapImage);
         }
-        private void MyListView_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            ListView list = (ListView)sender;
-            if (list.Items.Count > 0)
-            {
-                Product selectedObject = (Product)list.SelectedItem;
-                if (selectedObject != null)
-                {
-                    this.TextBox_ProductName.Text = selectedObject.Name;
-                    this.TextBox_ProductPrice.Text = selectedObject.Price.ToString();
-                    this.TextBox_ProductAmount.Text = selectedObject.Amount.ToString();
-
-                    BitmapImage image = BitmapConverter.LoadImage(selectedObject.Image);
-                    this.Dispatcher.Invoke(() => this.Image_ProductImage.Source = image);
-                }
-            }
-        }
-        #endregion
-
-        public void handleProductList(JObject receivedData)
-        {
-            this.Dispatcher.Invoke(() => this.ListView_ProductList.Items.Clear());
-            JArray productList = (JArray)receivedData["productList"];
-            foreach (JToken Jproduct in productList)
-            {
-                Product product = JsonConvert.DeserializeObject<Product>(Jproduct.ToString());
-                this.Dispatcher.Invoke(() => this.ListView_ProductList.Items.Add(product));
-            }
-        }
         private void ListViewItem_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             ListViewItem item = (ListViewItem)sender;
@@ -172,11 +171,22 @@ namespace ServerEditor.Interface_pages
                 this.TextBox_ProductName.Text = selectedObject.Name;
                 this.TextBox_ProductPrice.Text = selectedObject.Price.ToString();
                 this.TextBox_ProductAmount.Text = selectedObject.Amount.ToString();
-
+                this.ComboBox_category.SelectedItem = selectedObject.Category;
                 BitmapImage image = BitmapConverter.LoadImage(selectedObject.Image);
                 this.Dispatcher.Invoke(() => this.Image_ProductImage.Source = image);
             }
 
+        }
+        #endregion
+        public void handleProductList(JObject receivedData)
+        {
+            this.Dispatcher.Invoke(() => this.ListView_ProductList.Items.Clear());
+            JArray productList = (JArray)receivedData["productList"];
+            foreach (JToken Jproduct in productList)
+            {
+                Product product = JsonConvert.DeserializeObject<Product>(Jproduct.ToString());
+                this.Dispatcher.Invoke(() => this.ListView_ProductList.Items.Add(product));
+            }
         }
     }
 }

@@ -144,16 +144,16 @@ namespace ServerApplication.Server_logics
             }
         }
         #endregion
-        public bool CheckUserLogin(string username, string password, bool isEditor)
+        public User CheckUserLogin(string username, string password, bool isEditor)
         {
             foreach(User user in this.Users)
             {
                 if(user.Username == username && user.Password == password)
                 {
-                    return (isEditor == user.IsEditor);
+                    return user;
                 }
             }
-            return false;
+            return null;
         }
     }
 }
