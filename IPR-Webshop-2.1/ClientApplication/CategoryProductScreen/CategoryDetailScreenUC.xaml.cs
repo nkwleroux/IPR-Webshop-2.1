@@ -26,8 +26,7 @@ namespace ClientApplication.CategoryProductScreen
             this.mainWindow = mainWindow;
             InitializeComponent();
 
-            var categories = mainWindow.ListViewProducts;
-            CategoryListBox.ItemsSource = categories;
+            CategoryListBox.ItemsSource = mainWindow.ListViewProducts;
         }
 
         public void SetListView(string category)
@@ -48,11 +47,14 @@ namespace ClientApplication.CategoryProductScreen
         private void ListViewItem_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             var item = sender as ListViewItem;
-            if (item != null && item.IsSelected)
+            if (item.IsSelected)
             {
-                CurrentProducts = ((ListViewSelectProduct)item.DataContext).Products;
-                ListViewProducts.ItemsSource = CurrentProducts;
-                CategoryTitle.Content = ((ListViewSelectProduct)item.DataContext).SelectId;
+                if (item != null)
+                {
+                    CurrentProducts = ((ListViewSelectProduct)item.DataContext).Products;
+                    ListViewProducts.ItemsSource = CurrentProducts;
+                    CategoryTitle.Content = ((ListViewSelectProduct)item.DataContext).SelectId;
+                }
             }
 
         }
