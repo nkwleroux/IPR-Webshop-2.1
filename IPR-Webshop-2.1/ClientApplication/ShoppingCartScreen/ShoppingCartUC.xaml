@@ -113,13 +113,15 @@
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
 
+            <!--Total amount (no time to implement)
             <StackPanel Grid.Column="0" Grid.Row="0" HorizontalAlignment="Left" Orientation="Horizontal">
-                <!--Total text-->
+                
                 <TextBlock Text="Total :" FontSize="20" VerticalAlignment="Center" Padding="30,0,0,0"/>
-                <!--Total number-->
+                
                 <TextBlock Text="0.00$" FontSize="20" Margin="10" VerticalAlignment="Center" />
 
             </StackPanel>
+            -->
 
             <Button Grid.Column="1" Grid.Row="1" Click="Button_ContinueShopping" Margin="40,40,60,40">
                 <TextBlock Text="Continue shopping" VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center">
