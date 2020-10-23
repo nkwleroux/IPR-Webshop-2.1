@@ -57,7 +57,9 @@ namespace ClientApplication.ProductDetailScreen
 
         private void Button_AddToCart(object sender, RoutedEventArgs e)
         {
+            Product product = new Product(this.product);
             product.Amount = int.Parse(ComboBox_Quantity.SelectedItem.ToString());
+            product.Price *= product.Amount;
             mainWindow.AddToCart(product);
         }
     }

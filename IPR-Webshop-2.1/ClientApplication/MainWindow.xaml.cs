@@ -38,7 +38,7 @@ namespace ClientApplication
         private ShoppingCartUC shoppingCartUC;
         private ProductDetailScreenUC productDetailScreenUC;
         private PurchaseCheckoutUC purchaseCheckoutUC;
-        private Client client;
+        public Client client;
 
         private bool HasAccount { get; set; }
 
@@ -109,6 +109,10 @@ namespace ClientApplication
             client.SendCredentials(tag, username, password);
         }
 
+        public void RemovefromCart(Product product) {
+            client.RemoveFromCart(product); 
+        }
+
         public void IsLoggedIn((bool status, User user) response)
         {
             if (response.status)
@@ -171,6 +175,14 @@ namespace ClientApplication
             LayoutControl.Children.Add(purchaseCheckoutUC);
 
             ChangeView("MainProduct");
+        }
+
+        public void UpdateCart(List<Product> cart)
+        {
+            this.Dispatcher.Invoke(() =>
+            {
+                shoppingCartUC.SetInCart(cart);
+            });
         }
 
         /**

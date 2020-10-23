@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Shared;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -18,22 +19,19 @@ namespace ClientApplication.ShoppingCartScreen
     /// </summary>
     public partial class ShoppingCartUC : UserControl
     {
-        private MainWindow mainWindow;
+        private MainWindow mainWindow; 
+        
+        public List<Product> InCart { get; set; }
         public ShoppingCartUC(MainWindow mainWindow)
         {
             this.mainWindow = mainWindow;
             InitializeComponent();
 
-            InCart = new List<InCartProduct>();
+            InCart = new List<Product>();
 
-            //    InCartProductsList.ItemsSource = InCart;
-
-            InCart = mainWindow.GetInCartProducts();
-            if (InCart.Count > 0)
-                InCartProductsList.ItemsSource = InCart;
+            InCartProductsList.ItemsSource = InCart;
         }
-
-        public List<InCartProduct> InCart { get; set; }
+              
 
         private void Button_ContinueShopping(object sender, RoutedEventArgs e)
         {
@@ -48,16 +46,20 @@ namespace ClientApplication.ShoppingCartScreen
         private void Button_Remove(object sender, RoutedEventArgs e)
         {
             string p = ((Button)sender).Tag.ToString();
-            foreach (InCartProduct product in InCart)
+            foreach (Product product in InCart)
             {
-                if (product.ProductName.Equals(p))
+                if (product.Name.Equals(p))
                 {
-                    InCart.Remove(product);
-                    InCartProductsList.ItemsSource = null;
-                    InCartProductsList.ItemsSource = InCart;
+
                     return;
                 }
             }
+        }
+
+        public void SetInCart(List<Product> products)
+        {
+            InCartProductsList.ItemsSource = null;
+            InCartProductsList.ItemsSource = products;
         }
     }
 }

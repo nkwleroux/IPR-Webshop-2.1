@@ -86,18 +86,12 @@ namespace ClientApplication
                 case "server/productListResponse":
 
                     HandleProductList(receivedData);
+                                     
 
-                  
-
-                    break;           
-                case "server/cartUpdateResponse":
-                    HandleCartChanged(receivedData);
                     break;
-
                 case "server/userResponse":
 
                     HandleUserResponse(receivedData);
-                    
 
                     break;
                 case "server/registerResponse":
@@ -130,13 +124,6 @@ namespace ClientApplication
             mainWindow.SetCategory();
         }
 
-        public void HandleCartChanged(JObject receivedData)
-        {
-           String JsonList = receivedData["cart"].ToString();
-
-            List<Product> cart = JsonConvert.DeserializeObject<List<Product>>(JsonList); 
-
-        }
 
         public (bool,User) HandleCredentialResponse(JObject receivedData)
         {
@@ -151,6 +138,8 @@ namespace ClientApplication
         public void HandleUserResponse(JObject receivedData) {
             this.currentUser = JsonConvert.DeserializeObject<User>(receivedData["user"].ToString());
             mainWindow.SetUser(this.currentUser);
+
+            mainWindow.UpdateCart(this.currentUser.cart);
         }
 
         public void SendCredentials(string tag, string username, string password)

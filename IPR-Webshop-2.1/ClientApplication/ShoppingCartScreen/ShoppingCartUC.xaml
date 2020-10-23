@@ -27,12 +27,12 @@
                     <RowDefinition Height="*"></RowDefinition>
                 </Grid.RowDefinitions>
 
-                <ItemsControl x:Name="InCartProductsList" ItemsSource="{Binding InCartProduct}">
+                <ItemsControl x:Name="InCartProductsList" ItemsSource="{Binding InCart}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <Border Margin="10" Height="140" MinWidth="418" Background="Beige">
 
-                                <materialDesign:Card Uid="{Binding ProductName}"  >
+                                <materialDesign:Card >
                                     <Grid>
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="*"></RowDefinition>
@@ -47,7 +47,7 @@
                                                 <DropShadowEffect ShadowDepth="1"/>
                                             </Border.Effect>
                                             <Border.Background>
-                                                <ImageBrush ImageSource="{Binding ProductImage}"/>
+                                                <ImageBrush ImageSource="{Binding bitmapImage}"/>
                                             </Border.Background>
                                         </Border>
 
@@ -65,22 +65,22 @@
                                             <StackPanel Grid.Column="0" Grid.Row="1" Margin="20,0,10,10"  Orientation="Horizontal" VerticalAlignment="Bottom">
 
                                                 <TextBlock TextWrapping="Wrap"  FontSize="15" TextAlignment="Center" Text="Product :"/>
-                                                <TextBlock TextWrapping="WrapWithOverflow" Margin="10,0,0,0"  FontSize="15" TextAlignment="Center" Text="{Binding ProductName}"/>
+                                                <TextBlock TextWrapping="WrapWithOverflow" Margin="10,0,0,0"  FontSize="15" TextAlignment="Center" Text="{Binding Name}"/>
 
                                             </StackPanel>
 
                                             <StackPanel Grid.Column="0" Grid.Row="2" Margin="20,10,0,0"  Orientation="Horizontal">
 
                                                 <TextBlock TextWrapping="Wrap" FontSize="15" TextAlignment="Center" Text="Amount :"/>
-                                                <TextBlock TextWrapping="Wrap" Margin="10,0,0,0"  FontSize="15" TextAlignment="Center" Text="{Binding ProductAmount}"/>
+                                                <TextBlock TextWrapping="Wrap" Margin="10,0,0,0"  FontSize="15" TextAlignment="Center" Text="{Binding Amount}"/>
 
                                             </StackPanel>
 
                                             <StackPanel Grid.Column="0" Grid.Row="3" Margin="20,0,10,0"  Orientation="Horizontal" VerticalAlignment="Center">
                                                 <TextBlock TextWrapping="Wrap" FontSize="15" TextAlignment="Center" Text="Price :"/>
-                                                <TextBlock TextWrapping="Wrap" Margin="10,0,0,0" FontSize="15" TextAlignment="Center" Text="{Binding ProductPrice}"/>
+                                                <TextBlock TextWrapping="Wrap" Margin="10,0,0,0" FontSize="15" TextAlignment="Center" Text="{Binding Price}"/>
                                                 <TextBlock TextWrapping="Wrap" Margin="0,0,50,0" FontSize="15" TextAlignment="Center" HorizontalAlignment="Left" Text=" $"/>
-                                                <Button Click="Button_Remove" Tag="{Binding ProductName}"  Width="100" Margin="0,0,0,0">
+                                                <Button Click="Button_Remove" Tag="{Binding Name}"  Width="100" Margin="0,0,0,0">
                                                     <TextBlock TextWrapping="Wrap" FontSize="15" TextAlignment="Center" HorizontalAlignment="Left" Text="Remove"/>
                                                 </Button>
                                             </StackPanel>

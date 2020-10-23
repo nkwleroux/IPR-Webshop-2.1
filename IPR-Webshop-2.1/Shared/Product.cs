@@ -24,5 +24,14 @@ namespace Shared
         [JsonIgnore]
         public BitmapImage bitmapImage { get { return BitmapConverter.LoadImage(Image); } }
 
+        public Product(Product product)
+        {
+            this.Name = product.Name;
+            this.Price = product.Price;
+            this.Amount = product.Amount;
+            this.Category = product.Category;
+            this.Id = product.Id;
+            this.Image = product.Image;
+        }
     }
 }
