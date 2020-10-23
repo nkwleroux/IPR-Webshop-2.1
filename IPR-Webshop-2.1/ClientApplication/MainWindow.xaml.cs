@@ -1,6 +1,5 @@
 ﻿using ClientApplication.AccountScreen;
 using ClientApplication.CategoryProductScreen;
-using ClientApplication.PreviousOrderScreen;
 using ClientApplication.ProductDetailScreen;
 using ClientApplication.PurchaseCheckoutScreen;
 using ClientApplication.ShoppingCartScreen;
@@ -34,7 +33,6 @@ namespace ClientApplication
         private RegisterScreenUC registerScreenUC;
         private AccountOverviewUC accountOverviewUC;
         private CategoryDetailScreenUC categoryDetailScreenUC;
-        private PreviousOrderScreenUC previousOrderScreenUC;
         private ShoppingCartUC shoppingCartUC;
         private ProductDetailScreenUC productDetailScreenUC;
         private PurchaseCheckoutUC purchaseCheckoutUC;
@@ -46,7 +44,10 @@ namespace ClientApplication
 
         public void SetInCartProducts(List<InCartProduct> InCartProducts) { this.InCartProducts = InCartProducts; }
 
-        public List<InCartProduct> GetInCartProducts() { return this.InCartProducts; }
+        public void RemoveFromCart(Product product)
+        {
+            client.RemoveFromCart(product);
+        }
 
         public string SelectedCategory { get; set; }
 
@@ -166,8 +167,6 @@ namespace ClientApplication
             LayoutControl.Children.Add(accountOverviewUC);
             categoryDetailScreenUC = new CategoryDetailScreenUC(this);
             LayoutControl.Children.Add(categoryDetailScreenUC);
-            previousOrderScreenUC = new PreviousOrderScreenUC(this);
-            LayoutControl.Children.Add(previousOrderScreenUC);
             shoppingCartUC = new ShoppingCartUC(this);
             LayoutControl.Children.Add(shoppingCartUC);
             productDetailScreenUC = new ProductDetailScreenUC(this);
@@ -196,7 +195,6 @@ namespace ClientApplication
             registerScreenUC.Visibility = Visibility.Hidden;
             accountOverviewUC.Visibility = Visibility.Hidden;
             categoryDetailScreenUC.Visibility = Visibility.Hidden;
-            previousOrderScreenUC.Visibility = Visibility.Hidden;
             shoppingCartUC.Visibility = Visibility.Hidden;
             productDetailScreenUC.Visibility = Visibility.Hidden;
             purchaseCheckoutUC.Visibility = Visibility.Hidden;
@@ -241,11 +239,7 @@ namespace ClientApplication
                 case "CategoryProduct":
                     categoryDetailScreenUC.SetListView(SelectedCategory);
                     categoryDetailScreenUC.Visibility = Visibility.Visible;
-                    break;
-                case "PreviousOrder":
-                    previousOrderScreenUC.SetProductsListSource();
-                    previousOrderScreenUC.Visibility = Visibility.Visible;
-                    break;
+                    break;              
                 case "ShoppingCart":
 
                     shoppingCartUC.Visibility = Visibility.Visible;

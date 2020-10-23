@@ -32,7 +32,6 @@ namespace ClientApplication.ShoppingCartScreen
             InCartProductsList.ItemsSource = InCart;
         }
               
-
         private void Button_ContinueShopping(object sender, RoutedEventArgs e)
         {
             mainWindow.ChangeView("MainProduct");
@@ -50,7 +49,7 @@ namespace ClientApplication.ShoppingCartScreen
             {
                 if (product.Name.Equals(p))
                 {
-
+                    mainWindow.RemoveFromCart(product);
                     return;
                 }
             }
