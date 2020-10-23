@@ -16,7 +16,7 @@ namespace Shared
             };
             return JsonConvert.SerializeObject(message);
         }
-        public static dynamic getLoginDynamic(string username, string password, bool isEditor)
+        public static dynamic getCredentialDynamic(string username, string password, bool isEditor)
         {
             return new
             {
@@ -26,14 +26,6 @@ namespace Shared
             };
         }
 
-        public static dynamic getRegisterDynamic(string username, string password)
-        {
-            return new
-            {
-                username,
-                password,
-            };
-        }
         public static dynamic getProductListRequest(string category)
         {
             return new

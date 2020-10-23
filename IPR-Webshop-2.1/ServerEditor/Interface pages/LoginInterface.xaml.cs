@@ -57,7 +57,7 @@ namespace ServerEditor.Interface_pages
 
             this.crypto.WriteTextMessage(
                 DataProtocol.getJsonMessage("client/login",
-                DataProtocol.getLoginDynamic(username, password, true)));
+                DataProtocol.getCredentialDynamic(username, password, true)));
         }
     }
 }

@@ -125,9 +125,9 @@ namespace ClientApplication
             return (bool)receivedData["status"];
         }
 
-        public void SendCredentials(string username, string password)
+        public void SendCredentials(string tag, string username, string password)
         {
-            this.crypto.WriteTextMessage(DataProtocol.getJsonMessage("client/register", DataProtocol.getRegisterDynamic(username, password)));
+            this.crypto.WriteTextMessage(DataProtocol.getJsonMessage(tag, DataProtocol.getCredentialDynamic(username, password,false)));
         }
     }
 }

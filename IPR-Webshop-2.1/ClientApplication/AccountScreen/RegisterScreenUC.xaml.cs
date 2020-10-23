@@ -41,7 +41,7 @@ namespace ClientApplication.AccountScreen
 
             if (username.Length >= 5 && password.Length >= 5)
             {
-                mainWindow.SendCredentials(username, password);
+                mainWindow.SendCredentials("client/register", username, password);
             }
         }
 

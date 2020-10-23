@@ -96,15 +96,16 @@ namespace ClientApplication
             }
         }
 
-        public void SendCredentials(string username, string password)
+        public void SendCredentials(string tag, string username, string password)
         {
-            client.SendCredentials(username, password);
+            client.SendCredentials(tag, username, password);
         }
 
         public void IsLoggedIn(bool status)
         {
             if(status)
-            ChangeView("AccountOverview");
+            this.Dispatcher.Invoke(()=>
+            ChangeView("AccountOverview"));
         }
 
         private void Init()

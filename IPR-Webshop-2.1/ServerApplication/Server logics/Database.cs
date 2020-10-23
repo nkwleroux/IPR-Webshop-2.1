@@ -176,9 +176,9 @@ namespace ServerApplication.Server_logics
                     return false;
                 }
             }
-            this.Users.Add(new User({ 
+            this.Users.Add(new User(){ 
                 Username = username, 
-                Password = password}));
+                Password = password});
             return true;
         }
     }
