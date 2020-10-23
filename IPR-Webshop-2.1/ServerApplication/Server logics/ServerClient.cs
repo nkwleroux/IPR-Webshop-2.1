@@ -71,6 +71,9 @@ namespace ServerApplication
                 case "client/login":
                     handleClientLogin(receivedData);
                     break;
+                case "client/register":
+                    handleClientRegister(receivedData);
+                    break;
                 default:
                     if (!currentUser.IsEditor)
                     {
@@ -92,6 +95,21 @@ namespace ServerApplication
                 }
             }
         }
+
+        private void handleClientRegister(JObject receivedData)
+        {
+            string username = receivedData["username"].ToString();
+            string password = receivedData["password"].ToString();
+            bool registerSucceeded = this.database.RegisterUser(username, password);
+
+            dynamic data = new
+            {
+                status = registerSucceeded
+            };
+            
+            this.crypto.WriteTextMessage(DataProtocol.getJsonMessage("server/registerResponse", data));
+        }
+
         private bool loginStatus;
         private void handleClientLogin(JObject receivedData)
         {
