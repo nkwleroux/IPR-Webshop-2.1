@@ -46,7 +46,7 @@ namespace ClientApplication
 
                 if (tcpClient.Connected)
                 {
-                    OnConnected();
+                 /*   OnConnected();*/
                 }
             }
             catch (System.Exception ex)
@@ -65,11 +65,11 @@ namespace ClientApplication
         }
 
         //Method used upon connection to the server. It is used to start the OnRead method and read incoming data.
-        private void OnConnected()
+/*        private void OnConnected()
         {
             networkStream.BeginRead(buffer, 0, buffer.Length, new AsyncCallback(OnRead), null);
         }
-
+*/
         //Method used to safely close all connections to the server.
         private void OnDisconnect()
         {
@@ -105,7 +105,7 @@ namespace ClientApplication
 
         //Method used to send the user's shopping cart to the server upon checkout.
         //MABYE REMOVE
-        public void sendOrderList(List<Product> products)
+ /*       public void sendOrderList(List<Product> products)
         {
             MessageToServer("client/product/orderList", new { products = products });
         }
@@ -114,10 +114,10 @@ namespace ClientApplication
         public void sendStockRequest(Product product)
         {
             MessageToServer("client/product/stockRequest", new { product = product });
-        }
+        }*/
 
         //Used to read all incoming data and convert it to a readable json format.
-        private void OnRead(IAsyncResult ar)
+/*        private void OnRead(IAsyncResult ar)
         {
             try
             {
@@ -132,10 +132,10 @@ namespace ClientApplication
                 OnDisconnect(); // Disconnects when there is no more incoming messages.
                 return;
             }
-        }
+        }*/
 
         //Method used to handle all incoming data from the server. Used to separate on the different data types.
-        public void HandleData(dynamic receivedData)
+/*        public void HandleData(dynamic receivedData)
         {
             JObject data = receivedData as JObject;
             string type = (string)data["type"];
@@ -159,13 +159,13 @@ namespace ClientApplication
                     break;
 
             }
-        }
+        }*/
 
         //Handles all product data. Returns a list of requested products which will be shown.
-        public List<Product> HandleProductData(JObject json)
+/*        public List<Product> HandleProductData(JObject json)
         {
             return new List<Product>();
-        }
+        }*/
 
         //Handles current user data. Receives the new user data from the server and sets it locally. Returns a User object.
         public User HandleUserData(JObject json)

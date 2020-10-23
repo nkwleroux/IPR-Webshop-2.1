@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Shared;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -11,20 +12,28 @@ namespace ClientApplication
         //temp
         public List<Category> Categories { get; set; }
 
-        public List<InCartProduct> Products { get; set; }
+        public List<InCartProduct> ICProducts { get; set; }
+
+        public List<Product> Products { get; set;}
 
         public ListViewSelectProduct(string selectId, List<Category> categories)
         {
             this.SelectId = selectId;
             this.Categories = categories;
-            this.Products = null;
+            this.ICProducts = null;
         }
 
         public ListViewSelectProduct(string selectId, List<InCartProduct> products)
         {
             this.SelectId = selectId;
             this.Categories = null;
+            this.ICProducts = products;
+        }
+
+        public ListViewSelectProduct(string selectId,List<Product> products)
+        {
+            this.SelectId = SelectId;
             this.Products = products;
-                    }
+        }
     }
 }

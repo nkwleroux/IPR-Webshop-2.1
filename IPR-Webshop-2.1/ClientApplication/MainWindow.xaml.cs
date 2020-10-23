@@ -4,6 +4,7 @@ using ClientApplication.PreviousOrderScreen;
 using ClientApplication.ProductDetailScreen;
 using ClientApplication.PurchaseCheckoutScreen;
 using ClientApplication.ShoppingCartScreen;
+using Shared;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -37,6 +38,7 @@ namespace ClientApplication
         private ShoppingCartUC shoppingCartUC;
         private ProductDetailScreenUC productDetailScreenUC;
         private PurchaseCheckoutUC purchaseCheckoutUC;
+        private Client client;
 
         private bool HasAccount { get; set; }
 
@@ -52,7 +54,37 @@ namespace ClientApplication
         {
             InitializeComponent();
 
+            client = new Client(this);
+
             Init();
+
+
+        }
+
+        public List<ListViewSelectProduct> ListViewProducts { get; set; }
+
+        public void SetCategory()
+        {
+            ListViewProducts = new List<ListViewSelectProduct>();
+            foreach (Product p in client.Products)
+            {
+                foreach (ListViewSelectProduct LVSP in ListViewProducts)
+                {
+                    //If cateogry doesnt exist, add category
+                    if (!LVSP.SelectId.Equals(p.Category))
+                    {
+                        ListViewProducts.Add(
+                            new ListViewSelectProduct(
+                                p.Category, new List<Product>() { p }));
+
+                    }
+                    //If category exist, add product to category
+                    else
+                    {
+                        LVSP.Products.Add(p);
+                    }
+                }
+            }
         }
 
         private void Init()
@@ -66,6 +98,22 @@ namespace ClientApplication
                     new InCartProduct("Kaas, vleeswaren, tapas",1,3.0,"/Assets/images/kaas-vleeswaren-tapas.png"),
                     new InCartProduct("Zuivel, plantaardig en eiren",5,20.0,"/Assets/images/boter-eieren-zuivel.png")
                 });
+
+            /*List<InCartProduct> InCartP = new List<InCartProduct>();
+
+            foreach (Product p in products)
+            {
+                string productName = p.Name;
+                int productAmount = p.Amount;
+                double productPrice = p.Price;
+                //string ProductImage = productImage;
+                InCartProduct ICProdcut = new InCartProduct(productName, productAmount, productPrice, null);
+                InCartP.Add(ICProdcut);
+            }
+
+            SetInCartProducts(InCartP);*/
+
+
 
             // Initialise the different pages.
 
@@ -181,7 +229,7 @@ namespace ClientApplication
         {
             ChangeView("ShoppingCart");
         }
-        
+
         private void Button_Shutdown(object sender, RoutedEventArgs e)
         {
             System.Windows.Application.Current.Shutdown();

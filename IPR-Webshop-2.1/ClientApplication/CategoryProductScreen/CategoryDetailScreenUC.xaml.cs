@@ -25,7 +25,7 @@ namespace ClientApplication.CategoryProductScreen
             this.mainWindow = mainWindow;
             InitializeComponent();
 
-            var categories = GetCategoryProducts();
+            var categories = mainWindow.ListViewProducts;
             if (categories.Count > 0)
                 CategoryListBox.ItemsSource = categories;
         }
@@ -93,7 +93,8 @@ namespace ClientApplication.CategoryProductScreen
 
         public void SetListView(string category)
         {
-            foreach (ListViewSelectProduct LVP in GetCategoryProducts())
+            /* foreach (ListViewSelectProduct LVP in GetCategoryProducts())*/
+            foreach (ListViewSelectProduct LVP in mainWindow.ListViewProducts)
             {
                 if (category.Equals(LVP.SelectId))
                 {

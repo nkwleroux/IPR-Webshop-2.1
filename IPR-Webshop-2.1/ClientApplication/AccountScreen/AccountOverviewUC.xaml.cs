@@ -35,7 +35,7 @@ namespace ClientApplication.AccountScreen
             var item = sender as ListViewItem;
             if (item != null && item.IsSelected)
             {
-                mainWindow.SetInCartProducts(((ListViewSelectProduct)item.DataContext).Products);
+                mainWindow.SetInCartProducts(((ListViewSelectProduct)item.DataContext).ICProducts);
                 mainWindow.ChangeView("PreviousOrder");
             }
         }
