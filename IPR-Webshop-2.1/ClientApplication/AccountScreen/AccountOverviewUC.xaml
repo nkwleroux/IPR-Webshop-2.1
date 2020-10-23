@@ -41,22 +41,23 @@
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="480"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
+            <!--unused column column 1 = 480 column 2 = *
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            -->
         </Grid.ColumnDefinitions>
 
         <!--Left side-->
-        <Grid>
+        <Grid HorizontalAlignment="Center">
             <Grid.RowDefinitions>
                 <RowDefinition Height="10"></RowDefinition>
                 <RowDefinition Height="84"></RowDefinition>
-                <RowDefinition Height="0.6*"></RowDefinition>
-                <RowDefinition Height="0.6*"></RowDefinition>
-                <RowDefinition Height="210"></RowDefinition>
-                <RowDefinition Height="105"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="300"></RowDefinition>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="480"></ColumnDefinition>
             </Grid.ColumnDefinitions>
 
             <!--Name and last name-->
@@ -70,25 +71,25 @@
                 </Grid.ColumnDefinitions>
 
                 <Border Grid.Column="0" Grid.Row="0" BorderThickness="2" BorderBrush="Black" Margin="10" >
-                    <TextBox Tag="First name" FontSize="16" Style="{StaticResource MyWaterMarkStyle}" VerticalAlignment="Center" TextWrapping="Wrap"/>
+                    <TextBox Name="TextBox_Firstname" Tag="First name" FontSize="16" Style="{StaticResource MyWaterMarkStyle}" VerticalAlignment="Center" TextWrapping="Wrap"/>
                 </Border>
 
                 <Border Grid.Column="1" Grid.Row="0" BorderThickness="2" BorderBrush="Black" Margin="10" >
-                    <TextBox Tag="Last name" FontSize="16" Style="{StaticResource MyWaterMarkStyle}" VerticalAlignment="Center" TextWrapping="Wrap"/>
+                    <TextBox Name="TextBox_Lastname"  Tag="Last name" FontSize="16" Style="{StaticResource MyWaterMarkStyle}" VerticalAlignment="Center" TextWrapping="Wrap"/>
                 </Border>
             </Grid>
 
             <!--Shipping address-->
             <Border Grid.Column="0" Grid.Row="2" BorderThickness="2" BorderBrush="Black" Margin="10" >
-                <TextBox Tag="Shipping address" Style="{StaticResource MyWaterMarkStyle}" TextWrapping="Wrap" />
+                <TextBox Name="TextBox_ShippingAddress"  Tag="Shipping address" Style="{StaticResource MyWaterMarkStyle}" TextWrapping="Wrap" />
             </Border>
 
             <!--Billing address-->
             <Border Grid.Column="0" Grid.Row="3" BorderThickness="2" BorderBrush="Black" Margin="10" >
-                <TextBox Tag="Billing address" Style="{StaticResource MyWaterMarkStyle}" TextWrapping="Wrap"/>
+                <TextBox Name="TextBox_BillingAddress" Tag="Billing address" Style="{StaticResource MyWaterMarkStyle}" TextWrapping="Wrap"/>
             </Border>
 
-            <!--Password reset-->
+            <!--Unused code Password reset
             <StackPanel Grid.Column="0" Grid.Row="4" VerticalAlignment="Top" Width="480" Margin="0,60,0,0" >
                 <StackPanel Grid.Column="0" Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center" >
                     <Label Content="Username :" Width="120" HorizontalContentAlignment="Right"></Label>
@@ -104,20 +105,21 @@
                 </StackPanel>
                 <Button Click="Button_ChangePassword" Content="Change password" Height="30" Width="110" Margin="0,0,60,0" HorizontalAlignment="Right"/>
             </StackPanel>
+            -->
 
             <Border Grid.Column="0" Grid.Row="5" Height="35" Width="160" Margin="10,20,0,0" BorderThickness="2" BorderBrush="Black" HorizontalAlignment="Left" VerticalAlignment="Top">
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Current credits : " Margin="10,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center"/>
-                    <TextBlock Text="Amount " TextWrapping="Wrap" VerticalAlignment="Center"/>
+                    <TextBlock Name="TextBlock_CreditAmount" Text="Amount " TextWrapping="Wrap" VerticalAlignment="Center"/>
                 </StackPanel>
             </Border>
-            
+                        
             <!--Save changes-->
-            <Button Grid.Column="0" Grid.Row="5" Content="Save changes" Height="35" Width="90"  Margin="0,20,40,0" HorizontalAlignment="Right" VerticalAlignment="Top"/>
+            <Button Grid.Column="0" Grid.Row="5" Click="Button_SaveChanges" Content="Save changes" Height="35" Width="90"  Margin="0,20,10,0" HorizontalAlignment="Right" VerticalAlignment="Top"/>
 
         </Grid>
 
-        <!--Right side-->
+        <!-- Right side. Previous orders. Not implemented
         <Grid Grid.Column="1" Grid.Row="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="60"></RowDefinition>
@@ -126,7 +128,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-
+            
             <Label Grid.Column="0" Grid.Row="0" Content="Previous orders" FontSize="30" FontWeight="Bold" Height="60" VerticalContentAlignment="Center"></Label>
 
             <ListView Name="PreviousOrdersListView" Grid.Column="0" Grid.Row="1" BorderThickness="2" Margin="0,0,40,40" Foreground="Black">
@@ -141,8 +143,8 @@
                     </Style>
                 </ListView.ItemContainerStyle>
             </ListView>
-
         </Grid>
-
+        -->
+        
     </Grid>
 </UserControl>

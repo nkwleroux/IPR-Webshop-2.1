@@ -56,5 +56,13 @@ namespace Shared
                 user
             };
         }
+
+        public static dynamic getUserChangeDynamic(User user)
+        {
+            return new
+            {
+                user
+            };
+        }
     }
 }

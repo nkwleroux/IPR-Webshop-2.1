@@ -11,7 +11,7 @@ namespace ClientApplication
     public class Client
     {
         public List<Product> Products { get; set; }
-        private User currentUser;
+        public User currentUser;
         private Crypto crypto;
         private readonly string IPAddress = "127.0.0.1";
         private readonly int port = 2000;
@@ -20,7 +20,7 @@ namespace ClientApplication
         private int totalTries = 0;
         private readonly int MAXRECONTRIES = 3;
 
-        private void setCurrentUser(User currentUser) { this.currentUser = currentUser; }
+        public void setCurrentUser(User currentUser) { this.currentUser = currentUser; }
 
         private MainWindow mainWindow;
 
@@ -86,11 +86,20 @@ namespace ClientApplication
 
                     HandleProductList(receivedData);
 
-                    mainWindow.SetCategory();
+                  
 
                     break;
 
                 case "server/userListRequest":
+
+
+                    break;
+
+                case "server/userResponse":
+
+                    HandleUserResponse(receivedData);
+                    
+
                     break;
                 case "server/registerResponse":
 
@@ -118,16 +127,33 @@ namespace ClientApplication
                 Product product = JsonConvert.DeserializeObject<Product>(Jproduct.ToString());
                 Products.Add(product);
             }
+
+            mainWindow.SetCategory();
         }
 
-        public bool HandleCredentialResponse(JObject receivedData)
+        public (bool,User) HandleCredentialResponse(JObject receivedData)
         {
-            return (bool)receivedData["status"];
+            (bool status, User user) response;
+            response.status = (bool)receivedData["status"];
+            User user = JsonConvert.DeserializeObject<User>(receivedData["user"].ToString());
+            response.user = user;
+
+            return response;
+        }
+
+        public void HandleUserResponse(JObject receivedData) {
+            this.currentUser = JsonConvert.DeserializeObject<User>(receivedData["user"].ToString());
+            mainWindow.SetUser(this.currentUser);
         }
 
         public void SendCredentials(string tag, string username, string password)
         {
             this.crypto.WriteTextMessage(DataProtocol.getJsonMessage(tag, DataProtocol.getCredentialDynamic(username, password,false)));
+        }
+
+        public void SendNewUser(User newUser)
+        {
+            this.crypto.WriteTextMessage(DataProtocol.getJsonMessage("client/userEditRequest", DataProtocol.getUserChangeDynamic(newUser)));
         }
     }
 }

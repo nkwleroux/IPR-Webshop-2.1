@@ -59,7 +59,6 @@ namespace ClientApplication
 
             Init();
 
-
         }
 
         public List<ListViewSelectProduct> ListViewProducts { get; set; }
@@ -101,11 +100,24 @@ namespace ClientApplication
             client.SendCredentials(tag, username, password);
         }
 
-        public void IsLoggedIn(bool status)
+        public void IsLoggedIn((bool status, User user) response)
         {
-            if(status)
-            this.Dispatcher.Invoke(()=>
-            ChangeView("AccountOverview"));
+            if(response.status)
+            this.Dispatcher.Invoke(()=> {
+                client.setCurrentUser(response.user);
+                ChangeView("AccountOverview");
+                
+                });
+        }
+
+        public void UserEdit(User userEdit)
+        {
+            client.SendNewUser(userEdit);
+        }
+
+        public void SetUser(User user)
+        {
+            accountOverviewUC.SetUserData(user);
         }
 
         private void Init()
@@ -190,6 +202,7 @@ namespace ClientApplication
                     break;
                 case "AccountOverview":
                     accountOverviewUC.Visibility = Visibility.Visible;
+                    accountOverviewUC.SetUserData(client.currentUser);
                     if (!HasAccount)
                     {
                         HasAccount = true;
