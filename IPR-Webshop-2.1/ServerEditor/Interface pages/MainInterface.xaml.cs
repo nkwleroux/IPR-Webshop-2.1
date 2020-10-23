@@ -54,7 +54,7 @@ namespace ServerEditor.Interface_pages
                     productEditor.ProductEditor.OnProductListReceived(receivedData);
                     break;
                 case "server/userListResponse":
-                    userEditor.handleUserList(receivedData);
+                    userEditor.UserEditor.OnUserListReceived(receivedData);
                     break;
                 default:
                     // TODO: when message is not undestood.
