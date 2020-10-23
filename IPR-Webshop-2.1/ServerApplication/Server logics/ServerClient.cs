@@ -223,7 +223,7 @@ namespace ServerApplication
                 }
             }
             
-            this.SendCurrentCart();
+            this.SendCurrentUser();
         }
         private void SendCurrentUser()
         {
