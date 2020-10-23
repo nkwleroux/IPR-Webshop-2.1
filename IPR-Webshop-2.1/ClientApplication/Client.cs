@@ -123,8 +123,6 @@ namespace ClientApplication
 
             mainWindow.SetCategory();
         }
-
-
         public (bool,User) HandleCredentialResponse(JObject receivedData)
         {
             (bool status, User user) response;

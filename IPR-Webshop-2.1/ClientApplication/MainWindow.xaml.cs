@@ -119,6 +119,7 @@ namespace ClientApplication
                 this.Dispatcher.Invoke(() =>
                 {
                     client.setCurrentUser(response.user);
+                    UpdateCart(response.user.cart);
                     ChangeView("AccountOverview");
                 });
         }
