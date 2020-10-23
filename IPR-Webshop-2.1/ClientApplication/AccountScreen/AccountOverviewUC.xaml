@@ -41,12 +41,14 @@
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="480"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
+            <!--unused column column 1 = 480 column 2 = *
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            -->
         </Grid.ColumnDefinitions>
 
         <!--Left side-->
-        <Grid>
+        <Grid HorizontalAlignment="Center">
             <Grid.RowDefinitions>
                 <RowDefinition Height="10"></RowDefinition>
                 <RowDefinition Height="84"></RowDefinition>
@@ -117,7 +119,7 @@
 
         </Grid>
 
-        <!--Right side-->
+        <!-- Right side. Previous orders. Not implemented
         <Grid Grid.Column="1" Grid.Row="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="60"></RowDefinition>
@@ -126,7 +128,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-
+            
             <Label Grid.Column="0" Grid.Row="0" Content="Previous orders" FontSize="30" FontWeight="Bold" Height="60" VerticalContentAlignment="Center"></Label>
 
             <ListView Name="PreviousOrdersListView" Grid.Column="0" Grid.Row="1" BorderThickness="2" Margin="0,0,40,40" Foreground="Black">
@@ -141,8 +143,8 @@
                     </Style>
                 </ListView.ItemContainerStyle>
             </ListView>
-
         </Grid>
-
+        -->
+        
     </Grid>
 </UserControl>

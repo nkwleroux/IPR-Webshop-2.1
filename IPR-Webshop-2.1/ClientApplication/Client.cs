@@ -20,7 +20,7 @@ namespace ClientApplication
         private int totalTries = 0;
         private readonly int MAXRECONTRIES = 3;
 
-        private void setCurrentUser(User currentUser) { this.currentUser = currentUser; }
+        public void setCurrentUser(User currentUser) { this.currentUser = currentUser; }
 
         private MainWindow mainWindow;
 
@@ -120,9 +120,13 @@ namespace ClientApplication
             }
         }
 
-        public bool HandleCredentialResponse(JObject receivedData)
+        public (bool,User) HandleCredentialResponse(JObject receivedData)
         {
-            return (bool)receivedData["status"];
+            (bool status, User user) response;
+            response.status = (bool)receivedData["status"];
+            response.user = JsonConvert.DeserializeObject<User>((string)receivedData["user"]);
+
+            return response;
         }
 
         public void SendCredentials(string tag, string username, string password)

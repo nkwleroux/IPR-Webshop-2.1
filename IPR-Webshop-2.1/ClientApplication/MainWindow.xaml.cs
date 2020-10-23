@@ -59,7 +59,6 @@ namespace ClientApplication
 
             Init();
 
-
         }
 
         public List<ListViewSelectProduct> ListViewProducts { get; set; }
@@ -101,11 +100,14 @@ namespace ClientApplication
             client.SendCredentials(tag, username, password);
         }
 
-        public void IsLoggedIn(bool status)
+        public void IsLoggedIn((bool status, User user) response)
         {
-            if(status)
-            this.Dispatcher.Invoke(()=>
-            ChangeView("AccountOverview"));
+            if(response.status)
+            this.Dispatcher.Invoke(()=> {
+                client.setCurrentUser(response.user);
+                ChangeView("AccountOverview");
+                
+                });
         }
 
         private void Init()

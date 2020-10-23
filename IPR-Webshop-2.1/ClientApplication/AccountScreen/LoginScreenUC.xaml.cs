@@ -23,8 +23,7 @@ namespace ClientApplication.AccountScreen
         {
             this.mainWindow = mainWindow;
             InitializeComponent();
-
-            
+                        
         }
 
         private void Button_Login(object sender, RoutedEventArgs e)
