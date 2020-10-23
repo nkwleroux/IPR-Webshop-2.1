@@ -23,9 +23,9 @@ using System.Windows.Shapes;
 
 namespace ClientApplication
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
+    /// <summary> 
+    /// Interaction logic for MainWindow.xaml 
+    /// </summary> 
     public partial class MainWindow : Window
     {
         private MainProductScreenUC mainProductScreenUC;
@@ -48,6 +48,7 @@ namespace ClientApplication
             Init();
         }
 
+        #region //init 
         private void Init()
         {
             HasAccount = false;
@@ -55,7 +56,7 @@ namespace ClientApplication
 
             SetCategories();
 
-            // Initialise the different pages.
+            // Initialise the different pages. 
             mainProductScreenUC = new MainProductScreenUC(this);
             LayoutControl.Children.Add(mainProductScreenUC);
             loginScreenUC = new LoginScreenUC(this);
@@ -76,12 +77,7 @@ namespace ClientApplication
             ChangeView("MainProduct");
         }
 
-
-        public void RemoveFromCart(Product product)
-        {
-            client.MessageRemoveFromCart(product);
-        }
-
+        //Method used to update products in category screen. 
         public void SetCategories()
         {
             ListViewProducts = new List<ListViewSelectProduct>(){
@@ -117,66 +113,10 @@ namespace ClientApplication
             }
         }
 
+        #endregion
 
-        public void SetProductDetail(Product p)
-        {
-            this.Dispatcher.Invoke(() =>
-            {
-                productDetailScreenUC.SetProductDetail(p);
-            });
-        }
-
-        //Login and register 
-        public void SendCredentials(string tag, string username, string password)
-        {
-            client.MessageSendCredentials(tag, username, password);
-        }
-
-        //Login and register - Sets user and login.
-        public void IsLoggedIn((bool status, User user) response)
-        {
-            if (response.status)
-                this.Dispatcher.Invoke(() =>
-                {
-                    client.setCurrentUser(response.user);
-                    UpdateCart(response.user.cart);
-                    HasAccount = true;
-                    ChangeView("AccountOverview");
-                });
-        }
-
-        //Account overview screen - button save changes
-        public void UserEdit(User userEdit)
-        {
-            client.MessageSendNewUser(userEdit);
-        }
-
-        //Account overview screen
-        public void SetUser(User user)
-        {
-            accountOverviewUC.SetUserData(user);
-        }
-
-        //Prodcut detail screen
-        public void AddToCart(Product product)
-        {
-            this.Dispatcher.Invoke(() =>
-            {
-                client.MessageSendToCart(product);
-            });
-        }
-
-        //Shopping cart screen
-        public void UpdateCart(List<Product> cart)
-        {
-            this.Dispatcher.Invoke(() =>
-            {
-                shoppingCartUC.SetInCart(cart);
-            });
-        }
-
-        /**
-         * Used to change the middle section of the screen. 
+        /** 
+         * Used to change the middle section of the screen.  
          */
         public void ChangeView(String viewName)
         {
@@ -189,7 +129,7 @@ namespace ClientApplication
             productDetailScreenUC.Visibility = Visibility.Hidden;
             purchaseCheckoutUC.Visibility = Visibility.Hidden;
 
-            //Sets default min heigh/width.
+            //Sets default min heigh/width. 
             mainscreen.MinHeight = 640;
             mainscreen.MinWidth = 960;
 
@@ -218,7 +158,7 @@ namespace ClientApplication
                         registerScreenUC.Visibility = Visibility.Visible;
                     }
                     break;
-                case "AccountOverview":                   
+                case "AccountOverview":
                     accountOverviewUC.Visibility = Visibility.Visible;
                     accountOverviewUC.SetUserData(client.currentUser);
                     break;
@@ -241,7 +181,7 @@ namespace ClientApplication
             }
         }
 
-        #region //Button onClicks
+        #region //Button onClicks 
 
         private void Button_AppName(object sender, RoutedEventArgs e)
         {
@@ -265,6 +205,71 @@ namespace ClientApplication
         }
 
         #endregion
+
+        #region //Helper methods 
+        //Shopping cart screen - Removes product from cart 
+        public void RemoveFromCart(Product product)
+        {
+            client.MessageRemoveFromCart(product);
+        }
+
+        //Product detail screen - sets product in product detail screen and updates info. 
+        public void SetProductDetail(Product p)
+        {
+            this.Dispatcher.Invoke(() =>
+            {
+                productDetailScreenUC.SetProductDetail(p);
+            });
+        }
+
+        //Login and register  
+        public void SendCredentials(string tag, string username, string password)
+        {
+            client.MessageSendCredentials(tag, username, password);
+        }
+
+        //Login and register - Sets user and login. 
+        public void IsLoggedIn((bool status, User user) response)
+        {
+            if (response.status)
+                this.Dispatcher.Invoke(() =>
+                {
+                    client.setCurrentUser(response.user);
+                    UpdateCart(response.user.cart);
+                    HasAccount = true;
+                    ChangeView("AccountOverview");
+                });
+        }
+
+        //Account overview screen - button save changes 
+        public void UserEdit(User userEdit)
+        {
+            client.MessageSendNewUser(userEdit);
+        }
+
+        //Account overview screen 
+        public void SetUser(User user)
+        {
+            accountOverviewUC.SetUserData(user);
+        }
+
+        //Prodcut detail screen 
+        public void AddToCart(Product product)
+        {
+            this.Dispatcher.Invoke(() =>
+            {
+                client.MessageSendToCart(product);
+            });
+        }
+
+        //Shopping cart screen 
+        public void UpdateCart(List<Product> cart)
+        {
+            this.Dispatcher.Invoke(() =>
+            {
+                shoppingCartUC.SetInCart(cart);
+            });
+        }
+        #endregion
     }
 }
-
