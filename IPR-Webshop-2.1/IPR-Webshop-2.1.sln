@@ -9,14 +9,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServerEditor", "ServerEdito
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServerApplication", "ServerApplication\ServerApplication.csproj", "{1675B1DF-3874-45D7-A673-6F53797C626E}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Util", "Util\Util.shproj", "{F8515F61-DE4C-4FCD-9F5A-6B035196F928}"
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Shared", "Shared\Shared.shproj", "{EFA32A8A-0DAD-4785-B658-4E384BA2B849}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Shared\Shared.projitems*{0020b253-9847-4bc0-8a21-4f0d662f73ed}*SharedItemsImports = 5
 		Shared\Shared.projitems*{1675b1df-3874-45d7-a673-6f53797c626e}*SharedItemsImports = 5
 		Util\Util.projitems*{eb34837d-663d-4891-ae4c-b95882d6d6b3}*SharedItemsImports = 5
-		Util\Util.projitems*{f8515f61-de4c-4fcd-9f5a-6b035196f928}*SharedItemsImports = 13
+		Shared\Shared.projitems*{efa32a8a-0dad-4785-b658-4e384ba2b849}*SharedItemsImports = 13
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

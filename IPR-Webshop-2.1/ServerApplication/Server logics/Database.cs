@@ -144,6 +144,18 @@ namespace ServerApplication.Server_logics
             }
         }
         #endregion
+        public List<Product> getCategoryList(string category)
+        {
+            List<Product> returningList = new List<Product>();
+            foreach(Product product in this.Products)
+            {
+                if(product.Category == category)
+                {
+                    returningList.Add(product);
+                }
+            }
+            return returningList;
+        }
         public User CheckUserLogin(string username, string password, bool isEditor)
         {
             foreach(User user in this.Users)

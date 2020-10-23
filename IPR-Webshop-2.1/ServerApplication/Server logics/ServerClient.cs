@@ -62,6 +62,9 @@ namespace ServerApplication
                 case "client/userListRequest":
                     SendUserList();
                     break;
+                case "client/cartUpdateRequest":
+                    SendCurrentCart();
+                    break;
                 case "client/disconnect":
                     Disconect();
                     break;
@@ -76,7 +79,6 @@ namespace ServerApplication
                     }
                     break;
             };
-
             if (currentUser.IsEditor)
             {
                 switch (type)
@@ -160,10 +162,27 @@ namespace ServerApplication
 
             this.server.sendUpdateProductList();
         }
+        private void SendCurrentCart()
+        {
+            dynamic data = new
+            {
+                this.currentUser.cart
+            };
+            this.crypto.WriteTextMessage(DataProtocol.getJsonMessage("server/cartUpdateResponse", data));
+        }
         public void SendProductList(JObject json)
         {
             //TODO categories
-            List<Product> productList = database.Products;
+            string category = json["category"].ToString();
+            List<Product> productList;
+            if (category.Length > 0)
+            {
+                productList = database.getCategoryList(category);
+            }
+            else
+            {
+                productList = database.Products;
+            }
             dynamic data = new
             {
                 productList

@@ -7,6 +7,10 @@ namespace Shared
 {
     public class User
     {
+        public User()
+        {
+            this.cart = new List<Product>();
+        }
         public string FullName { get { return (this.FirstName + " " + this.LastName); } }
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -15,6 +19,7 @@ namespace Shared
         public double Credits { get; set; }
         public string ShippingDetails { get; set; }
         public string BillingDetails { get; set; }
+        public List<Product> cart { get; set; }
         public int Id { get; set; }
         public bool IsEditor { get; set; }
     }

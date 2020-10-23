@@ -55,7 +55,7 @@ namespace ServerEditor.Interface_pages
 
             this.crypto = crypto;
             this.crypto.WriteTextMessage(DataProtocol.getJsonMessage("client/productListRequest",
-                DataProtocol.getProductListRequest("TODO")));
+                DataProtocol.getProductListRequest("")));
 
             this.cachedImage = null;
             this.textBoxes = new TextBox[] { 
