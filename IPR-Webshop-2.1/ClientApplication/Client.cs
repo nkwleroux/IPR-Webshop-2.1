@@ -91,6 +91,17 @@ namespace ClientApplication
                     break;
 
                 case "server/userListRequest":
+                    break;
+                case "server/registerResponse":
+
+                    mainWindow.IsLoggedIn(HandleCredentialResponse(receivedData));
+
+                    break;
+                case "server/loginResponse":
+
+                    mainWindow.IsLoggedIn(HandleCredentialResponse(receivedData));
+
+                    break;
 
                 default:
                     break;
@@ -106,10 +117,17 @@ namespace ClientApplication
             {
                 Product product = JsonConvert.DeserializeObject<Product>(Jproduct.ToString());
                 Products.Add(product);
-
-
-
             }
+        }
+
+        public bool HandleCredentialResponse(JObject receivedData)
+        {
+            return (bool)receivedData["status"];
+        }
+
+        public void SendCredentials(string username, string password)
+        {
+            this.crypto.WriteTextMessage(DataProtocol.getJsonMessage("client/register", DataProtocol.getRegisterDynamic(username, password)));
         }
     }
 }

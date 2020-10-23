@@ -25,6 +25,15 @@ namespace Shared
                 isEditor
             };
         }
+
+        public static dynamic getRegisterDynamic(string username, string password)
+        {
+            return new
+            {
+                username,
+                password,
+            };
+        }
         public static dynamic getProductListRequest(string category)
         {
             return new

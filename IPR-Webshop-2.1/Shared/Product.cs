@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -19,5 +20,9 @@ namespace Shared
         public string Category { get; set; }
         public int Id { get; set; }
         public byte[] Image { get; set; }
+
+        [JsonIgnore]
+        public BitmapImage bitmapImage { get { return BitmapConverter.LoadImage(Image); } }
+
     }
 }

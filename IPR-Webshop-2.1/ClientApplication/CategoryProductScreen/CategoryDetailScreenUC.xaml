@@ -56,12 +56,13 @@
                                             </Grid.ColumnDefinitions>
 
                                             <StackPanel Grid.Column="0" Grid.Row="0">
-                                                <Border Width="90" Height="90">
+                                                <!--Need to change imagesource and add id/name to border to call Imagesource-->
+                                                <Border Tag="Name"  Width="90" Height="90">
                                                     <Border.Effect>
                                                         <DropShadowEffect ShadowDepth="1"/>
                                                     </Border.Effect>
                                                     <Border.Background>
-                                                        <ImageBrush ImageSource="{Binding CategoryImage}"/>
+                                                        <ImageBrush ImageSource="{Binding bitmapImage}"/>
                                                     </Border.Background>
                                                 </Border>
                                                 <TextBlock Margin="5,20,5,5" TextWrapping="Wrap" FontSize="15" TextAlignment="Center" VerticalAlignment="Center" Text="{Binding Name}"/>

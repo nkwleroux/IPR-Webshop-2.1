@@ -32,7 +32,7 @@ namespace ClientApplication
 
         public ListViewSelectProduct(string selectId,List<Product> products)
         {
-            this.SelectId = SelectId;
+            this.SelectId = selectId;
             this.Products = products;
         }
     }

@@ -29,7 +29,13 @@ namespace ClientApplication.AccountScreen
 
         private void Button_Login(object sender, RoutedEventArgs e)
         {
-            mainWindow.ChangeView("AccountOverview");
+            string username = Username.Text;
+            string password = Password.Password;
+
+            if (username.Length >= 5 && password.Length >= 5)
+            {
+                mainWindow.SendCredentials(username, password);
+            }
         }
 
         private void Button_Register(object sender, RoutedEventArgs e)

@@ -55,6 +55,7 @@ namespace ClientApplication
             InitializeComponent();
 
             client = new Client(this);
+            ListViewProducts = new List<ListViewSelectProduct>();
 
             Init();
 
@@ -68,6 +69,12 @@ namespace ClientApplication
             ListViewProducts = new List<ListViewSelectProduct>();
             foreach (Product p in client.Products)
             {
+                if (ListViewProducts.Count <= 0)
+                {
+                    ListViewProducts.Add(
+                            new ListViewSelectProduct(
+                                p.Category, new List<Product>() { p }));
+                }
                 foreach (ListViewSelectProduct LVSP in ListViewProducts)
                 {
                     //If cateogry doesnt exist, add category
@@ -81,10 +88,23 @@ namespace ClientApplication
                     //If category exist, add product to category
                     else
                     {
-                        LVSP.Products.Add(p);
+                        if (!LVSP.Products.Contains(p)){
+                            LVSP.Products.Add(p);
+                        }
                     }
                 }
             }
+        }
+
+        public void SendCredentials(string username, string password)
+        {
+            client.SendCredentials(username, password);
+        }
+
+        public void IsLoggedIn(bool status)
+        {
+            if(status)
+            ChangeView("AccountOverview");
         }
 
         private void Init()
@@ -98,22 +118,6 @@ namespace ClientApplication
                     new InCartProduct("Kaas, vleeswaren, tapas",1,3.0,"/Assets/images/kaas-vleeswaren-tapas.png"),
                     new InCartProduct("Zuivel, plantaardig en eiren",5,20.0,"/Assets/images/boter-eieren-zuivel.png")
                 });
-
-            /*List<InCartProduct> InCartP = new List<InCartProduct>();
-
-            foreach (Product p in products)
-            {
-                string productName = p.Name;
-                int productAmount = p.Amount;
-                double productPrice = p.Price;
-                //string ProductImage = productImage;
-                InCartProduct ICProdcut = new InCartProduct(productName, productAmount, productPrice, null);
-                InCartP.Add(ICProdcut);
-            }
-
-            SetInCartProducts(InCartP);*/
-
-
 
             // Initialise the different pages.
 
