@@ -18,7 +18,7 @@
 
         <!--All products from previous purchase-->
 
-        <ScrollViewer Grid.Column="0" Width="880" Grid.Row="0" Margin="30,20,20,20" HorizontalAlignment="Left" VerticalScrollBarVisibility="Auto" Background="Black" BorderThickness="1" >
+        <ScrollViewer Grid.Column="0" Width="900" Grid.Row="0" Margin="30,20,20,20" HorizontalAlignment="Left" VerticalScrollBarVisibility="Auto" Background="Black" BorderThickness="1" >
             <Grid >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"></ColumnDefinition>
