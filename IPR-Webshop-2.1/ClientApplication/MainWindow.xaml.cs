@@ -87,12 +87,21 @@ namespace ClientApplication
                     //If category exist, add product to category
                     else
                     {
-                        if (!LVSP.Products.Contains(p)){
+                        if (!LVSP.Products.Contains(p))
+                        {
                             LVSP.Products.Add(p);
                         }
                     }
                 }
             }
+        }
+
+        public void SetProductDetail(Product p)
+        {
+            this.Dispatcher.Invoke(() =>
+            {
+                productDetailScreenUC.SetProductDetail(p);
+            });
         }
 
         public void SendCredentials(string tag, string username, string password)
@@ -102,11 +111,11 @@ namespace ClientApplication
 
         public void IsLoggedIn((bool status, User user) response)
         {
-            if(response.status)
-            this.Dispatcher.Invoke(()=> {
-                client.setCurrentUser(response.user);
-                ChangeView("AccountOverview");
-                
+            if (response.status)
+                this.Dispatcher.Invoke(() =>
+                {
+                    client.setCurrentUser(response.user);
+                    ChangeView("AccountOverview");
                 });
         }
 
@@ -118,6 +127,14 @@ namespace ClientApplication
         public void SetUser(User user)
         {
             accountOverviewUC.SetUserData(user);
+        }
+
+        public void AddToCart(Product product)
+        {
+            this.Dispatcher.Invoke(() =>
+            {
+                client.SendToCart(product);
+            });
         }
 
         private void Init()
@@ -250,6 +267,7 @@ namespace ClientApplication
 
         private void Button_Shutdown(object sender, RoutedEventArgs e)
         {
+            client.OnDisconnect();
             System.Windows.Application.Current.Shutdown();
         }
 

@@ -274,9 +274,9 @@ namespace ServerApplication
         }
         public void Disconect()
         {
+            this.log.PrintLine(SOURCE_LABEL, $"client disconnect: {this.client.Client.RemoteEndPoint}");
             this.stream.Dispose();
-            this.client.Dispose();
-            this.log.PrintLine(SOURCE_LABEL, "Client disconnect");
+            this.client.Dispose();            
             this.server.OnDisposeServerClient(this);
         }
     }

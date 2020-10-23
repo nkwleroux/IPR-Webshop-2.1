@@ -68,8 +68,9 @@ namespace ClientApplication
         }
 
         //Method used to safely close all connections to the server.
-        private void OnDisconnect()
+        public void OnDisconnect()
         {
+            this.crypto.WriteTextMessage(DataProtocol.getJsonMessage("client/disconnect", new { }));
             tcpClient.Close();
         }
 
@@ -88,11 +89,9 @@ namespace ClientApplication
 
                   
 
-                    break;
-
-                case "server/userListRequest":
-
-
+                    break;           
+                case "server/cartUpdateResponse":
+                    HandleCartChanged(receivedData);
                     break;
 
                 case "server/userResponse":
@@ -131,6 +130,14 @@ namespace ClientApplication
             mainWindow.SetCategory();
         }
 
+        public void HandleCartChanged(JObject receivedData)
+        {
+           String JsonList = receivedData["cart"].ToString();
+
+            List<Product> cart = JsonConvert.DeserializeObject<List<Product>>(JsonList); 
+
+        }
+
         public (bool,User) HandleCredentialResponse(JObject receivedData)
         {
             (bool status, User user) response;
@@ -154,6 +161,20 @@ namespace ClientApplication
         public void SendNewUser(User newUser)
         {
             this.crypto.WriteTextMessage(DataProtocol.getJsonMessage("client/userEditRequest", DataProtocol.getUserChangeDynamic(newUser)));
+
         }
+
+        public void SendToCart(Product product)
+        {
+            this.crypto.WriteTextMessage(DataProtocol.getJsonMessage("client/cartChangeProduct", DataProtocol.getCartChangedDynamic("add",product)));
+
+        }
+
+        public void RemoveFromCart(Product product)
+        {
+            this.crypto.WriteTextMessage(DataProtocol.getJsonMessage("client/cartChangeProduct", DataProtocol.getCartChangedDynamic("remove", product)));
+
+        }
+
     }
 }

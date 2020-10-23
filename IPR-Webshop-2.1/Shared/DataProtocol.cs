@@ -64,5 +64,14 @@ namespace Shared
                 user
             };
         }
+
+        internal static dynamic getCartChangedDynamic(string typeOfChange, Product product)
+        {
+            return new
+            {
+                typeOfChange,
+                product
+            };
+        }
     }
 }

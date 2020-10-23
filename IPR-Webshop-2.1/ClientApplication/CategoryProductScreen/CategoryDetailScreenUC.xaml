@@ -18,7 +18,7 @@
         </Grid.RowDefinitions>
 
         <!--Category Title-->
-        <Label Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Name="CategoryTitle" Content="Temp Category" FontSize="20" FontWeight="Bold" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"></Label>
+        <Label Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Name="CategoryTitle" FontSize="20" FontWeight="Bold" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"></Label>
 
         <Label Grid.Column="0" Grid.Row="1" Name="Category" Content="Categories" FontSize="20" FontWeight="Bold" Margin="0,0,25,0"  VerticalContentAlignment="Top" HorizontalContentAlignment="Center"></Label>
         <!--Category list-->
@@ -46,7 +46,7 @@
                         <DataTemplate>
                             <Border Margin="10" Width="160" Height="160" Background="Beige">
                                 <StackPanel Orientation="Vertical">
-                                    <materialDesign:Card Uid="{Binding Name}"  >
+                                    <materialDesign:Card  >
                                         <Grid>
                                             <Grid.RowDefinitions>
                                                 <RowDefinition Height="*"></RowDefinition>
@@ -56,8 +56,7 @@
                                             </Grid.ColumnDefinitions>
 
                                             <StackPanel Grid.Column="0" Grid.Row="0">
-                                                <!--Need to change imagesource and add id/name to border to call Imagesource-->
-                                                <Border Tag="Name"  Width="90" Height="90">
+                                               <Border Tag="Name"  Width="90" Height="90">
                                                     <Border.Effect>
                                                         <DropShadowEffect ShadowDepth="1"/>
                                                     </Border.Effect>
@@ -68,7 +67,7 @@
                                                 <TextBlock Margin="5,20,5,5" TextWrapping="Wrap" FontSize="15" TextAlignment="Center" VerticalAlignment="Center" Text="{Binding Name}"/>
                                             </StackPanel>
 
-                                            <Button Grid.Column="0" Grid.Row="0" Click="Button_Click" Opacity="0.1" Height="160" Width="160" >
+                                            <Button Tag="{Binding Name}" Grid.Column="0" Grid.Row="0" Click="Button_Click" Opacity="0.1" Height="160" Width="160" >
                                                 <Button.Style>
                                                     <Style TargetType="{x:Type Button}">
                                                         <Setter Property="Background" Value="Transparent"/>

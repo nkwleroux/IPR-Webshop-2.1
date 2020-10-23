@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Shared;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -26,18 +27,18 @@ namespace ClientApplication.CategoryProductScreen
             InitializeComponent();
 
             var categories = mainWindow.ListViewProducts;
-            if (categories.Count > 0)
-                CategoryListBox.ItemsSource = categories;
+            CategoryListBox.ItemsSource = categories;
         }
 
         public void SetListView(string category)
         {
             foreach (ListViewSelectProduct LVP in mainWindow.ListViewProducts)
             {
-                if (category.Equals(LVP.SelectId))
+                if (LVP.SelectId.Equals(category))
                 {
-                    ListViewProducts.ItemsSource = LVP.Products;
-                                       
+                    CurrentProducts = LVP.Products;
+                    ListViewProducts.ItemsSource = CurrentProducts;
+
                     CategoryTitle.Content = category;
                     return;
                 }
@@ -49,15 +50,27 @@ namespace ClientApplication.CategoryProductScreen
             var item = sender as ListViewItem;
             if (item != null && item.IsSelected)
             {
-                ListViewProducts.ItemsSource = ((ListViewSelectProduct)item.DataContext).Products;
+                CurrentProducts = ((ListViewSelectProduct)item.DataContext).Products;
+                ListViewProducts.ItemsSource = CurrentProducts;
                 CategoryTitle.Content = ((ListViewSelectProduct)item.DataContext).SelectId;
             }
 
         }
 
+        private List<Product> CurrentProducts { get; set; }
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            mainWindow.ChangeView("ProductDetail");
+            foreach (Product p in CurrentProducts)
+            {
+                if (((Button)sender).Tag.ToString().Equals(p.Name)){
+
+                    mainWindow.SetProductDetail(p);
+                    mainWindow.ChangeView("ProductDetail");
+                    return;
+                }
+            }
+
         }
     }
 }

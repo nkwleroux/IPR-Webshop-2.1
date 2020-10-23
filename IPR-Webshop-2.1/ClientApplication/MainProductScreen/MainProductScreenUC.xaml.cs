@@ -56,7 +56,6 @@ namespace ClientApplication
                 };
         }
 
-        //todo
         private void Button_Category(object sender, RoutedEventArgs e)
         {
             string cat = ((Button)sender).Tag.ToString();

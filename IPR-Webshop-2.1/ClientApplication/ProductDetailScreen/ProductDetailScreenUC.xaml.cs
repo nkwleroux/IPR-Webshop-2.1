@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Shared;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -19,10 +20,45 @@ namespace ClientApplication.ProductDetailScreen
     public partial class ProductDetailScreenUC : UserControl
     {
         private MainWindow mainWindow;
+        private Product product;
+
         public ProductDetailScreenUC(MainWindow mainWindow)
         {
             this.mainWindow = mainWindow;
             InitializeComponent();
+        }
+
+        public void SetProductDetail(Product p)
+        {
+            product = p;
+
+            ImageBrush_Image.ImageSource = p.bitmapImage;
+            TextBlock_Name.Text = p.Name;
+            if (p.Amount > 0)
+            {
+                TextBlock_Stock.Text = p.Amount.ToString();
+            }
+            else
+            {
+                TextBlock_Stock.Text = "None";
+            }
+
+            if (p.Amount >= 1)
+            {
+                ComboBox_Quantity.ItemsSource = new List<int>() {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 20, 25, 50 };
+            }
+            else
+            {
+                ComboBox_Quantity.ItemsSource = new int[] { 0 };
+            }
+
+            ComboBox_Quantity.SelectedIndex = 0;
+        }
+
+        private void Button_AddToCart(object sender, RoutedEventArgs e)
+        {
+            product.Amount = int.Parse(ComboBox_Quantity.SelectedItem.ToString());
+            mainWindow.AddToCart(product);
         }
     }
 }

@@ -21,20 +21,16 @@
                 <DropShadowEffect ShadowDepth="1"/>
             </Border.Effect>
             <Border.Background>
-                <!--Used to bind an image
-                <ImageBrush ImageSource="{Binding CategoryImage}"/>
-                -->
-                <!--Temp image-->
-                <ImageBrush ImageSource="/Assets/images/boter-eieren-zuivel.png"/>
+                <ImageBrush x:Name="ImageBrush_Image" ImageSource="{Binding bitmapImage}"/>
             </Border.Background>
         </Border>
 
         <Grid Grid.Column="1" Grid.Row="0" Margin="10,10,20,10"> 
             <Grid.RowDefinitions>
-                <RowDefinition Height="150"></RowDefinition>
-                <RowDefinition Height="*"></RowDefinition>
-                <RowDefinition Height="80"></RowDefinition>
-                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="250"></RowDefinition>
+
+                <RowDefinition Height="100"></RowDefinition>
+                <RowDefinition Height="100"></RowDefinition>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"></ColumnDefinition>
@@ -42,27 +38,22 @@
 
             <!--Name-->
             <Border Grid.Column="0" Grid.Row="0" Height="60" Margin="10,10,10,10" BorderBrush="Black" BorderThickness="1" VerticalAlignment="Bottom">
-                <TextBlock TextWrapping="Wrap" Width="410" Margin="10" FontSize="15" VerticalAlignment="Top" HorizontalAlignment="Left" TextAlignment="Left" Text="TempName"/>
+                <TextBlock Name="TextBlock_Name" TextWrapping="Wrap" Width="410" Margin="10" FontSize="15" VerticalAlignment="Top" HorizontalAlignment="Left" TextAlignment="Left"/>
             </Border>
-            <!--Description-->
-            <Border Grid.Column="0" Grid.Row="1" MinHeight="120" Margin="10" BorderBrush="Black" BorderThickness="1">
-                <ScrollViewer VerticalScrollBarVisibility="Auto">
-                    <TextBlock TextWrapping="Wrap" Width="410" Margin="10" FontSize="15" VerticalAlignment="Top" HorizontalAlignment="Left" TextAlignment="Left" Text="TempDescription"/>
-                </ScrollViewer>
-            </Border>
+            
             <!--Stock-->
-            <Border Grid.Column="0" Grid.Row="2" Height="50" Width="180" Margin="10" VerticalAlignment="Center" HorizontalAlignment="Left" BorderBrush="Black" BorderThickness="1">
+            <Border Grid.Column="0" Grid.Row="1" Height="50" Width="180" Margin="10" VerticalAlignment="Center" HorizontalAlignment="Left" BorderBrush="Black" BorderThickness="1">
                 <StackPanel Orientation="Horizontal" >
                     <TextBlock TextWrapping="Wrap" FontSize="15" Padding="20,15,0,0" TextAlignment="Center" Text="Stock :" FontWeight="Black"/>
-                    <TextBlock TextWrapping="Wrap" FontSize="20" Padding="20,0,0,0" TextAlignment="Center" VerticalAlignment="Center" Text="1"/>
+                    <TextBlock Name="TextBlock_Stock" TextWrapping="Wrap" FontSize="20" Padding="20,0,0,0" TextAlignment="Center" VerticalAlignment="Center" Text="1"/>
                 </StackPanel>
             </Border>
             <!--Add to cart & Quantity selector-->
-            <StackPanel Grid.Column="0" Grid.Row="3" Width="200" Height="35" Margin="10" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
-                <Button Margin="0,0,50,0" Width="80">
+            <StackPanel Grid.Column="0" Grid.Row="2" Width="200" Height="35" Margin="10" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
+                <Button Click="Button_AddToCart"  Margin="0,0,50,0" Width="80">
                     <TextBlock Text="Add to cart"></TextBlock>
                 </Button>
-                <ComboBox Width="50">
+                <ComboBox Name="ComboBox_Quantity" Width="50">
                     
                 </ComboBox>
             </StackPanel>
