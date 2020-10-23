@@ -39,124 +39,23 @@ namespace ClientApplication
         public Client client;
 
         private bool HasAccount { get; set; }
-
-        private List<InCartProduct> InCartProducts { get; set; }
-
-        public void SetInCartProducts(List<InCartProduct> InCartProducts) { this.InCartProducts = InCartProducts; }
-
-        public void RemoveFromCart(Product product)
-        {
-            client.RemoveFromCart(product);
-        }
-
         public string SelectedCategory { get; set; }
+        public List<ListViewSelectProduct> ListViewProducts { get; set; }
 
         public MainWindow()
         {
             InitializeComponent();
-
-            client = new Client(this);
-            ListViewProducts = new List<ListViewSelectProduct>();
-
             Init();
-
-        }
-
-        public List<ListViewSelectProduct> ListViewProducts { get; set; }
-
-        public void SetCategory()
-        {
-            ListViewProducts = new List<ListViewSelectProduct>();
-            foreach (Product p in client.Products)
-            {
-                if (ListViewProducts.Count <= 0)
-                {
-                    ListViewProducts.Add(
-                            new ListViewSelectProduct(
-                                p.Category, new List<Product>() { p }));
-                }
-                foreach (ListViewSelectProduct LVSP in ListViewProducts)
-                {
-                    //If cateogry doesnt exist, add category
-                    if (!LVSP.SelectId.Equals(p.Category))
-                    {
-                        ListViewProducts.Add(
-                            new ListViewSelectProduct(
-                                p.Category, new List<Product>() { p }));
-
-                    }
-                    //If category exist, add product to category
-                    else
-                    {
-                        if (!LVSP.Products.Contains(p))
-                        {
-                            LVSP.Products.Add(p);
-                        }
-                    }
-                }
-            }
-        }
-
-        public void SetProductDetail(Product p)
-        {
-            this.Dispatcher.Invoke(() =>
-            {
-                productDetailScreenUC.SetProductDetail(p);
-            });
-        }
-
-        public void SendCredentials(string tag, string username, string password)
-        {
-            client.SendCredentials(tag, username, password);
-        }
-
-        public void RemovefromCart(Product product) {
-            client.RemoveFromCart(product); 
-        }
-
-        public void IsLoggedIn((bool status, User user) response)
-        {
-            if (response.status)
-                this.Dispatcher.Invoke(() =>
-                {
-                    client.setCurrentUser(response.user);
-                    UpdateCart(response.user.cart);
-                    ChangeView("AccountOverview");
-                });
-        }
-
-        public void UserEdit(User userEdit)
-        {
-            client.SendNewUser(userEdit);
-        }
-
-        public void SetUser(User user)
-        {
-            accountOverviewUC.SetUserData(user);
-        }
-
-        public void AddToCart(Product product)
-        {
-            this.Dispatcher.Invoke(() =>
-            {
-                client.SendToCart(product);
-            });
         }
 
         private void Init()
         {
-            //Init products
-            SetInCartProducts(new List<InCartProduct>()
-                {
-                    new InCartProduct("Aardappel, groente, fruit",2,50.0,"/Assets/images/aardappelen_groente_fruit.png"),
-                    new InCartProduct("Salades, pizza, maaltijden",3,20.0,"/Assets/images/salades-pizza-maaltijden.png"),
-                    new InCartProduct("Vlees, kip, vis, vega",1,2.0,"/Assets/images/vlees-kip-vis-vega.png"),
-                    new InCartProduct("Kaas, vleeswaren, tapas",1,3.0,"/Assets/images/kaas-vleeswaren-tapas.png"),
-                    new InCartProduct("Zuivel, plantaardig en eiren",5,20.0,"/Assets/images/boter-eieren-zuivel.png")
-                });
+            HasAccount = false;
+            client = new Client(this);
+
+            SetCategories();
 
             // Initialise the different pages.
-
             mainProductScreenUC = new MainProductScreenUC(this);
             LayoutControl.Children.Add(mainProductScreenUC);
             loginScreenUC = new LoginScreenUC(this);
@@ -177,6 +76,97 @@ namespace ClientApplication
             ChangeView("MainProduct");
         }
 
+
+        public void RemoveFromCart(Product product)
+        {
+            client.MessageRemoveFromCart(product);
+        }
+
+        public void SetCategories()
+        {
+            ListViewProducts = new List<ListViewSelectProduct>(){
+                new ListViewSelectProduct("Aardappel, groente, fruit", new List<Product>() ),
+                new ListViewSelectProduct("Salades, pizza, maaltijden", new List<Product>()),
+                new ListViewSelectProduct("Vlees, kip, vis, vega", new List<Product>()),
+                new ListViewSelectProduct("Kaas, vleeswaren, tapas", new List<Product>()),
+                new ListViewSelectProduct("Zuivel, plantaardig en eiren", new List<Product>()),
+                new ListViewSelectProduct("Bakkerij en banket", new List<Product>()),
+                new ListViewSelectProduct("Ontbijtgranen, beleg, tussendoor", new List<Product>()),
+                new ListViewSelectProduct("Frisdrank, sappen, koffie, thee", new List<Product>()),
+                new ListViewSelectProduct("Wijn en bubbels", new List<Product>()),
+                new ListViewSelectProduct("Bier, sterke drank, aperitieven", new List<Product>()),
+                new ListViewSelectProduct("Pasta, rijst en wereldkeuken", new List<Product>()),
+                new ListViewSelectProduct("Soepen, sauzen, kruiden, olie", new List<Product>()),
+                new ListViewSelectProduct("Snoep, koek, chips en chocolade", new List<Product>()),
+                new ListViewSelectProduct("Diepvries", new List<Product>()),
+                new ListViewSelectProduct("Baby, verzorging en hygiene", new List<Product>()),
+                new ListViewSelectProduct("Bewuste voeding", new List<Product>()),
+                new ListViewSelectProduct("Huishouden, huisdier", new List<Product>()),
+                new ListViewSelectProduct("Koken, tafelen, vrije tijd", new List<Product>()),
+            };
+
+            foreach (ListViewSelectProduct LVSP in ListViewProducts)
+            {
+                foreach (Product p in client.Products)
+                {
+                    if (!LVSP.Products.Contains(p) && LVSP.SelectId.Equals(p.Category))
+                    {
+                        LVSP.Products.Add(p);
+                    }
+                }
+            }
+        }
+
+
+        public void SetProductDetail(Product p)
+        {
+            this.Dispatcher.Invoke(() =>
+            {
+                productDetailScreenUC.SetProductDetail(p);
+            });
+        }
+
+        //Login and register 
+        public void SendCredentials(string tag, string username, string password)
+        {
+            client.MessageSendCredentials(tag, username, password);
+        }
+
+        //Login and register - Sets user and login.
+        public void IsLoggedIn((bool status, User user) response)
+        {
+            if (response.status)
+                this.Dispatcher.Invoke(() =>
+                {
+                    client.setCurrentUser(response.user);
+                    UpdateCart(response.user.cart);
+                    HasAccount = true;
+                    ChangeView("AccountOverview");
+                });
+        }
+
+        //Account overview screen - button save changes
+        public void UserEdit(User userEdit)
+        {
+            client.MessageSendNewUser(userEdit);
+        }
+
+        //Account overview screen
+        public void SetUser(User user)
+        {
+            accountOverviewUC.SetUserData(user);
+        }
+
+        //Prodcut detail screen
+        public void AddToCart(Product product)
+        {
+            this.Dispatcher.Invoke(() =>
+            {
+                client.MessageSendToCart(product);
+            });
+        }
+
+        //Shopping cart screen
         public void UpdateCart(List<Product> cart)
         {
             this.Dispatcher.Invoke(() =>
@@ -228,18 +218,14 @@ namespace ClientApplication
                         registerScreenUC.Visibility = Visibility.Visible;
                     }
                     break;
-                case "AccountOverview":
+                case "AccountOverview":                   
                     accountOverviewUC.Visibility = Visibility.Visible;
                     accountOverviewUC.SetUserData(client.currentUser);
-                    if (!HasAccount)
-                    {
-                        HasAccount = true;
-                    }
                     break;
                 case "CategoryProduct":
                     categoryDetailScreenUC.SetListView(SelectedCategory);
                     categoryDetailScreenUC.Visibility = Visibility.Visible;
-                    break;              
+                    break;
                 case "ShoppingCart":
 
                     shoppingCartUC.Visibility = Visibility.Visible;

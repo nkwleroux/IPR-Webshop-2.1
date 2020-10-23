@@ -1,6 +1,7 @@
 ﻿using Shared;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -19,8 +20,8 @@ namespace ClientApplication.ShoppingCartScreen
     /// </summary>
     public partial class ShoppingCartUC : UserControl
     {
-        private MainWindow mainWindow; 
-        
+        private MainWindow mainWindow;
+
         public List<Product> InCart { get; set; }
         public ShoppingCartUC(MainWindow mainWindow)
         {
@@ -31,7 +32,7 @@ namespace ClientApplication.ShoppingCartScreen
 
             InCartProductsList.ItemsSource = InCart;
         }
-              
+
         private void Button_ContinueShopping(object sender, RoutedEventArgs e)
         {
             mainWindow.ChangeView("MainProduct");
@@ -44,21 +45,23 @@ namespace ClientApplication.ShoppingCartScreen
 
         private void Button_Remove(object sender, RoutedEventArgs e)
         {
+
             string p = ((Button)sender).Tag.ToString();
+
             foreach (Product product in InCart)
             {
                 if (product.Name.Equals(p))
                 {
                     mainWindow.RemoveFromCart(product);
-                    return;
                 }
             }
         }
 
         public void SetInCart(List<Product> products)
         {
-            InCartProductsList.ItemsSource = null;
+            InCartProductsList.ItemsSource = new List<Product>();
             InCartProductsList.ItemsSource = products;
+            
         }
     }
 }

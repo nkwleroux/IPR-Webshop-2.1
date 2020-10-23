@@ -121,18 +121,11 @@
 
             </StackPanel>
 
-            <Button Grid.Column="0" Grid.Row="1" Click="Button_ContinueShopping" Margin="60,40,40,40">
+            <Button Grid.Column="1" Grid.Row="1" Click="Button_ContinueShopping" Margin="40,40,60,40">
                 <TextBlock Text="Continue shopping" VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center">
-                    
-                </TextBlock>
-            </Button>
-
-            <Button Grid.Column="1" Grid.Row="1" Click="Button_ProceedPurchase" Margin="20,40,80,40">
-                <TextBlock Text="Proceed with purchase" VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center">
 
                 </TextBlock>
             </Button>
-
 
         </Grid>
     </Grid>

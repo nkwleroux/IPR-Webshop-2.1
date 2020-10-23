@@ -16,6 +16,7 @@ namespace Shared
             };
             return JsonConvert.SerializeObject(message);
         }
+       
         public static dynamic getCredentialDynamic(string username, string password, bool isEditor)
         {
             return new
@@ -33,6 +34,7 @@ namespace Shared
                 category
             };
         }
+        
         public static dynamic getUserListRequest()
         {
             return new
@@ -40,6 +42,7 @@ namespace Shared
                 //todo criteria maybe
             };
         }
+        
         public static dynamic getProductChangeDynamic(string typeOfChange, Product product)
         {
             return new
@@ -65,7 +68,7 @@ namespace Shared
             };
         }
 
-        internal static dynamic getCartChangedDynamic(string typeOfChange, Product product)
+        public static dynamic getCartChangedDynamic(string typeOfChange, Product product)
         {
             return new
             {

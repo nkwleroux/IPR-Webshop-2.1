@@ -63,14 +63,13 @@ namespace ClientApplication.CategoryProductScreen
         {
             foreach (Product p in CurrentProducts)
             {
-                if (((Button)sender).Tag.ToString().Equals(p.Name)){
+                if (((Button)sender).Tag.ToString().Equals(p.Name))
+                {
 
                     mainWindow.SetProductDetail(p);
                     mainWindow.ChangeView("ProductDetail");
-                    return;
                 }
             }
-
         }
     }
 }

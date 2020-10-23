@@ -31,9 +31,10 @@ namespace ClientApplication.AccountScreen
 
         public void SetUserData(User currentUser)
         {
-            this.currentUser = currentUser;
+            
             this.Dispatcher.Invoke(() =>
             {
+                this.currentUser = currentUser;
                 TextBox_Firstname.Text = currentUser.FirstName;
                 TextBox_Lastname.Text = currentUser.LastName;
                 TextBox_BillingAddress.Text = currentUser.BillingDetails;
@@ -51,60 +52,5 @@ namespace ClientApplication.AccountScreen
 
             mainWindow.UserEdit(this.currentUser);
         }
-
-
-        #region //Unused code
-        /*var prevOrders = GetPreviousOrders();
-        if (prevOrders.Count > 0)
-            PreviousOrdersListView.ItemsSource = prevOrders;
     }
-
-    private void ListViewItem_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-    {
-        var item = sender as ListViewItem;
-        if (item != null && item.IsSelected)
-        {
-            mainWindow.SetInCartProducts(((ListViewSelectProduct)item.DataContext).ICProducts);
-            mainWindow.ChangeView("PreviousOrder");
-        }
-    }
-
-    private List<ListViewSelectProduct> GetPreviousOrders()
-    {
-
-        return new List<ListViewSelectProduct>()
-        {
-            new ListViewSelectProduct("Order 1", new List<InCartProduct>()
-            {
-                new InCartProduct("Aardappel, groente, fruit",2,50.0,"/Assets/images/aardappelen_groente_fruit.png"),
-                new InCartProduct("Salades, pizza, maaltijden",3,20.0,"/Assets/images/salades-pizza-maaltijden.png"),
-                new InCartProduct("Vlees, kip, vis, vega",1,2.0,"/Assets/images/vlees-kip-vis-vega.png"),
-                new InCartProduct("Kaas, vleeswaren, tapas",1,3.0,"/Assets/images/kaas-vleeswaren-tapas.png"),
-                new InCartProduct("Zuivel, plantaardig en eiren",5,20.0,"/Assets/images/boter-eieren-zuivel.png")
-            }),
-
-            new ListViewSelectProduct("Order 2", new List<InCartProduct>()
-                {
-                new InCartProduct("Groente, fruit",2,50.0,"/Assets/images/aardappelen_groente_fruit.png"),
-                new InCartProduct("Salades, maaltijden",3,20.0,"/Assets/images/salades-pizza-maaltijden.png"),
-                new InCartProduct("Aardappel",2,50.0,"/Assets/images/aardappelen_groente_fruit.png"),
-                new InCartProduct("Pizza",3,20.0,"/Assets/images/salades-pizza-maaltijden.png")
-            })
-       };
-    }*/
-
-        /*
-               private void Button_ChangePassword(object sender, RoutedEventArgs e)
-               {
-                   Username.Clear();
-                   Password.Clear();
-                   ConfirmPassword.Clear();
-               }
-       */
-
-        #endregion
-
-
-    }
-
 }

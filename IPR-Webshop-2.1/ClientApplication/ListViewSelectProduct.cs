@@ -10,10 +10,7 @@ namespace ClientApplication
     {
         public string SelectId { get; set; }
 
-        //temp
         public List<Category> Categories { get; set; }
-
-        public List<InCartProduct> ICProducts { get; set; }
 
         public List<Product> Products { get; set;}
 
@@ -21,14 +18,6 @@ namespace ClientApplication
         {
             this.SelectId = selectId;
             this.Categories = categories;
-            this.ICProducts = null;
-        }
-
-        public ListViewSelectProduct(string selectId, List<InCartProduct> products)
-        {
-            this.SelectId = selectId;
-            this.Categories = null;
-            this.ICProducts = products;
         }
 
         public ListViewSelectProduct(string selectId,List<Product> products)

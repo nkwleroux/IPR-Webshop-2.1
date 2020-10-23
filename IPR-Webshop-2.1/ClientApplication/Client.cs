@@ -86,7 +86,6 @@ namespace ClientApplication
                 case "server/productListResponse":
 
                     HandleProductList(receivedData);
-                                     
 
                     break;
                 case "server/userResponse":
@@ -104,7 +103,6 @@ namespace ClientApplication
                     mainWindow.IsLoggedIn(HandleCredentialResponse(receivedData));
 
                     break;
-
                 default:
                     break;
             }
@@ -121,9 +119,9 @@ namespace ClientApplication
                 Products.Add(product);
             }
 
-            mainWindow.SetCategory();
+            mainWindow.SetCategories();
         }
-        public (bool,User) HandleCredentialResponse(JObject receivedData)
+        public (bool, User) HandleCredentialResponse(JObject receivedData)
         {
             (bool status, User user) response;
             response.status = (bool)receivedData["status"];
@@ -133,31 +131,32 @@ namespace ClientApplication
             return response;
         }
 
-        public void HandleUserResponse(JObject receivedData) {
+        public void HandleUserResponse(JObject receivedData)
+        {
             this.currentUser = JsonConvert.DeserializeObject<User>(receivedData["user"].ToString());
             mainWindow.SetUser(this.currentUser);
 
             mainWindow.UpdateCart(this.currentUser.cart);
         }
 
-        public void SendCredentials(string tag, string username, string password)
+        public void MessageSendCredentials(string tag, string username, string password)
         {
-            this.crypto.WriteTextMessage(DataProtocol.getJsonMessage(tag, DataProtocol.getCredentialDynamic(username, password,false)));
+            this.crypto.WriteTextMessage(DataProtocol.getJsonMessage(tag, DataProtocol.getCredentialDynamic(username, password, false)));
         }
 
-        public void SendNewUser(User newUser)
+        public void MessageSendNewUser(User newUser)
         {
             this.crypto.WriteTextMessage(DataProtocol.getJsonMessage("client/userEditRequest", DataProtocol.getUserChangeDynamic(newUser)));
 
         }
 
-        public void SendToCart(Product product)
+        public void MessageSendToCart(Product product)
         {
-            this.crypto.WriteTextMessage(DataProtocol.getJsonMessage("client/cartChangeProduct", DataProtocol.getCartChangedDynamic("add",product)));
+            this.crypto.WriteTextMessage(DataProtocol.getJsonMessage("client/cartChangeProduct", DataProtocol.getCartChangedDynamic("add", product)));
 
         }
 
-        public void RemoveFromCart(Product product)
+        public void MessageRemoveFromCart(Product product)
         {
             this.crypto.WriteTextMessage(DataProtocol.getJsonMessage("client/cartChangeProduct", DataProtocol.getCartChangedDynamic("remove", product)));
 

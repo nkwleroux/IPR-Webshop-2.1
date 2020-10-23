@@ -42,12 +42,8 @@
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"></ColumnDefinition>
-            <!--unused column column 1 = 480 column 2 = *
-            <ColumnDefinition Width="*"></ColumnDefinition>
-            -->
         </Grid.ColumnDefinitions>
 
-        <!--Left side-->
         <Grid HorizontalAlignment="Center">
             <Grid.RowDefinitions>
                 <RowDefinition Height="10"></RowDefinition>
@@ -89,24 +85,6 @@
                 <TextBox Name="TextBox_BillingAddress" Tag="Billing address" Style="{StaticResource MyWaterMarkStyle}" TextWrapping="Wrap"/>
             </Border>
 
-            <!--Unused code Password reset
-            <StackPanel Grid.Column="0" Grid.Row="4" VerticalAlignment="Top" Width="480" Margin="0,60,0,0" >
-                <StackPanel Grid.Column="0" Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center" >
-                    <Label Content="Username :" Width="120" HorizontalContentAlignment="Right"></Label>
-                    <TextBox Name="Username" Width="300" VerticalAlignment="Stretch"/>
-                </StackPanel>
-                <StackPanel Grid.Column="0" Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Center">
-                    <Label Content="Password  :" Width="120" HorizontalContentAlignment="Right"></Label>
-                    <PasswordBox Name="Password" Width="300" VerticalAlignment="Center"/>
-                </StackPanel>
-                <StackPanel Grid.Column="0" Grid.Row="2"  Orientation="Horizontal" VerticalAlignment="Center" >
-                    <Label Content="Confirm password  :" Width="120" HorizontalContentAlignment="Right"></Label>
-                    <PasswordBox Name="ConfirmPassword" Width="300" VerticalAlignment="Center" />
-                </StackPanel>
-                <Button Click="Button_ChangePassword" Content="Change password" Height="30" Width="110" Margin="0,0,60,0" HorizontalAlignment="Right"/>
-            </StackPanel>
-            -->
-
             <Border Grid.Column="0" Grid.Row="5" Height="35" Width="160" Margin="10,20,0,0" BorderThickness="2" BorderBrush="Black" HorizontalAlignment="Left" VerticalAlignment="Top">
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Current credits : " Margin="10,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center"/>
@@ -118,33 +96,6 @@
             <Button Grid.Column="0" Grid.Row="5" Click="Button_SaveChanges" Content="Save changes" Height="35" Width="90"  Margin="0,20,10,0" HorizontalAlignment="Right" VerticalAlignment="Top"/>
 
         </Grid>
-
-        <!-- Right side. Previous orders. Not implemented
-        <Grid Grid.Column="1" Grid.Row="0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="60"></RowDefinition>
-                <RowDefinition Height="*"></RowDefinition>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            
-            <Label Grid.Column="0" Grid.Row="0" Content="Previous orders" FontSize="30" FontWeight="Bold" Height="60" VerticalContentAlignment="Center"></Label>
-
-            <ListView Name="PreviousOrdersListView" Grid.Column="0" Grid.Row="1" BorderThickness="2" Margin="0,0,40,40" Foreground="Black">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding SelectId}" FontSize="16" FontWeight="Bold" MinWidth="200"/>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-                <ListView.ItemContainerStyle>
-                    <Style TargetType="ListViewItem">
-                        <EventSetter Event="PreviewMouseLeftButtonDown" Handler="ListViewItem_PreviewMouseLeftButtonDown" />
-                    </Style>
-                </ListView.ItemContainerStyle>
-            </ListView>
-        </Grid>
-        -->
         
     </Grid>
 </UserControl>

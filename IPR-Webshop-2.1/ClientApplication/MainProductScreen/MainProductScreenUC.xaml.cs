@@ -26,13 +26,11 @@ namespace ClientApplication
             InitializeComponent();
 
             var categories = GetCategories();
-            if (categories.Count > 0)
-                ListViewCategories.ItemsSource = categories;
+            ListViewCategories.ItemsSource = categories;
         }
 
         private List<Category> GetCategories()
         {
-
             return new List<Category>()
             {
                 new Category("Aardappel, groente, fruit","/Assets/images/aardappelen_groente_fruit.png"),
@@ -68,7 +66,6 @@ namespace ClientApplication
                     return;
                 }
             }
-            
         }
     }
 }
