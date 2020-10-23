@@ -26,6 +26,10 @@ namespace ClientApplication.ShoppingCartScreen
 
             InCart = new List<InCartProduct>();
 
+            //    InCartProductsList.ItemsSource = InCart;
+
+            InCart = mainWindow.GetInCartProducts();
+            if (InCart.Count > 0)
                 InCartProductsList.ItemsSource = InCart;
         }
 
@@ -39,6 +43,21 @@ namespace ClientApplication.ShoppingCartScreen
         private void Button_ProceedPurchase(object sender, RoutedEventArgs e)
         {
             mainWindow.ChangeView("PurchaseCheckout");
+        }
+
+        private void Button_Remove(object sender, RoutedEventArgs e)
+        {
+            string p = ((Button)sender).Tag.ToString();
+            foreach (InCartProduct product in InCart)
+            {
+                if (product.ProductName.Equals(p))
+                {
+                    InCart.Remove(product);
+                    InCartProductsList.ItemsSource = null;
+                    InCartProductsList.ItemsSource = InCart;
+                    return;
+                }
+            }
         }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using ClientApplication.AccountScreen;
 using ClientApplication.CategoryProductScreen;
-using ClientApplication.FAQScreen;
 using ClientApplication.PreviousOrderScreen;
 using ClientApplication.ProductDetailScreen;
 using ClientApplication.PurchaseCheckoutScreen;
@@ -30,7 +29,6 @@ namespace ClientApplication
     public partial class MainWindow : Window
     {
         private MainProductScreenUC mainProductScreenUC;
-        private FAQScreenUC fAQUC;
         private LoginScreenUC loginScreenUC;
         private RegisterScreenUC registerScreenUC;
         private AccountOverviewUC accountOverviewUC;
@@ -73,8 +71,6 @@ namespace ClientApplication
 
             mainProductScreenUC = new MainProductScreenUC(this);
             LayoutControl.Children.Add(mainProductScreenUC);
-            fAQUC = new FAQScreenUC(this);
-            LayoutControl.Children.Add(fAQUC);
             loginScreenUC = new LoginScreenUC(this);
             LayoutControl.Children.Add(loginScreenUC);
             registerScreenUC = new RegisterScreenUC(this);
@@ -95,10 +91,12 @@ namespace ClientApplication
             ChangeView("MainProduct");
         }
 
+        /**
+         * Used to change the middle section of the screen. 
+         */
         public void ChangeView(String viewName)
         {
             mainProductScreenUC.Visibility = Visibility.Hidden;
-            fAQUC.Visibility = Visibility.Hidden;
             loginScreenUC.Visibility = Visibility.Hidden;
             registerScreenUC.Visibility = Visibility.Hidden;
             accountOverviewUC.Visibility = Visibility.Hidden;
@@ -116,9 +114,6 @@ namespace ClientApplication
             {
                 case "MainProduct":
                     mainProductScreenUC.Visibility = Visibility.Visible;
-                    break;
-                case "FAQ":
-                    fAQUC.Visibility = Visibility.Visible;
                     break;
                 case "Login":
                     if (HasAccount)
@@ -171,11 +166,6 @@ namespace ClientApplication
         }
 
         #region //Button onClicks
-
-        private void Button_FAQ(object sender, RoutedEventArgs e)
-        {
-            ChangeView("FAQ");
-        }
 
         private void Button_AppName(object sender, RoutedEventArgs e)
         {

@@ -6,6 +6,35 @@
              xmlns:local="clr-namespace:ClientApplication.PurchaseCheckoutScreen"
              mc:Ignorable="d" 
              d:DesignHeight="640" d:DesignWidth="960" Background="White">
+    
+    <UserControl.Resources>
+        <Style x:Key="MyWaterMarkStyle" TargetType="{x:Type TextBox}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TextBox}">
+                        <Grid>
+                            <Border Background="White" BorderBrush="#FF7D8683" BorderThickness="0"/>
+                            <ScrollViewer x:Name="PART_ContentHost" Margin="5,0,0,0" VerticalAlignment="Top" />
+                            <Label Margin="5,0,0,0" x:Name="WaterMarkLabel" Content="{TemplateBinding Tag}" VerticalAlignment="Top"
+                           Visibility="Collapsed" Foreground="Gray" FontFamily="Arial"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="Text" Value=""/>
+                                </MultiTrigger.Conditions>
+                                <Setter Property="Visibility" TargetName="WaterMarkLabel" Value="Visible"/>
+                            </MultiTrigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Foreground" Value="DimGray"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="380"></RowDefinition>
@@ -38,29 +67,31 @@
                     <ColumnDefinition Width="*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
 
+                <!--Name-->
                 <Border Grid.Column="0" Grid.Row="0" BorderThickness="2" BorderBrush="Black" Margin="10" >
-                    <TextBox Text="Name" TextWrapping="Wrap" />
+                    <TextBox Tag="First name" FontSize="16" Style="{StaticResource MyWaterMarkStyle}" VerticalAlignment="Center" TextWrapping="Wrap"/>
                 </Border>
 
+                <!--Last name-->
                 <Border Grid.Column="1" Grid.Row="0" BorderThickness="2" BorderBrush="Black" Margin="10" >
-                    <TextBox Text="Last Name" TextWrapping="Wrap"/>
+                    <TextBox Tag="Last name" FontSize="16" Style="{StaticResource MyWaterMarkStyle}" VerticalAlignment="Center" TextWrapping="Wrap"/>
                 </Border>
             </Grid>
 
             <!--Shipping address-->
             <Border Grid.Column="0" Grid.Row="2" BorderThickness="2" BorderBrush="Black" Margin="10" >
-                <TextBox Text="Shipping address" TextWrapping="Wrap" />
+                <TextBox Tag="Shipping address" Style="{StaticResource MyWaterMarkStyle}" TextWrapping="Wrap" />
             </Border>
 
             <!--Billing address-->
             <Border Grid.Column="0" Grid.Row="3" BorderThickness="2" BorderBrush="Black" Margin="10" >
-                <TextBox Text="Billing address" TextWrapping="Wrap"/>
+                <TextBox Tag="Billing address" Style="{StaticResource MyWaterMarkStyle}" TextWrapping="Wrap"/>
             </Border>
 
         </Grid>
 
         <Border Grid.Column="0" Grid.Row="1" BorderThickness="2" BorderBrush="Black" Margin="10,0,10,80" >
-            <TextBox Text="Optional - Shipping description" TextWrapping="Wrap"/>
+                <TextBox Tag="Optional - Shipping description" Style="{StaticResource MyWaterMarkStyle}" TextWrapping="Wrap"/>
         </Border>
 
         <Border Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Top" Width="360" Height="156" BorderThickness="2" BorderBrush="Black" Margin="10,20,10,80" >

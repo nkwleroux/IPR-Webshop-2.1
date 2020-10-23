@@ -18,7 +18,7 @@
 
         <!--All products from previous purchase-->
 
-        <ScrollViewer Grid.Column="0" Grid.Row="0" Margin="30,20,20,20" HorizontalAlignment="Left" VerticalScrollBarVisibility="Auto" Background="Black" >
+        <ScrollViewer Grid.Column="0" Width="880" Grid.Row="0" Margin="30,20,20,20" HorizontalAlignment="Left" VerticalScrollBarVisibility="Auto" Background="Black" BorderThickness="1" >
             <Grid >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"></ColumnDefinition>
@@ -79,7 +79,10 @@
                                             <StackPanel Grid.Column="0" Grid.Row="3" Margin="20,0,10,0"  Orientation="Horizontal" VerticalAlignment="Center">
                                                 <TextBlock TextWrapping="Wrap" FontSize="15" TextAlignment="Center" Text="Price :"/>
                                                 <TextBlock TextWrapping="Wrap" Margin="10,0,0,0" FontSize="15" TextAlignment="Center" Text="{Binding ProductPrice}"/>
-                                                <TextBlock TextWrapping="Wrap" FontSize="15" TextAlignment="Center" HorizontalAlignment="Left" Text=" $"/>
+                                                <TextBlock TextWrapping="Wrap" Margin="0,0,50,0" FontSize="15" TextAlignment="Center" HorizontalAlignment="Left" Text=" $"/>
+                                                <Button Click="Button_Remove" Tag="{Binding ProductName}"  Width="100" Margin="0,0,0,0">
+                                                    <TextBlock TextWrapping="Wrap" FontSize="15" TextAlignment="Center" HorizontalAlignment="Left" Text="Remove"/>
+                                                </Button>
                                             </StackPanel>
                                         </Grid>
 

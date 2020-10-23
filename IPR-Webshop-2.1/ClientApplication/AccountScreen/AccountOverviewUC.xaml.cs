@@ -63,6 +63,13 @@ namespace ClientApplication.AccountScreen
                 })
            };
         }
+
+        private void Button_ChangePassword(object sender, RoutedEventArgs e)
+        {
+            Username.Clear();
+            Password.Clear();
+            ConfirmPassword.Clear();
+        }
     }
 
 }
