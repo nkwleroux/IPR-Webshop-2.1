@@ -107,7 +107,14 @@ namespace ServerApplication
         {
             foreach(ServerClient serverClient in clients)
             {
-                serverClient.SendProductList(null);
+                try
+                {
+                    serverClient.SendProductList(null);
+                }
+                catch (Exception)
+                {
+
+                }
             }
         }
     }

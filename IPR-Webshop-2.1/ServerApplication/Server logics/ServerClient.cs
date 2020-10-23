@@ -102,8 +102,12 @@ namespace ServerApplication
         {
             string username = receivedData["username"].ToString();
             string password = receivedData["password"].ToString();
-            bool registerSucceeded = this.database.RegisterUser(username, password);
-
+            User registeredUser = this.database.RegisterUser(username, password);
+            bool registerSucceeded = (registeredUser != null);
+            if (registerSucceeded)
+            {
+                this.currentUser = registeredUser;
+            }
             dynamic data = new
             {
                 status = registerSucceeded,
@@ -202,11 +206,10 @@ namespace ServerApplication
         }
         private void EditUser(JObject receivedData)
         {
-            User user = JsonConvert.DeserializeObject<User>((string)receivedData["user"]);
+            User user = JsonConvert.DeserializeObject<User>(receivedData["user"].ToString());
             database.EditUser(user);
             this.currentUser = user;
-
-
+            SendCurrentUser();
         }
         public void SendProductList(JObject json)
         {

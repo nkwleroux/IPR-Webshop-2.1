@@ -167,19 +167,22 @@ namespace ServerApplication.Server_logics
             }
             return null;
         }
-        internal bool RegisterUser(string username, string password)
+        internal User RegisterUser(string username, string password)
         {
             foreach(User user in this.Users)
             {
                 if(user.Username == username)
                 {
-                    return false;
+                    return null;
                 }
             }
-            this.Users.Add(new User(){ 
-                Username = username, 
-                Password = password});
-            return true;
+            User user = new User()
+            {
+                Username = username,
+                Password = password
+            };
+            this.Users.Add(user);
+            return user;
         }
     }
 }
