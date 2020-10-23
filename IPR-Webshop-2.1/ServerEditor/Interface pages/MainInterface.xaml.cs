@@ -51,7 +51,7 @@ namespace ServerEditor.Interface_pages
             switch (type)
             {
                 case "server/productListResponse":
-                    productEditor.handleProductList(receivedData);
+                    productEditor.ProductEditor.OnProductListReceived(receivedData);
                     break;
                 case "server/userListResponse":
                     userEditor.handleUserList(receivedData);

@@ -173,7 +173,11 @@ namespace ServerApplication
         public void SendProductList(JObject json)
         {
             //TODO categories
-            string category = json["category"].ToString();
+            string category = "";
+            if(json != null)
+            {
+                category = (string)json["category"];
+            }
             List<Product> productList;
             if (category.Length > 0)
             {

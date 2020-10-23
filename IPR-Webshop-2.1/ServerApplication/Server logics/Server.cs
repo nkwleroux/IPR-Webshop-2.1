@@ -78,11 +78,13 @@ namespace ServerApplication
             this.serverButtons.Button_Start.IsEnabled = true;
             this.serverButtons.Button_Stop.IsEnabled = false;
             // foreach client connected to the server
-            foreach (ServerClient client in clients)
+            for(int i = 0; i < this.clients.Count; i++)
             {
+                ServerClient client = this.clients[clients.Count-1];
                 // Disposes the TcpClient and NetworkStream
                 client.Disconect();
             }
+                
             // Stop listening to new tcp connections
             this.tcpListener.Stop();
             // Indicate user of serverstate
