@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Shared;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -19,20 +20,38 @@ namespace ClientApplication.AccountScreen
     public partial class AccountOverviewUC : UserControl
     {
         private MainWindow mainWindow;
+        private User currentUser;
 
         public AccountOverviewUC(MainWindow mainWindow)
         {
             this.mainWindow = mainWindow;
+            this.currentUser = new User();
             InitializeComponent();
-
         }
 
-        private void Button_ChangePassword(object sender, RoutedEventArgs e)
+        public void SetUserData(User currentUser)
         {
-            Username.Clear();
-            Password.Clear();
-            ConfirmPassword.Clear();
+            this.currentUser = currentUser;
+            this.Dispatcher.Invoke(() =>
+            {
+                TextBox_Firstname.Text = currentUser.FirstName;
+                TextBox_Lastname.Text = currentUser.LastName;
+                TextBox_BillingAddress.Text = currentUser.BillingDetails;
+                TextBox_ShippingAddress.Text = currentUser.ShippingDetails;
+                TextBlock_CreditAmount.Text = (currentUser.Credits).ToString();
+            });
         }
+
+        private void Button_SaveChanges(object sender, RoutedEventArgs e)
+        {
+            currentUser.FirstName = TextBox_Firstname.Text;
+            currentUser.LastName = TextBox_Lastname.Text;
+            currentUser.BillingDetails = TextBox_BillingAddress.Text;
+            currentUser.ShippingDetails = TextBox_ShippingAddress.Text;
+
+            mainWindow.UserEdit(this.currentUser);
+        }
+
 
         #region //Unused code
         /*var prevOrders = GetPreviousOrders();
@@ -73,6 +92,15 @@ namespace ClientApplication.AccountScreen
             })
        };
     }*/
+
+        /*
+               private void Button_ChangePassword(object sender, RoutedEventArgs e)
+               {
+                   Username.Clear();
+                   Password.Clear();
+                   ConfirmPassword.Clear();
+               }
+       */
 
         #endregion
 

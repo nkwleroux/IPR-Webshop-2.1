@@ -202,7 +202,7 @@ namespace ServerApplication
         }
         private void EditUser(JObject receivedData)
         {
-            User user = JsonConvert.DeserializeObject<User>((string)receivedData["user"]);
+            User user = JsonConvert.DeserializeObject<User>(receivedData["user"].ToString());
             database.EditUser(user);
             this.currentUser = user;
 

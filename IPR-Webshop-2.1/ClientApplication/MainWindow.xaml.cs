@@ -110,6 +110,16 @@ namespace ClientApplication
                 });
         }
 
+        public void UserEdit(User userEdit)
+        {
+            client.SendNewUser(userEdit);
+        }
+
+        public void SetUser(User user)
+        {
+            accountOverviewUC.SetUserData(user);
+        }
+
         private void Init()
         {
             //Init products
@@ -192,6 +202,7 @@ namespace ClientApplication
                     break;
                 case "AccountOverview":
                     accountOverviewUC.Visibility = Visibility.Visible;
+                    accountOverviewUC.SetUserData(client.currentUser);
                     if (!HasAccount)
                     {
                         HasAccount = true;
