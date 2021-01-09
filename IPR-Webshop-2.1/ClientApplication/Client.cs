@@ -10,6 +10,7 @@ namespace ClientApplication
 {
     public class Client
     {
+        private KeepAliveService keepAliveServie;
         public List<Product> Products { get; set; }
         public User currentUser;
         private Crypto crypto;
@@ -33,7 +34,7 @@ namespace ClientApplication
         }
 
         //Method used to make the initial connection to the server. Upon failure this method automatically retries until it reaches the given MAXRECONTIRES before stopping.
-        private void OnConnect(string iPAddress, int port)
+        private void OnConnect(string IPAddress, int port)
         {
             try
             {
@@ -41,9 +42,9 @@ namespace ClientApplication
                 if (tcpClient.Connected)
                 {
                     OnConnected();
-                }
+                } 
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine(ex);
                 if (!tcpClient.Connected && totalTries < MAXRECONTRIES)
@@ -63,14 +64,19 @@ namespace ClientApplication
         {
             this.crypto = new Crypto(tcpClient, HandleData);
 
+            this.keepAliveServie = new KeepAliveService(this.crypto);
+            this.keepAliveServie.Run();
+
             this.crypto.WriteTextMessage(DataProtocol.getJsonMessage("client/productListRequest",
-    DataProtocol.getProductListRequest("")));
+            DataProtocol.getProductListRequest("")));
         }
 
         //Method used to safely close all connections to the server.
         public void OnDisconnect()
         {
-            this.crypto.WriteTextMessage(DataProtocol.getJsonMessage("client/disconnect", new { }));
+            if (this.crypto != null)
+                this.crypto.WriteTextMessage(DataProtocol.getJsonMessage("client/disconnect", new { }));
+            this.keepAliveServie.Stop();
             tcpClient.Close();
         }
 

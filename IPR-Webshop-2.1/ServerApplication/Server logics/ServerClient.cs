@@ -16,6 +16,7 @@ namespace ServerApplication
     public class ServerClient
     {
         private static readonly string SOURCE_LABEL = "ServerClient";
+        private KeepAliveReceiver keepAliveReceiver;
         // The accepted client from out tcp listener
         private TcpClient client;
         // The stream to send and receive tcp data
@@ -41,6 +42,8 @@ namespace ServerApplication
             this.stream = client.GetStream();
             this.crypto = new Crypto(client, HandleData);
             this.currentUser = new User();
+            this.keepAliveReceiver = new KeepAliveReceiver(this.Disconect);
+            this.keepAliveReceiver.Run();
         }
         /*
          * When the received message is wrapped by a JObject, the message ends in the 
@@ -50,6 +53,7 @@ namespace ServerApplication
         private void HandleData(string receivedText)
         {
             JObject receivedMessage = (JObject)JsonConvert.DeserializeObject(receivedText);
+            log.PrintLine("incomming message: ",receivedText.ToString());
             // Type of message received.
             string type = (string)receivedMessage["type"];
             JObject receivedData = (JObject)receivedMessage["data"];
@@ -79,6 +83,12 @@ namespace ServerApplication
                     break;
                 case "client/register":
                     handleClientRegister(receivedData);
+                    break;
+                case "client/alive":
+                    //todo some kind of default value
+                    int interval = int.MaxValue;
+                    int.TryParse(receivedData["nextAliveTime"].ToString(), out interval);
+                    this.keepAliveReceiver.received(interval);
                     break;
                 default:
                     if (!currentUser.IsEditor)
@@ -278,6 +288,7 @@ namespace ServerApplication
             this.stream.Dispose();
             this.client.Dispose();            
             this.server.OnDisposeServerClient(this);
+            this.keepAliveReceiver.Stop();
         }
     }
 }
