@@ -234,7 +234,7 @@ namespace ClientApplication
             if (response.status)
                 this.Dispatcher.Invoke(() =>
                 {
-                    client.setCurrentUser(response.user);
+                    client.SetCurrentUser(response.user);
                     UpdateCart(response.user.cart);
                     HasAccount = true;
                     ChangeView("AccountOverview");
@@ -242,9 +242,9 @@ namespace ClientApplication
         }
 
         //Account overview screen - button save changes 
-        public void UserEdit(User userEdit)
+        public void EditUser(User editUser)
         {
-            client.MessageSendNewUser(userEdit);
+            client.MessageSendNewUser(editUser);
         }
 
         //Account overview screen 

@@ -21,7 +21,6 @@ namespace ClientApplication.ShoppingCartScreen
     public partial class ShoppingCartUC : UserControl
     {
         private MainWindow mainWindow;
-
         public List<Product> InCart { get; set; }
         public ShoppingCartUC(MainWindow mainWindow)
         {
@@ -61,7 +60,6 @@ namespace ClientApplication.ShoppingCartScreen
         {
             InCartProductsList.ItemsSource = new List<Product>();
             InCartProductsList.ItemsSource = products;
-            
         }
     }
 }

@@ -50,7 +50,7 @@ namespace ClientApplication.AccountScreen
             currentUser.BillingDetails = TextBox_BillingAddress.Text;
             currentUser.ShippingDetails = TextBox_ShippingAddress.Text;
 
-            mainWindow.UserEdit(this.currentUser);
+            mainWindow.EditUser(this.currentUser);
         }
     }
 }

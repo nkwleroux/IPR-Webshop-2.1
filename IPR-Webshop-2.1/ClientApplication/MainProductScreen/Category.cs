@@ -10,6 +10,11 @@ namespace ClientApplication
 
         public string CategoryImage { get; set; }
 
+        public Category()
+        {
+
+        }
+
         public Category(string name)
         {
             this.Name = name;

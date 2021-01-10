@@ -20,7 +20,9 @@ namespace ClientApplication
         private int totalTries = 0;
         private readonly int MAXRECONTRIES = 3;
 
-        public void setCurrentUser(User currentUser) { this.currentUser = currentUser; }
+        public void SetCurrentUser(User currentUser) { this.currentUser = currentUser; }
+
+        public TcpClient GetClient() { return this.tcpClient; }
 
         private MainWindow mainWindow;
 
@@ -33,7 +35,7 @@ namespace ClientApplication
         }
 
         //Method used to make the initial connection to the server. Upon failure this method automatically retries until it reaches the given MAXRECONTIRES before stopping.
-        private void OnConnect(string iPAddress, int port)
+        public void OnConnect(string iPAddress, int port)
         {
             try
             {
@@ -74,12 +76,17 @@ namespace ClientApplication
             tcpClient.Close();
         }
 
-        public void HandleData(string receivedText)
+        private void ParseRecievedString(string receivedString, out string type, out JObject receivedData)
         {
-            JObject receivedMessage = (JObject)JsonConvert.DeserializeObject(receivedText);
+            JObject receivedMessage = (JObject)JsonConvert.DeserializeObject(receivedString);
             // Type of message received.
-            string type = (string)receivedMessage["type"];
-            JObject receivedData = (JObject)receivedMessage["data"];
+            type = (string)receivedMessage["type"];
+            receivedData = (JObject)receivedMessage["data"];
+        }
+
+        private void HandleData(string receivedText)
+        {
+            ParseRecievedString(receivedText, out string type, out JObject receivedData);
 
             switch (type)
             {
@@ -109,7 +116,7 @@ namespace ClientApplication
         }
 
         //Adds products to prodcut list
-        public void HandleProductList(JObject receivedData)
+        private void HandleProductList(JObject receivedData)
         {
             Products.Clear();
             JArray productList = (JArray)receivedData["productList"];

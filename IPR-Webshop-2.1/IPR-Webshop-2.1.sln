@@ -11,6 +11,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServerApplication", "Server
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Shared", "Shared\Shared.shproj", "{EFA32A8A-0DAD-4785-B658-4E384BA2B849}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NUnitTestProject", "NUnitTestProject\NUnitTestProject.csproj", "{05740433-8938-4592-B7FF-E402CA5302FD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientApplicationTests", "ClientApplicationTests\ClientApplicationTests.csproj", "{A853E007-5AA0-44BE-B830-214F3F1642FB}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Shared\Shared.projitems*{0020b253-9847-4bc0-8a21-4f0d662f73ed}*SharedItemsImports = 5
@@ -36,6 +40,14 @@ Global
 		{1675B1DF-3874-45D7-A673-6F53797C626E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1675B1DF-3874-45D7-A673-6F53797C626E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1675B1DF-3874-45D7-A673-6F53797C626E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{05740433-8938-4592-B7FF-E402CA5302FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05740433-8938-4592-B7FF-E402CA5302FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05740433-8938-4592-B7FF-E402CA5302FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05740433-8938-4592-B7FF-E402CA5302FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A853E007-5AA0-44BE-B830-214F3F1642FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A853E007-5AA0-44BE-B830-214F3F1642FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A853E007-5AA0-44BE-B830-214F3F1642FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A853E007-5AA0-44BE-B830-214F3F1642FB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
