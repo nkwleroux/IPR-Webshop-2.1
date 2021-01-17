@@ -12,7 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ClientApplication.CategoryProductScreen
+namespace Shared.CategoryProductScreen
 {
     /// <summary>
     /// Interaction logic for CategoryDetailScreenUC.xaml

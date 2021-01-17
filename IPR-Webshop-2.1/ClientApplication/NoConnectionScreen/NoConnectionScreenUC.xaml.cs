@@ -12,7 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ClientApplication.NoConnectionScreen
+namespace Shared.NoConnectionScreen
 {
     /// <summary>
     /// Interaction logic for NoConnectionScreenUC.xaml

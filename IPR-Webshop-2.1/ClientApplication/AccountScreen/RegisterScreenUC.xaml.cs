@@ -11,7 +11,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ClientApplication.AccountScreen
+namespace Shared.AccountScreen
 {
     /// <summary>
     /// Interaction logic for RegisterScreenUC.xaml

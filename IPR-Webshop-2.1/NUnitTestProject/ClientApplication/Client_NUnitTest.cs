@@ -1,4 +1,4 @@
-using ClientApplication;
+using Shared;
 using NUnit.Framework;
 using System.Threading;
 

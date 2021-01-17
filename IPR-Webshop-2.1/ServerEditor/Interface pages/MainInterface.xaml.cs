@@ -13,8 +13,9 @@ namespace ServerEditor.Interface_pages
     /// </summary>
     public partial class MainInterface : Page
     {
-        private Page_ProductEditor productEditor;
-        private Page_UserEditor userEditor;
+        private KeepAliveService keepAliveService;
+        private Page_ProductEditor productEditorPage;
+        private Page_UserEditor userEditorPage;
         private Crypto crypto;
 
         public MainInterface(Window window, Crypto crypto)
@@ -23,11 +24,14 @@ namespace ServerEditor.Interface_pages
             this.crypto = crypto;
             this.crypto.handleMethod = this.HandleData;
 
-            this.productEditor = new Page_ProductEditor(this.crypto);
-            this.userEditor = new Page_UserEditor(this.crypto);
+            this.keepAliveService = new KeepAliveService(this.crypto);
+            this.keepAliveService.Run();
 
-            this.ViewPort_ProductEditor.Navigate(this.productEditor);
-            this.ViewPort_UserEditor.Navigate(this.userEditor);
+            this.productEditorPage = new Page_ProductEditor(this.crypto);
+            this.userEditorPage = new Page_UserEditor(this.crypto);
+
+            this.ViewPort_ProductEditor.Navigate(this.productEditorPage);
+            this.ViewPort_UserEditor.Navigate(this.userEditorPage);
             window.Closed += Window_Closed;
         }
 
@@ -41,10 +45,10 @@ namespace ServerEditor.Interface_pages
             switch (type)
             {
                 case "server/productListResponse":
-                    productEditor.ProductEditor.OnProductListReceived(receivedData);
+                    productEditorPage.ProductEditor.OnProductListReceived(receivedData);
                     break;
                 case "server/userListResponse":
-                    userEditor.UserEditor.OnUserListReceived(receivedData);
+                    userEditorPage.UserEditor.OnUserListReceived(receivedData);
                     break;
                 default:
                     // TODO: when message is not undestood.
@@ -59,6 +63,7 @@ namespace ServerEditor.Interface_pages
         public void disconnectMessage()
         {
             this.crypto.WriteTextMessage(DataProtocol.getJsonMessage("client/disconnect", new { }));
+            this.keepAliveService.Stop();
         }
     }
 }

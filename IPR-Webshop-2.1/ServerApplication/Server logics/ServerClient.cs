@@ -53,7 +53,6 @@ namespace ServerApplication
         private void HandleData(string receivedText)
         {
             JObject receivedMessage = (JObject)JsonConvert.DeserializeObject(receivedText);
-            log.PrintLine("incomming message: ",receivedText.ToString());
             // Type of message received.
             string type = (string)receivedMessage["type"];
             JObject receivedData = (JObject)receivedMessage["data"];
@@ -85,8 +84,7 @@ namespace ServerApplication
                     handleClientRegister(receivedData);
                     break;
                 case "client/alive":
-                    //todo some kind of default value
-                    int interval = int.MaxValue;
+                    int interval;
                     int.TryParse(receivedData["nextAliveTime"].ToString(), out interval);
                     this.keepAliveReceiver.received(interval);
                     break;

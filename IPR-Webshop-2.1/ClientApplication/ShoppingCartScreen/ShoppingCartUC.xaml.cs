@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ClientApplication.ShoppingCartScreen
+namespace Shared.ShoppingCartScreen
 {
     /// <summary>
     /// Interaction logic for ShoppingCartUC.xaml

@@ -1,9 +1,9 @@
-﻿using ClientApplication.AccountScreen;
-using ClientApplication.CategoryProductScreen;
-using ClientApplication.NoConnectionScreen;
-using ClientApplication.ProductDetailScreen;
-using ClientApplication.PurchaseCheckoutScreen;
-using ClientApplication.ShoppingCartScreen;
+﻿using Shared.AccountScreen;
+using Shared.CategoryProductScreen;
+using Shared.NoConnectionScreen;
+using Shared.ProductDetailScreen;
+using Shared.PurchaseCheckoutScreen;
+using Shared.ShoppingCartScreen;
 using Shared;
 using System;
 using System.Collections.Generic;
@@ -23,7 +23,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 
-namespace ClientApplication
+namespace Shared
 {
     /// <summary> 
     /// Interaction logic for MainWindow.xaml 

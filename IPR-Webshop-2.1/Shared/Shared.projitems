@@ -12,6 +12,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)BitmapConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Crypto.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DataProtocol.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)KeepAliveService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Product.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)User.cs" />
   </ItemGroup>

@@ -159,10 +159,12 @@ namespace Shared
             Array.Copy(lengthMessage, fullMessage, lengthMessage.Length);
             Array.Copy(dataAsBytes,0, fullMessage,lengthMessage.Length, dataAsBytes.Length);
 
-       
+
             //send the message
-            networkStream.Write(fullMessage, 0, fullMessage.Length);
-            networkStream.Flush();
+            if (networkStream.CanWrite) {
+                networkStream.Write(fullMessage, 0, fullMessage.Length);
+                networkStream.Flush();
+            }
         }
 
         /// <summary>
