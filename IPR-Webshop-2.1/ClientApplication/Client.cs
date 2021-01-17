@@ -60,6 +60,13 @@ namespace ClientApplication
             }
         }
 
+        public void Reconnect()
+        {
+            this.tcpClient = new TcpClient();
+            totalTries = 0;
+            OnConnect(IPAddress, port);
+        }
+
         //Method used upon connection to the server. It is used to start the OnRead method and read incoming data.
         private void OnConnected()
         {
@@ -72,7 +79,10 @@ namespace ClientApplication
         //Method used to safely close all connections to the server.
         public void OnDisconnect()
         {
-            this.crypto.WriteTextMessage(DataProtocol.getJsonMessage("client/disconnect", new { }));
+            if (crypto != null)
+            {
+                this.crypto.WriteTextMessage(DataProtocol.getJsonMessage("client/disconnect", new { }));
+            }
             tcpClient.Close();
         }
 

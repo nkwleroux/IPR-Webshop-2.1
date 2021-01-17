@@ -1,5 +1,6 @@
 ﻿using ClientApplication.AccountScreen;
 using ClientApplication.CategoryProductScreen;
+using ClientApplication.NoConnectionScreen;
 using ClientApplication.ProductDetailScreen;
 using ClientApplication.PurchaseCheckoutScreen;
 using ClientApplication.ShoppingCartScreen;
@@ -9,6 +10,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -36,7 +38,9 @@ namespace ClientApplication
         private ShoppingCartUC shoppingCartUC;
         private ProductDetailScreenUC productDetailScreenUC;
         private PurchaseCheckoutUC purchaseCheckoutUC;
-        public Client client;
+        private NoConnectionScreenUC noConnectionScreenUC;
+        
+        public Client client { get; private set; }
 
         private bool HasAccount { get; set; }
         public string SelectedCategory { get; set; }
@@ -73,15 +77,25 @@ namespace ClientApplication
             LayoutControl.Children.Add(productDetailScreenUC);
             purchaseCheckoutUC = new PurchaseCheckoutUC(this);
             LayoutControl.Children.Add(purchaseCheckoutUC);
+            noConnectionScreenUC = new NoConnectionScreenUC(this);
+            LayoutControl.Children.Add(noConnectionScreenUC);
 
-            ChangeView("MainProduct");
+            if (client.GetClient().Connected)
+            {
+                ChangeView("MainProduct");
+            }
+            else
+            {
+                ChangeView("Reconnect");
+
+            }
         }
 
         //Method used to update products in category screen. 
         public void SetCategories()
         {
             ListViewProducts = new List<ListViewSelectProduct>(){
-                new ListViewSelectProduct("Aardappel, groente, fruit", new List<Product>() ),
+                new ListViewSelectProduct("Aardappel, groente, fruit", new List<Product>()),
                 new ListViewSelectProduct("Salades, pizza, maaltijden", new List<Product>()),
                 new ListViewSelectProduct("Vlees, kip, vis, vega", new List<Product>()),
                 new ListViewSelectProduct("Kaas, vleeswaren, tapas", new List<Product>()),
@@ -128,6 +142,7 @@ namespace ClientApplication
             shoppingCartUC.Visibility = Visibility.Hidden;
             productDetailScreenUC.Visibility = Visibility.Hidden;
             purchaseCheckoutUC.Visibility = Visibility.Hidden;
+            noConnectionScreenUC.Visibility = Visibility.Hidden;
 
             //Sets default min heigh/width. 
             mainscreen.MinHeight = 640;
@@ -167,7 +182,6 @@ namespace ClientApplication
                     categoryDetailScreenUC.Visibility = Visibility.Visible;
                     break;
                 case "ShoppingCart":
-
                     shoppingCartUC.Visibility = Visibility.Visible;
                     break;
                 case "ProductDetail":
@@ -175,6 +189,9 @@ namespace ClientApplication
                     break;
                 case "PurchaseCheckout":
                     purchaseCheckoutUC.Visibility = Visibility.Visible;
+                    break;
+                case "Reconnect":
+                    noConnectionScreenUC.Visibility = Visibility.Visible;
                     break;
                 default:
                     break;
@@ -185,17 +202,26 @@ namespace ClientApplication
 
         private void Button_AppName(object sender, RoutedEventArgs e)
         {
-            ChangeView("MainProduct");
+            if (client.GetClient().Connected)
+            {
+                ChangeView("MainProduct");
+            }
         }
 
         private void Button_MyAccount(object sender, RoutedEventArgs e)
         {
-            ChangeView("Login");
+            if (client.GetClient().Connected)
+            {
+                ChangeView("Login");
+            }
         }
 
         private void Button_Cart(object sender, RoutedEventArgs e)
         {
-            ChangeView("ShoppingCart");
+            if (client.GetClient().Connected)
+            {
+                ChangeView("ShoppingCart");
+            }
         }
 
         private void Button_Shutdown(object sender, RoutedEventArgs e)
@@ -271,5 +297,6 @@ namespace ClientApplication
             });
         }
         #endregion
+
     }
 }

@@ -6,7 +6,7 @@ using System.Threading;
 
 namespace NUnitTestProject.ClientApplication
 {
-
+    [TestFixture]
     class ListViewSelectProduct_NUnitTest
     {
 
