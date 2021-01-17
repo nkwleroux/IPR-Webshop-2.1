@@ -21,7 +21,7 @@ namespace ClientApplication.ShoppingCartScreen
     public partial class ShoppingCartUC : UserControl
     {
         private MainWindow mainWindow;
-        public List<Product> InCart { get; set; }
+        private List<Product> InCart { get; set; }
         public ShoppingCartUC(MainWindow mainWindow)
         {
             this.mainWindow = mainWindow;

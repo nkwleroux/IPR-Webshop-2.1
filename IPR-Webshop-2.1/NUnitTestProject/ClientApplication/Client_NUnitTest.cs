@@ -25,7 +25,7 @@ namespace NUnitTestProject.ClientApplication
         [Test]
         public void IsConnected()
         {
-           //Arrange
+            //Arrange
 
             //Act
 
