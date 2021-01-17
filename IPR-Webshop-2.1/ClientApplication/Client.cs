@@ -21,7 +21,9 @@ namespace ClientApplication
         private int totalTries = 0;
         private readonly int MAXRECONTRIES = 3;
 
-        public void setCurrentUser(User currentUser) { this.currentUser = currentUser; }
+        public void SetCurrentUser(User currentUser) { this.currentUser = currentUser; }
+
+        public TcpClient GetClient() { return this.tcpClient; }
 
         private MainWindow mainWindow;
 
@@ -59,6 +61,13 @@ namespace ClientApplication
             }
         }
 
+        public void Reconnect()
+        {
+            this.tcpClient = new TcpClient();
+            totalTries = 0;
+            OnConnect(IPAddress, port);
+        }
+
         //Method used upon connection to the server. It is used to start the OnRead method and read incoming data.
         private void OnConnected()
         {
@@ -80,12 +89,17 @@ namespace ClientApplication
             tcpClient.Close();
         }
 
-        public void HandleData(string receivedText)
+        private void ParseRecievedString(string receivedString, out string type, out JObject receivedData)
         {
-            JObject receivedMessage = (JObject)JsonConvert.DeserializeObject(receivedText);
+            JObject receivedMessage = (JObject)JsonConvert.DeserializeObject(receivedString);
             // Type of message received.
-            string type = (string)receivedMessage["type"];
-            JObject receivedData = (JObject)receivedMessage["data"];
+            type = (string)receivedMessage["type"];
+            receivedData = (JObject)receivedMessage["data"];
+        }
+
+        private void HandleData(string receivedText)
+        {
+            ParseRecievedString(receivedText, out string type, out JObject receivedData);
 
             switch (type)
             {
@@ -115,7 +129,7 @@ namespace ClientApplication
         }
 
         //Adds products to prodcut list
-        public void HandleProductList(JObject receivedData)
+        private void HandleProductList(JObject receivedData)
         {
             Products.Clear();
             JArray productList = (JArray)receivedData["productList"];
