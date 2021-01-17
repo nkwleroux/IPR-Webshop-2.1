@@ -12,6 +12,7 @@ namespace ServerApplication
         private Stopwatch stopwatch;
         private int interval;
 
+        // Delecate which is reffering to a disconnection
         private Action onIntervalMissed;
         public KeepAliveReceiver(Action onIntervalMissed)
         {
@@ -19,14 +20,14 @@ namespace ServerApplication
             this.stopwatch = new Stopwatch();
             this.interval = int.MaxValue;
         }
-
+        // this method will run our keep alive thread.
         public void Run()
         {
             this.running = true;
             Thread thread = new Thread(new ThreadStart(this.runThread));
             thread.Start();
         }
-
+        // This will stop the current thread if running.
         public void Stop()
         {
             this.running = false;
@@ -36,6 +37,7 @@ namespace ServerApplication
         {
             while (running)
             {
+                // When our elapsed time is > than out interval.
                 if(this.stopwatch.ElapsedMilliseconds > this.interval)
                 {
                     this.onIntervalMissed();
@@ -43,10 +45,14 @@ namespace ServerApplication
                 Thread.Sleep(100);
             }
         }
+        // When called our object will reset its previous interval and elapsed time.
         public void received(int interval)
         {
-            if(this.stopwatch.IsRunning)
+            if (this.stopwatch.IsRunning)
+            {
                 this.stopwatch.Stop();
+                this.stopwatch.Reset();
+            }
 
             this.stopwatch.Start();
             this.interval = interval;
