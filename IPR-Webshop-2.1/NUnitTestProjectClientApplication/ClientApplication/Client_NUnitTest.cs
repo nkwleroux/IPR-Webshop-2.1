@@ -19,11 +19,10 @@ namespace NUnitTestProject.ClientApplication
         [TearDown]
         public void TearDown()
         {
-            /*client.OnDisconnect();*/
         }
 
         [Test]
-        public void IsConnected()
+        public void IsConnected_ServerOn()
         {
             //Arrange
 
@@ -31,6 +30,19 @@ namespace NUnitTestProject.ClientApplication
 
             //Assert
             Assert.IsTrue(client.GetClient().Connected);
+
+            client.OnDisconnect();
+        }
+
+        [Test]
+        public void IsConnected_ServerOff()
+        {
+            //Arrange
+
+            //Act
+
+            //Assert
+            Assert.IsFalse(client.GetClient().Connected);
 
             client.OnDisconnect();
         }
@@ -62,14 +74,5 @@ namespace NUnitTestProject.ClientApplication
             Assert.IsFalse(client.GetClient().Connected);
         }
 
-/*        [Test]
-        public void TestTemplate()
-        {
-            //Arrange
-
-            //Act
-
-            //Assert
-        }*/
     }
 }

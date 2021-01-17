@@ -16,8 +16,4 @@
     <ProjectReference Include="..\ClientApplication\ClientApplication.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="ClientApplication\MainWindow\" />
-  </ItemGroup>
-
 </Project>

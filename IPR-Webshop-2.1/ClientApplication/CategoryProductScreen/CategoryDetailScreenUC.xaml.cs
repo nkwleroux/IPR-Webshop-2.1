@@ -20,6 +20,7 @@ namespace ClientApplication.CategoryProductScreen
     public partial class CategoryDetailScreenUC : UserControl
     {
         private MainWindow mainWindow;
+        private List<Product> CurrentProducts { get; set; }
 
         public CategoryDetailScreenUC(MainWindow mainWindow)
         {
@@ -58,8 +59,6 @@ namespace ClientApplication.CategoryProductScreen
             }
 
         }
-
-        private List<Product> CurrentProducts { get; set; }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
