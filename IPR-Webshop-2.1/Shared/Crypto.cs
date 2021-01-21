@@ -15,6 +15,7 @@ namespace Shared
         private TcpClient client;
         private NetworkStream networkStream;
         private List<byte> totalBuffer;
+        public Action onDisconnect { get; set; }
         public Action<string> handleMethod { get; set; }
         private byte[] key;
         private byte[] iV;
@@ -25,12 +26,13 @@ namespace Shared
         /// </summary>
         /// <param name="networkStream">the stream from a TcpClient</param>
         /// <param name="handleMethod">method where the data is being handled</param>
-        public Crypto(TcpClient client, Action<string> handleMethod)
+        public Crypto(TcpClient client, Action<string> handleMethod, Action onDisconnect)
         {
             this.buffer = new byte[1024];
             this.client = client;
             this.networkStream = client.GetStream();
             this.handleMethod = handleMethod;
+            this.onDisconnect = onDisconnect;
             this.totalBuffer = new List<byte>();
 
 
@@ -161,9 +163,12 @@ namespace Shared
 
 
             //send the message
-            if (networkStream.CanWrite) {
+            try{
                 networkStream.Write(fullMessage, 0, fullMessage.Length);
                 networkStream.Flush();
+            } catch (Exception)
+            {
+                this.onDisconnect();
             }
         }
 

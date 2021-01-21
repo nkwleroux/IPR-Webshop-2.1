@@ -23,6 +23,7 @@ namespace ServerEditor.Interface_pages
             InitializeComponent();
             this.crypto = crypto;
             this.crypto.handleMethod = this.HandleData;
+            this.crypto.onDisconnect = this.OnDisconnect;
 
             this.keepAliveService = new KeepAliveService(this.crypto);
             this.keepAliveService.Run();
@@ -58,11 +59,16 @@ namespace ServerEditor.Interface_pages
         }
         private void Window_Closed(object sender, EventArgs e)
         {
-            this.disconnectMessage();
+            this.DisconnectMessage();
         }
-        public void disconnectMessage()
+        public void DisconnectMessage()
         {
             this.crypto.WriteTextMessage(DataProtocol.getJsonMessage("client/disconnect", new { }));
+            this.OnDisconnect();
+        }
+
+        public void OnDisconnect()
+        {
             this.keepAliveService.Stop();
         }
     }

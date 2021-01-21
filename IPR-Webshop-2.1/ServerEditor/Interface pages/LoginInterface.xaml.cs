@@ -24,7 +24,7 @@ namespace ServerEditor.Interface_pages
 
             TcpClient tcpClient = new TcpClient();
             tcpClient.Connect("localhost", 2000);
-            this.crypto = new Crypto(tcpClient, HandleData);
+            this.crypto = new Crypto(tcpClient, HandleData, null);
         }
         public void HandleData(string receivedText)
         {

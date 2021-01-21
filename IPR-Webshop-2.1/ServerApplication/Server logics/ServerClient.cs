@@ -40,7 +40,7 @@ namespace ServerApplication
             this.client = client;
             this.database = server.Database;
             this.stream = client.GetStream();
-            this.crypto = new Crypto(client, HandleData);
+            this.crypto = new Crypto(client, HandleData, Disconect);
             this.currentUser = new User();
             this.keepAliveReceiver = new KeepAliveReceiver(this.Disconect);
             this.keepAliveReceiver.Run();

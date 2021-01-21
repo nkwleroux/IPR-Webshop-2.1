@@ -71,7 +71,7 @@ namespace Shared
         //Method used upon connection to the server. It is used to start the OnRead method and read incoming data.
         private void OnConnected()
         {
-            this.crypto = new Crypto(tcpClient, HandleData);
+            this.crypto = new Crypto(tcpClient, HandleData, this.OnDisconnectNoMessage);
 
             this.keepAliveServie = new KeepAliveService(this.crypto);
             this.keepAliveServie.Run();
@@ -85,7 +85,13 @@ namespace Shared
         {
             if (this.crypto != null)
                 this.crypto.WriteTextMessage(DataProtocol.getJsonMessage("client/disconnect", new { }));
-            this.keepAliveServie.Stop();
+            this.OnDisconnectNoMessage();
+        }
+
+        public void OnDisconnectNoMessage()
+        {
+            if (this.keepAliveServie != null)
+                this.keepAliveServie.Stop();
             tcpClient.Close();
         }
 
