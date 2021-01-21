@@ -19,13 +19,29 @@ namespace Shared.AccountScreen
     public partial class LoginScreenUC : UserControl
     {
         private MainWindow mainWindow;
+
+        /// <summary>
+        /// The constructor of LoginScreenUC.
+        /// </summary>
+        /// <param name="mainWindow">
+        /// MainWindow is used to send data to the server and change the view of the application.
+        /// </param>
         public LoginScreenUC(MainWindow mainWindow)
         {
             this.mainWindow = mainWindow;
             InitializeComponent();
-                        
+
         }
 
+        /// <summary>
+        /// Used to login to the server.
+        /// </summary>
+        /// <param name="sender">
+        /// The data of the object.
+        /// </param>
+        /// <param name="e">
+        /// The button event argument.
+        /// </param>
         private void Button_Login(object sender, RoutedEventArgs e)
         {
             string username = Username.Text;
@@ -33,10 +49,19 @@ namespace Shared.AccountScreen
 
             if (username.Length >= 5 && password.Length >= 5)
             {
-                mainWindow.SendCredentials("client/login",username, password);
+                mainWindow.SendCredentials("client/login", username, password);
             }
         }
 
+        /// <summary>
+        /// Used to change the current view.
+        /// </summary>
+        /// <param name="sender">
+        /// The data of the object.
+        /// </param>
+        /// <param name="e">
+        /// The button event argument.
+        /// </param>
         private void Button_Register(object sender, RoutedEventArgs e)
         {
             mainWindow.ChangeView("Register");

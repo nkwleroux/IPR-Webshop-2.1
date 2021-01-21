@@ -10,28 +10,29 @@ namespace Shared
     {
         public string SelectId { get; set; }
 
-        //not used
-        public List<Category> Categories { get; set; }
 
         public List<Product> Products { get; set; }
 
-        //not used
-        public ListViewSelectProduct(string selectId, List<Category> categories)
-        {
-            this.SelectId = selectId;
-            this.Categories = categories;
-        }
+        /// <summary>
+        /// The constructor of the class ListViewSelectProduct.
+        /// </summary>
+        public ListViewSelectProduct(){}
 
+        /// <summary>
+        /// Overloaded constructor of the class ListViewSelectProduct.
+        /// </summary>
+        /// <param name="selectId">
+        /// The id of the list of products.
+        /// </param>
+        /// <param name="products">
+        /// The list of products.
+        /// </param>
         public ListViewSelectProduct(string selectId, List<Product> products)
         {
             this.SelectId = selectId;
             this.Products = products;
         }
 
-        public ListViewSelectProduct()
-        {
-
-        }
 
     }
 }

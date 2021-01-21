@@ -22,12 +22,24 @@ namespace Shared.ProductDetailScreen
         private MainWindow mainWindow;
         private Product product;
 
+        /// <summary>
+        /// The constructor of ProductDetailScreenUC
+        /// </summary>
+        /// <param name="mainWindow">
+        /// MainWindow is used to send data to the server.
+        /// </param>
         public ProductDetailScreenUC(MainWindow mainWindow)
         {
             this.mainWindow = mainWindow;
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Used to set the name of the product and the amount of products that the user can select to put in the cart.
+        /// </summary>
+        /// <param name="p">
+        /// The product which contains the data for the name and total amount of items of that product.
+        /// </param>
         public void SetProductDetail(Product p)
         {
             product = p;
@@ -45,7 +57,7 @@ namespace Shared.ProductDetailScreen
 
             if (p.Amount >= 1)
             {
-                ComboBox_Quantity.ItemsSource = new List<int>() {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 20, 25, 50 };
+                ComboBox_Quantity.ItemsSource = new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 20, 25, 50 };
             }
             else
             {
@@ -55,6 +67,15 @@ namespace Shared.ProductDetailScreen
             ComboBox_Quantity.SelectedIndex = 0;
         }
 
+        /// <summary>
+        /// Used to add a product to the users cart.
+        /// </summary>
+        /// <param name="sender">
+        /// The data of the object.
+        /// </param>
+        /// <param name="e">
+        /// The button event argument.
+        /// </param>
         private void Button_AddToCart(object sender, RoutedEventArgs e)
         {
             Product product = new Product(this.product);

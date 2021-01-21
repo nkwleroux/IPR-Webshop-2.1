@@ -39,13 +39,16 @@ namespace Shared
         private ProductDetailScreenUC productDetailScreenUC;
         private PurchaseCheckoutUC purchaseCheckoutUC;
         private NoConnectionScreenUC noConnectionScreenUC;
-        
+
         public Client client { get; private set; }
 
         private bool HasAccount { get; set; }
         public string SelectedCategory { get; set; }
         public List<ListViewSelectProduct> ListViewProducts { get; set; }
 
+        /// <summary>
+        /// The constructor of MainWindow.
+        /// </summary>
         public MainWindow()
         {
             InitializeComponent();
@@ -53,6 +56,10 @@ namespace Shared
         }
 
         #region //init 
+
+        /// <summary>
+        /// Used to initialize the data of the application.
+        /// </summary>
         private void Init()
         {
             HasAccount = false;
@@ -91,7 +98,9 @@ namespace Shared
             }
         }
 
-        //Method used to update products in category screen. 
+        /// <summary>
+        /// Method used to update products in category screen. 
+        /// </summary>
         public void SetCategories()
         {
             ListViewProducts = new List<ListViewSelectProduct>(){
@@ -129,9 +138,12 @@ namespace Shared
 
         #endregion
 
-        /** 
-         * Used to change the middle section of the screen.  
-         */
+        /// <summary>
+        /// Used to change the middle section of the screen.  
+        /// </summary>
+        /// <param name="viewName">
+        /// The id of the view.
+        /// </param>
         public void ChangeView(String viewName)
         {
             mainProductScreenUC.Visibility = Visibility.Hidden;
@@ -200,6 +212,15 @@ namespace Shared
 
         #region //Button onClicks 
 
+        /// <summary>
+        /// Used to change the view to the Home screen.
+        /// </summary>
+        /// <param name="sender">
+        /// The data of the object.
+        /// </param>
+        /// <param name="e">
+        /// The button event argument.
+        /// </param>
         private void Button_AppName(object sender, RoutedEventArgs e)
         {
             if (client.GetClient().Connected)
@@ -208,6 +229,15 @@ namespace Shared
             }
         }
 
+        /// <summary>
+        /// Used to change the view to the account screen.
+        /// </summary>
+        /// <param name="sender">
+        /// The data of the object.
+        /// </param>
+        /// <param name="e">
+        /// The button event argument.
+        /// </param>
         private void Button_MyAccount(object sender, RoutedEventArgs e)
         {
             if (client.GetClient().Connected)
@@ -216,6 +246,15 @@ namespace Shared
             }
         }
 
+        /// <summary>
+        /// Used to change the view to the user cart screen.
+        /// </summary>
+        /// <param name="sender">
+        /// The data of the object.
+        /// </param>
+        /// <param name="e">
+        /// The button event argument.
+        /// </param>
         private void Button_Cart(object sender, RoutedEventArgs e)
         {
             if (client.GetClient().Connected)
@@ -224,6 +263,15 @@ namespace Shared
             }
         }
 
+        /// <summary>
+        /// Used to close the application.
+        /// </summary>
+        /// <param name="sender">
+        /// The data of the object.
+        /// </param>
+        /// <param name="e">
+        /// The button event argument.
+        /// </param>
         private void Button_Shutdown(object sender, RoutedEventArgs e)
         {
             client.OnDisconnect();
@@ -233,13 +281,23 @@ namespace Shared
         #endregion
 
         #region //Helper methods 
-        //Shopping cart screen - Removes product from cart 
+        /// <summary>
+        /// Shopping cart screen - Removes product from cart 
+        /// </summary>
+        /// <param name="product">
+        /// The product to be removed from the users cart.
+        /// </param>
         public void RemoveFromCart(Product product)
         {
             client.MessageRemoveFromCart(product);
         }
 
-        //Product detail screen - sets product in product detail screen and updates info. 
+        /// <summary>
+        /// Product detail screen - sets product in product detail screen and updates info. 
+        /// </summary>
+        /// <param name="p">
+        /// The product which is to be displayed on the screen.
+        /// </param>
         public void SetProductDetail(Product p)
         {
             this.Dispatcher.Invoke(() =>
@@ -248,13 +306,29 @@ namespace Shared
             });
         }
 
-        //Login and register  
+        /// <summary>
+        /// Login and register  
+        /// </summary>
+        /// <param name="tag">
+        /// The type of credentials.
+        /// </param>
+        /// <param name="username">
+        /// The username of the User.
+        /// </param>
+        /// <param name="password">
+        /// The password of the User.
+        /// </param>
         public void SendCredentials(string tag, string username, string password)
         {
             client.MessageSendCredentials(tag, username, password);
         }
 
-        //Login and register - Sets user and login. 
+        /// <summary>
+        /// Login and register - Sets user and login. 
+        /// </summary>
+        /// <param name="response">
+        /// The server response.
+        /// </param>
         public void IsLoggedIn((bool status, User user) response)
         {
             if (response.status)
@@ -267,19 +341,34 @@ namespace Shared
                 });
         }
 
-        //Account overview screen - button save changes 
+        /// <summary>
+        /// Account overview screen - button save changes 
+        /// </summary>
+        /// <param name="editUser">
+        /// The user object with the edited user details.
+        /// </param>
         public void EditUser(User editUser)
         {
             client.MessageSendNewUser(editUser);
         }
 
-        //Account overview screen 
+        /// <summary>
+        /// Account overview screen 
+        /// </summary>
+        /// <param name="user">
+        /// Sets the data of user on the account screen.
+        /// </param>
         public void SetUser(User user)
         {
             accountOverviewUC.SetUserData(user);
         }
 
-        //Prodcut detail screen 
+        /// <summary>
+        /// Prodcut detail screen 
+        /// </summary>
+        /// <param name="product">
+        /// Sets the data of the product on the product detail screen.
+        /// </param>
         public void AddToCart(Product product)
         {
             this.Dispatcher.Invoke(() =>
@@ -288,7 +377,12 @@ namespace Shared
             });
         }
 
-        //Shopping cart screen 
+        /// <summary>
+        /// Shopping cart screen 
+        /// </summary>
+        /// <param name="cart">
+        /// Sets the data on the user cart screen.
+        /// </param>
         public void UpdateCart(List<Product> cart)
         {
             this.Dispatcher.Invoke(() =>

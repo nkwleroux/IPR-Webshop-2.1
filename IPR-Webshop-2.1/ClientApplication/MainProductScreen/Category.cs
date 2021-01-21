@@ -10,16 +10,31 @@ namespace Shared
 
         public string CategoryImage { get; set; }
 
-        public Category()
-        {
+        /// <summary>
+        /// The constructor of the class Category.
+        /// </summary>
+        public Category() {}
 
-        }
-
+        /// <summary>
+        /// Overloaded constructor of the class Category.
+        /// </summary>
+        /// <param name="name">
+        /// The name of the category.
+        /// </param>
         public Category(string name)
         {
             this.Name = name;
         }
 
+        /// <summary>
+        /// Overloaded constructor of the class Category.
+        /// </summary>
+        /// <param name="name">
+        /// The name of the category.
+        /// </param>
+        /// <param name="categoryImage">
+        /// The image of the category.
+        /// </param>
         public Category(string name, string categoryImage) : this(name)
         {
             this.CategoryImage = categoryImage;

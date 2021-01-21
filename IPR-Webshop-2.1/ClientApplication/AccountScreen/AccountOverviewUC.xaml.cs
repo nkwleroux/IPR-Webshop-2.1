@@ -22,6 +22,12 @@ namespace Shared.AccountScreen
         private MainWindow mainWindow;
         private User currentUser;
 
+        /// <summary>
+        /// The constructor of AccountOverviewUC.
+        /// </summary>
+        /// <param name="mainWindow">
+        /// Mainwindow is used to send data to the server.
+        /// </param>
         public AccountOverviewUC(MainWindow mainWindow)
         {
             this.mainWindow = mainWindow;
@@ -29,9 +35,14 @@ namespace Shared.AccountScreen
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Used to change the text of the textboxes of the application.
+        /// </summary>
+        /// <param name="currentUser">
+        /// The user which will be displayed.
+        /// </param>
         public void SetUserData(User currentUser)
         {
-            
             this.Dispatcher.Invoke(() =>
             {
                 this.currentUser = currentUser;
@@ -43,6 +54,15 @@ namespace Shared.AccountScreen
             });
         }
 
+        /// <summary>
+        /// Used to save the changes made to user.
+        /// </summary>
+        /// <param name="sender">
+        /// The data of the object.
+        /// </param>
+        /// <param name="e">
+        /// The button event argument.
+        /// </param>
         private void Button_SaveChanges(object sender, RoutedEventArgs e)
         {
             currentUser.FirstName = TextBox_Firstname.Text;

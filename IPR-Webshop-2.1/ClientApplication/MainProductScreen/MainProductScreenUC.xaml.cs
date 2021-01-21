@@ -19,6 +19,13 @@ namespace Shared
     public partial class MainProductScreenUC : UserControl
     {
         private MainWindow mainWindow;
+
+        /// <summary>
+        /// The constructor of MainProductScreenUC
+        /// </summary>
+        /// <param name="mainWindow">
+        /// MainWindow is used to change the view of the application.
+        /// </param>
         public MainProductScreenUC(MainWindow mainWindow)
         {
             this.mainWindow = mainWindow;
@@ -29,6 +36,12 @@ namespace Shared
             ListViewCategories.ItemsSource = categories;
         }
 
+        /// <summary>
+        /// List which contains the different categories used in the webshop.
+        /// </summary>
+        /// <returns>
+        /// The list of categories.
+        /// </returns>
         private List<Category> GetCategories()
         {
             return new List<Category>()
@@ -54,6 +67,15 @@ namespace Shared
                 };
         }
 
+        /// <summary>
+        /// The onClick method. Used to change the view to the selected item.
+        /// </summary>
+        /// <param name="sender">
+        /// The data of the object.
+        /// </param>
+        /// <param name="e">
+        /// The button event argument.
+        /// </param>
         private void Button_Category(object sender, RoutedEventArgs e)
         {
             string cat = ((Button)sender).Tag.ToString();

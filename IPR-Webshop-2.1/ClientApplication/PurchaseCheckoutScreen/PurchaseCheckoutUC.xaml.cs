@@ -19,12 +19,28 @@ namespace Shared.PurchaseCheckoutScreen
     public partial class PurchaseCheckoutUC : UserControl
     {
         private MainWindow mainWindow;
+
+        /// <summary>
+        /// The constructor of PurchaseCheckoutUC
+        /// </summary>
+        /// <param name="mainWindow">
+        /// MainWindow is used to change the view of the application.
+        /// </param>
         public PurchaseCheckoutUC(MainWindow mainWindow)
         {
             this.mainWindow = mainWindow;
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Used to navigate back to the Home screen.
+        /// </summary>
+        /// <param name="sender">
+        /// The data of the object.
+        /// </param>
+        /// <param name="e">
+        /// The button event argument.
+        /// </param>
         private void Button_Home(object sender, RoutedEventArgs e)
         {
             mainWindow.ChangeView("MainProduct");

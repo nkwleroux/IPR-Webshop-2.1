@@ -22,6 +22,12 @@ namespace Shared.CategoryProductScreen
         private MainWindow mainWindow;
         private List<Product> CurrentProducts { get; set; }
 
+        /// <summary>
+        /// The constructor of CategoryDetailScreenUC.
+        /// </summary>
+        /// <param name="mainWindow">
+        /// MainWindow is used to send data to the server and change the view of the application.
+        /// </param>
         public CategoryDetailScreenUC(MainWindow mainWindow)
         {
             this.mainWindow = mainWindow;
@@ -30,6 +36,12 @@ namespace Shared.CategoryProductScreen
             CategoryListBox.ItemsSource = mainWindow.ListViewProducts;
         }
 
+        /// <summary>
+        /// Used to set the currently displayed list on the view.
+        /// </summary>
+        /// <param name="category">
+        /// The category to which the data of the list will be changed to.
+        /// </param>
         public void SetListView(string category)
         {
             foreach (ListViewSelectProduct LVP in mainWindow.ListViewProducts)
@@ -45,6 +57,15 @@ namespace Shared.CategoryProductScreen
             }
         }
 
+        /// <summary>
+        /// The onClick method. Used to check if there has been a left click action on a list item.
+        /// </summary>
+        /// <param name="sender">
+        /// The data of the object.
+        /// </param>
+        /// <param name="e">
+        /// The button event argument.
+        /// </param>
         private void ListViewItem_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             var item = sender as ListViewItem;
@@ -60,6 +81,15 @@ namespace Shared.CategoryProductScreen
 
         }
 
+        /// <summary>
+        /// The onClick method. Used to change the view to the selected item.
+        /// </summary>
+        /// <param name="sender">
+        /// The data of the object.
+        /// </param>
+        /// <param name="e">
+        /// The button event argument.
+        /// </param>
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             foreach (Product p in CurrentProducts)
