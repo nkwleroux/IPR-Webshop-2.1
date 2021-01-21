@@ -39,7 +39,8 @@ namespace Shared
         private ProductDetailScreenUC productDetailScreenUC;
         private PurchaseCheckoutUC purchaseCheckoutUC;
         private NoConnectionScreenUC noConnectionScreenUC;
-        public Client client;
+        
+        public Client client { get; private set; }
 
         private bool HasAccount { get; set; }
         public string SelectedCategory { get; set; }
@@ -94,7 +95,7 @@ namespace Shared
         public void SetCategories()
         {
             ListViewProducts = new List<ListViewSelectProduct>(){
-                new ListViewSelectProduct("Aardappel, groente, fruit", new List<Product>() ),
+                new ListViewSelectProduct("Aardappel, groente, fruit", new List<Product>()),
                 new ListViewSelectProduct("Salades, pizza, maaltijden", new List<Product>()),
                 new ListViewSelectProduct("Vlees, kip, vis, vega", new List<Product>()),
                 new ListViewSelectProduct("Kaas, vleeswaren, tapas", new List<Product>()),

@@ -38,9 +38,10 @@ namespace ServerApplication.Server_logics
 
             return jsons;
         }
+
         public string[] GetAllUsersJson()
         {
-            string[] jsons = new string[this.Products.Count];
+            string[] jsons = new string[this.Users.Count];
 
             for (int i = 0; i < this.Users.Count; i++)
             {
@@ -146,7 +147,7 @@ namespace ServerApplication.Server_logics
         }
 
         #endregion
-        public List<Product> getCategoryList(string category)
+        public List<Product> GetProductListFromCategory(string category)
         {
             List<Product> returningList = new List<Product>();
             foreach (Product product in this.Products)
@@ -248,7 +249,7 @@ namespace ServerApplication.Server_logics
                 }
             }
         }
-        public bool checkStockAndUpdate(Product product, bool add)
+        public bool CheckStockAndUpdate(Product product, bool add)
         {
             int amount = product.Amount;
             if (add)

@@ -214,14 +214,14 @@ namespace ServerApplication
             Product product = JsonConvert.DeserializeObject<Product>(receivedData["product"].ToString());
             if(typeOfChange == "add")
             {
-                bool status = this.database.checkStockAndUpdate(product, true);
+                bool status = this.database.CheckStockAndUpdate(product, true);
                 if (status)
                 {
                     this.currentUser.cart.Add(product);
                 }
             } else if(typeOfChange == "remove")
             {
-                this.database.checkStockAndUpdate(product, false);
+                this.database.CheckStockAndUpdate(product, false);
                 foreach(Product p in this.currentUser.cart)
                 {
                     if(p.Id == product.Id)
@@ -259,7 +259,7 @@ namespace ServerApplication
             List<Product> productList;
             if (category.Length > 0)
             {
-                productList = database.getCategoryList(category);
+                productList = database.GetProductListFromCategory(category);
             }
             else
             {
