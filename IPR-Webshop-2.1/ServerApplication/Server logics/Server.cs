@@ -103,7 +103,9 @@ namespace ServerApplication
         {
             this.clients.Remove(serverClient);
         }
-
+        /// <summary>
+        /// Sends user list to all current editor users.
+        /// </summary>
         internal void SendUpdateUserList()
         {
             foreach (ServerClient serverClient in clients)
@@ -111,7 +113,9 @@ namespace ServerApplication
                 serverClient.SendUserList();
             }
         }
-
+        /// <summary>
+        /// sends product. list to all clients.
+        /// </summary>
         public void sendUpdateProductList()
         {
             foreach(ServerClient serverClient in clients)

@@ -24,8 +24,11 @@ namespace ServerApplication
         public MainWindow()
         {
             InitializeComponent();
+            // wrapper for a richtextfield
             LogField log = new LogField(this.Log, this.Dispatcher);
+            // wrapper for a status label.
             ServerStatusLabel statusLabel = new ServerStatusLabel(this.Label_Status, this.Indicator);
+            // wrapperfor server buttons. 
             ServerButtons serverButtons = new ServerButtons(this.Button_Start, this.Button_Stop);
             this.server = new Server(log, statusLabel, serverButtons);
         }

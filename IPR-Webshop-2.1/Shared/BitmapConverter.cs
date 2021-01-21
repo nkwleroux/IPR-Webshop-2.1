@@ -11,6 +11,7 @@ namespace Shared
 {
     public class BitmapConverter
     {
+        // this method will convert an bitmapimage to a byte[] to send over a stream.
         public static byte[] ConvertImageToByteArray(BitmapImage image)
         {
             string imagePath = image.UriSource.LocalPath;
@@ -26,6 +27,7 @@ namespace Shared
             
             return imageByteArray;
         }
+        // this method will revert the byte[] to a bitmapimage
         public static BitmapImage LoadImage(byte[] imageData)
         {
             if (imageData == null || imageData.Length == 0) return null;

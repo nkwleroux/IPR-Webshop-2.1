@@ -11,15 +11,21 @@ namespace ServerEditor
 {
     public class UserEditor
     {
+        // our encrypted messaging logic.
         private Crypto crypto;
+        // our view.
         private Page_UserEditor viewModel;
         public UserEditor(Crypto crypto, Page_UserEditor page)
         {
             this.viewModel = page;
             this.crypto = crypto;
+            // initial data request to server.
             this.crypto.WriteTextMessage(DataProtocol.getJsonMessage("client/userListRequest",
                 DataProtocol.getUserListRequest()));
         }
+        /// <summary>
+        /// When the add button is called.
+        /// </summary>
         public void OnAdd()
         {
             foreach (TextBox box in viewModel.textBoxes)
@@ -42,11 +48,14 @@ namespace ServerEditor
                 ShippingDetails = viewModel.TextBox_ShippingAddress.Text,
                 BillingDetails = viewModel.TextBox_BillingDetails.Text
             };
-
+            // Sends the server a request to add new user.
             this.crypto.WriteTextMessage(DataProtocol.getJsonMessage(
                                             "client/userListChangeRequest",
                                             DataProtocol.getUserChangeDynamic("add", user)));
         }
+        /// <summary>
+        /// Edit button callback.
+        /// </summary>
         public void OnEdit()
         {
             User selectedUser = (User)viewModel.ListView_UserList.SelectedItem;
@@ -69,19 +78,27 @@ namespace ServerEditor
                 selectedUser.Credits = credits;
                 selectedUser.ShippingDetails = viewModel.TextBox_ShippingAddress.Text;
                 selectedUser.BillingDetails = viewModel.TextBox_BillingDetails.Text;
-
+                // sends a message to our server with edited user.
                 this.crypto.WriteTextMessage(DataProtocol.getJsonMessage(
                                             "client/userListChangeRequest",
                                             DataProtocol.getUserChangeDynamic("edit", selectedUser)));
             }
         }
+        /// <summary>
+        /// Remove button callback.
+        /// </summary>
         public void OnRemove()
         {
             User user = (User)viewModel.ListView_UserList.SelectedItem;
+            // send a messgae to our server with the remove request.
             this.crypto.WriteTextMessage(DataProtocol.getJsonMessage(
                                             "client/userListChangeRequest",
                                             DataProtocol.getUserChangeDynamic("remove", user)));
         }
+        /// <summary>
+        /// When a item is selected.
+        /// </summary>
+        /// <param name="item"></param>
         public void OnItemSelect(ListViewItem item)
         {
             User selectedObject = (User)item.DataContext;
@@ -97,6 +114,10 @@ namespace ServerEditor
                 viewModel.TextBox_Credits.Text = selectedObject.Credits.ToString();
             }
         }
+        /// <summary>
+        /// When our server sends over our users.
+        /// </summary>
+        /// <param name="receivedData"> json with all users </param>
         public void OnUserListReceived(JObject receivedData)
         {
             viewModel.Dispatcher.Invoke(() => viewModel.ListView_UserList.Items.Clear());

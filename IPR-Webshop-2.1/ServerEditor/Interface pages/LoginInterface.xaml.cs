@@ -22,10 +22,15 @@ namespace ServerEditor.Interface_pages
             this.window = window;
             InitializeComponent();
 
+            // tcp client will be our low level tcp packets handler.
             TcpClient tcpClient = new TcpClient();
             tcpClient.Connect("localhost", 2000);
             this.crypto = new Crypto(tcpClient, HandleData, null);
         }
+        /// <summary>
+        /// This method is our initial handle data method for our received messages.
+        /// </summary>
+        /// <param name="receivedText"> only login status </param>
         public void HandleData(string receivedText)
         {
             JObject receivedMessage = (JObject)JsonConvert.DeserializeObject(receivedText);
@@ -34,6 +39,7 @@ namespace ServerEditor.Interface_pages
             JObject receivedData = (JObject)receivedMessage["data"];
             if (type == "server/loginResponse")
             {
+                // when messages status lable is true, our application will continue.
                 if ((bool)receivedData["status"])
                 {
                     this.Dispatcher.Invoke(() => this.NavigationService.Navigate(
@@ -47,7 +53,7 @@ namespace ServerEditor.Interface_pages
             string password = this.TextBlock_LoginPassword.Text;
             if (username.Length <= 0 && password.Length <= 0)
                 return;
-
+            // sends our login attempt to the server.
             this.crypto.WriteTextMessage(
                 DataProtocol.getJsonMessage("client/login",
                 DataProtocol.getCredentialDynamic(username, password, true)));

@@ -20,6 +20,7 @@ namespace ServerApplication.Server_logics
             this.Users = new List<User>();
             this.Users.Add(new User
             {
+                // default admin credentials
                 Username = "admin",
                 Password = "admin",
                 IsEditor = true
@@ -147,6 +148,11 @@ namespace ServerApplication.Server_logics
         }
 
         #endregion
+        /// <summary>
+        /// returns a product list based on category.
+        /// </summary>
+        /// <param name="category"></param>
+        /// <returns></returns>
         public List<Product> GetProductListFromCategory(string category)
         {
             List<Product> returningList = new List<Product>();
@@ -159,6 +165,13 @@ namespace ServerApplication.Server_logics
             }
             return returningList;
         }
+        /// <summary>
+        /// This method will indentify a attempt of login.
+        /// </summary>
+        /// <param name="username"> attempt </param>
+        /// <param name="password"> attempt </param>
+        /// <param name="isEditor"> attempt </param>
+        /// <returns></returns>
         public User CheckUserLogin(string username, string password, bool isEditor)
         {
             foreach (User user in this.Users)
@@ -170,6 +183,12 @@ namespace ServerApplication.Server_logics
             }
             return null;
         }
+        /// <summary>
+        /// This method will register a new user to our database.
+        /// </summary>
+        /// <param name="username"> username must be unique </param>
+        /// <param name="password"> password of user </param>
+        /// <returns></returns>
         internal User RegisterUser(string username, string password)
         {
             foreach (User u in this.Users)
@@ -187,6 +206,10 @@ namespace ServerApplication.Server_logics
             this.Users.Add(user);
             return user;
         }
+        /// <summary>
+        /// This method will save our current database to a file.
+        /// </summary>
+        /// <param name="dirName"></param>
         public void Save(string dirName)
         {
             string location = Environment.CurrentDirectory + @"\" + dirName;
@@ -218,6 +241,10 @@ namespace ServerApplication.Server_logics
                 streamWriter.Flush();
             }
         }
+        /// <summary>
+        /// This method will load our latest data from a file.
+        /// </summary>
+        /// <param name="dirName"></param>
         public void Load(string dirName)
         {
             string location = Environment.CurrentDirectory + @"\" + dirName;
@@ -249,6 +276,12 @@ namespace ServerApplication.Server_logics
                 }
             }
         }
+        /// <summary>
+        /// Updates stock numbers when a product is bougt.
+        /// </summary>
+        /// <param name="product"> which product to change stock </param>
+        /// <param name="add"> add or remove a stock </param>
+        /// <returns></returns>
         public bool CheckStockAndUpdate(Product product, bool add)
         {
             int amount = product.Amount;

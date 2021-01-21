@@ -23,6 +23,9 @@ namespace ServerEditor
             this.crypto.WriteTextMessage(DataProtocol.getJsonMessage("client/productListRequest",
                 DataProtocol.getProductListRequest("")));
         }
+        /// <summary>
+        /// when add button is called.
+        /// </summary>
         public void OnAdd()
         {
             foreach (TextBox box in viewModel.textBoxes)
@@ -49,11 +52,14 @@ namespace ServerEditor
             {
                 product.Image = cachedImage;
             }
-
+            // this will send a request to add a user to the server.
             this.crypto.WriteTextMessage(DataProtocol.getJsonMessage(
                                             "client/productListChangeRequest",
                                             DataProtocol.getProductChangeDynamic("add", product)));
         }
+        /// <summary>
+        /// This method will be called when a edit button is clicked.
+        /// </summary>
         public void OnEdit()
         {
             Product selectedProduct = (Product)viewModel.ListView_ProductList.SelectedItem;
@@ -80,11 +86,16 @@ namespace ServerEditor
                 {
                     selectedProduct.Image = cachedImage;
                 }
+                // Server sends request to edit user.
                 this.crypto.WriteTextMessage(DataProtocol.getJsonMessage(
                                             "client/productListChangeRequest",
                                             DataProtocol.getProductChangeDynamic("edit", selectedProduct)));
             }
         }
+        /// <summary>
+        /// when a product removal is requested. 
+        /// This method will send a remove request to server.
+        /// </summary>
         public void OnRemove()
         {
             Product product = (Product)viewModel.ListView_ProductList.SelectedItem;
@@ -92,17 +103,28 @@ namespace ServerEditor
                                             "client/productListChangeRequest",
                                             DataProtocol.getProductChangeDynamic("remove", product)));
         }
+        /// <summary>
+        /// Clears our cached image.
+        /// </summary>
         public void OnClear()
         {
             this.cachedImage = new byte[0];
             viewModel.Dispatcher.Invoke(() => viewModel.Image_ProductImage.Source = new BitmapImage());
         }
+        /// <summary>
+        /// Sets a cached image.
+        /// </summary>
+        /// <param name="fileName"></param>
         public void ImageSelected(string fileName)
         {
             BitmapImage bitmapImage = new BitmapImage(new Uri(fileName));
             viewModel.Dispatcher.Invoke(() => viewModel.Image_ProductImage.Source = bitmapImage);
             this.cachedImage = BitmapConverter.ConvertImageToByteArray(bitmapImage);
         }
+        /// <summary>
+        /// Callback for item click.
+        /// </summary>
+        /// <param name="item"></param>
         public void OnItemClick(ListViewItem item)
         {
             Product selectedObject = (Product)item.DataContext;
@@ -114,9 +136,14 @@ namespace ServerEditor
                 viewModel.TextBox_ProductAmount.Text = selectedObject.Amount.ToString();
                 viewModel.ComboBox_category.SelectedItem = selectedObject.Category;
                 BitmapImage image = BitmapConverter.LoadImage(selectedObject.Image);
+                // set image in placeholder.
                 viewModel.Dispatcher.Invoke(() => viewModel.Image_ProductImage.Source = image);
             }
         }
+        /// <summary>
+        /// Callback for when our product list is received.
+        /// </summary>
+        /// <param name="receivedData"> json with our list of products and images </param>
         public void OnProductListReceived(JObject receivedData)
         {
             viewModel.Dispatcher.Invoke(() => viewModel.ListView_ProductList.Items.Clear());

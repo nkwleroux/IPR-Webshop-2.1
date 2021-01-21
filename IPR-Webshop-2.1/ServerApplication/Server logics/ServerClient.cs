@@ -45,11 +45,12 @@ namespace ServerApplication
             this.keepAliveReceiver = new KeepAliveReceiver(this.Disconect);
             this.keepAliveReceiver.Run();
         }
-        /*
-         * When the received message is wrapped by a JObject, the message ends in the 
-         * handledata method, which filters the next steps by switching with the type value
-         * in the message.
-        */
+        /// <summary>
+        /// When the received message is wrapped by a JObject, the message ends in the 
+        /// handledata method, which filters the next steps by switching with the type value
+        /// in the message.
+        /// </summary>
+        /// <param name="receivedText"> received json typed message </param>
         private void HandleData(string receivedText)
         {
             JObject receivedMessage = (JObject)JsonConvert.DeserializeObject(receivedText);
@@ -109,7 +110,10 @@ namespace ServerApplication
                 }
             }
         }
-
+        /// <summary>
+        /// Method will be called if the message type equals that of a register request.
+        /// </summary>
+        /// <param name="receivedData"> json typed message </param>
         private void handleClientRegister(JObject receivedData)
         {
             string username = receivedData["username"].ToString();
@@ -128,8 +132,12 @@ namespace ServerApplication
             
             this.crypto.WriteTextMessage(DataProtocol.getJsonMessage("server/registerResponse", data));
         }
-
+        // our currect login status
         private bool loginStatus;
+        /// <summary>
+        /// This method will handle login messages to trigger our loginstatus and to premise to more data.
+        /// </summary>
+        /// <param name="receivedData"> json typed message </param>
         private void handleClientLogin(JObject receivedData)
         {
             string username = receivedData["username"].ToString();
@@ -154,7 +162,10 @@ namespace ServerApplication
 
             this.crypto.WriteTextMessage(DataProtocol.getJsonMessage("server/loginResponse", data));
         }
-
+        /// <summary>
+        /// When a list change is send from servereditor.
+        /// </summary>
+        /// <param name="receivedData"> json typed message </param>
         private void handleUserListChangeRequest(JObject receivedData)
         {
             User user = JsonConvert.DeserializeObject<User>(receivedData["user"].ToString());
@@ -176,7 +187,10 @@ namespace ServerApplication
             }
             this.server.SendUpdateUserList();
         }
-
+        /// <summary>
+        /// When a list change is send from servereditor.
+        /// </summary>
+        /// <param name="receivedData"> json typed message </param>
         private void handleProductListChangeRequest(JObject receivedData)
         {
             string typeOfChange = (string)receivedData["typeOfChange"];
@@ -200,6 +214,9 @@ namespace ServerApplication
 
             this.server.sendUpdateProductList();
         }
+        /// <summary>
+        /// Sends a list of user's current cart.
+        /// </summary>
         private void SendCurrentCart()
         {
             dynamic data = new
@@ -208,6 +225,10 @@ namespace ServerApplication
             };
             this.crypto.WriteTextMessage(DataProtocol.getJsonMessage("server/cartUpdateResponse", data));
         }
+        /// <summary>
+        /// This method is called when our client sends a change in cart.
+        /// </summary>
+        /// <param name="receivedData"> json typed message </param>
         private void changeProductInCart(JObject receivedData)
         {
             string typeOfChange = receivedData["typeOfChange"].ToString();
@@ -233,6 +254,9 @@ namespace ServerApplication
             
             this.SendCurrentUser();
         }
+        /// <summary>
+        /// This method will send our client its current user.
+        /// </summary>
         private void SendCurrentUser()
         {
             dynamic data = new
@@ -248,9 +272,12 @@ namespace ServerApplication
             this.currentUser = user;
             SendCurrentUser();
         }
+        /// <summary>
+        /// This method will send our client a list with products based on category.
+        /// </summary>
+        /// <param name="json"></param>
         public void SendProductList(JObject json)
         {
-            //TODO categories
             string category = "";
             if(json != null)
             {
@@ -271,6 +298,9 @@ namespace ServerApplication
             };
             this.crypto.WriteTextMessage(DataProtocol.getJsonMessage("server/productListResponse", data));
         }
+        /// <summary>
+        /// This method wil send a list of users (only to an sertified editor)
+        /// </summary>
         public void SendUserList()
         {
             List<User> userList = database.Users;
@@ -280,6 +310,9 @@ namespace ServerApplication
             };
             this.crypto.WriteTextMessage(DataProtocol.getJsonMessage("server/userListResponse", data));
         }
+        /// <summary>
+        /// This method will disconnect our client end dispose itself.
+        /// </summary>
         public void Disconect()
         {
             this.log.PrintLine(SOURCE_LABEL, $"client disconnect: {this.client.Client.RemoteEndPoint}");

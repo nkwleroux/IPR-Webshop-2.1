@@ -13,6 +13,10 @@ namespace ServerApplication
             this.label = label;
             this.indicator = indicator;
         }
+        /// <summary>
+        /// This method will change our indicator collor.
+        /// </summary>
+        /// <param name="serverState"> current status </param>
         public void SetStatus(ServerStates serverState)
         {
             switch (serverState)

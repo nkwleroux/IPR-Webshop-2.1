@@ -72,11 +72,13 @@ namespace ServerEditor.Interface_pages
         private void Button_ChangeImage_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog dialog = new OpenFileDialog();
+            // adds a filter with a list of usable image filetypes.
             dialog.Filter =
                "png files (*.png)|*.png|jpeg files (*.jpeg)|*.jpeg|jpg files (*.jpg)|*.jpg";
             dialog.InitialDirectory = "C:\\";
             dialog.Title = "Select an image file";
             dialog.FileOk += Dialog_FileOk;
+            // shows a dialog where a file can be picked.
             dialog.ShowDialog();
         }
         private void Dialog_FileOk(object sender, System.ComponentModel.CancelEventArgs e)

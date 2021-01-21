@@ -35,7 +35,10 @@ namespace ServerEditor.Interface_pages
             this.ViewPort_UserEditor.Navigate(this.userEditorPage);
             window.Closed += Window_Closed;
         }
-
+        /// <summary>
+        /// This is the main callback for our crypto. this will handle the incomming data.
+        /// </summary>
+        /// <param name="receivedText"> a json typed message from server </param>
         private void HandleData(string receivedText)
         {
             JObject receivedMessage = (JObject)JsonConvert.DeserializeObject(receivedText);
@@ -61,6 +64,9 @@ namespace ServerEditor.Interface_pages
         {
             this.DisconnectMessage();
         }
+        /// <summary>
+        /// This method will send a disconnect message to our server.
+        /// </summary>
         public void DisconnectMessage()
         {
             this.crypto.WriteTextMessage(DataProtocol.getJsonMessage("client/disconnect", new { }));
