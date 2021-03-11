@@ -1,6 +1,6 @@
 # Webshop
 ## About
 Server and client side applications for a supermarket.
-## What I learned:
+## What we learned:
 - WPF framework.
 - Working with communication protocols over TCP.
